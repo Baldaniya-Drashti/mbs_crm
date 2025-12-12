@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,17 +33,17 @@ class DynamicForm extends StatelessWidget {
         create: (context) =>
             getIt<DynamicFormBloc>()
               ..add(DynamicFormEvent.loadForm(form.slug ?? '')),
-        child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
-          builder: (context, state) {
-            final schema = state.schema ?? DynamicFormDTO();
-            return (state.isLoading)
-                ? Center(child: CenterLoadingIndicator())
-                : Form(
-                    key: _formKey,
-                    child: Padding(
+        child: FormBuilder(
+          key: _formKey,
+          child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
+            builder: (context, state) {
+              final schema = state.schema ?? DynamicFormDTO();
+              return (state.isLoading)
+                  ? Center(child: CenterLoadingIndicator())
+                  : Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: getSize(20),
-                        horizontal: getSize(15),
+                        horizontal: getSize((isLandscape()) ? 30 : 15),
                       ),
                       child: Column(
                         children: [
@@ -54,35 +55,40 @@ class DynamicForm extends StatelessWidget {
                           ),
                           Gap(getSize(20)),
                           Expanded(
-                            child: ListView(
-                              // shrinkWrap: true,
-                              clipBehavior: Clip.none,
-                              children: [
-                                if (schema.sections != null)
-                                  for (var section in schema.sections!)
-                                    _buildSection(section: section),
-                              ],
+                            child: SingleChildScrollView(
+                              child: Column(
+                                children: [
+                                  if (schema.sections != null)
+                                    for (var section in schema.sections!)
+                                      _buildSection(section: section),
+                                ],
+                              ),
                             ),
                           ),
                           Gap(getSize(10)),
                           CommonButton(
-                            onPressed: () {
+                            onPressed: () async {
                               if (_formKey.currentState!.saveAndValidate()) {
-                                final data = _formKey.currentState!.value;
+                                final Map<String, dynamic> data =
+                                    Map<String, dynamic>.from(
+                                      _formKey.currentState!.value,
+                                    );
+
                                 context.read<DynamicFormBloc>().add(
                                   DynamicFormEvent.submitForm(data),
                                 );
                               }
                             },
-                            height: 40,
+                            width: (isLandscape()) ? double.maxFinite : null,
+                            height: (isLandscape()) ? 80 : 40,
                             borderRadius: 10,
                             buttonText: StringConstant.submit,
                           ),
                         ],
                       ),
-                    ),
-                  );
-          },
+                    );
+            },
+          ),
         ),
       ),
     );
@@ -95,6 +101,7 @@ class DynamicForm extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       margin: EdgeInsets.symmetric(vertical: getSize(6)),
       child: ExpansionTile(
+        maintainState: true,
         initiallyExpanded: false,
         iconColor: AppColors.black,
         title: Text(

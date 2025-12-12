@@ -758,6 +758,9 @@ TableColumnSchema _$TableColumnSchemaFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$TableColumnSchema {
   String? get label => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get display => throw _privateConstructorUsedError;
+  List<TableColumnSchema> get children => throw _privateConstructorUsedError;
 
   /// Serializes this TableColumnSchema to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -776,7 +779,12 @@ abstract class $TableColumnSchemaCopyWith<$Res> {
     $Res Function(TableColumnSchema) then,
   ) = _$TableColumnSchemaCopyWithImpl<$Res, TableColumnSchema>;
   @useResult
-  $Res call({String? label});
+  $Res call({
+    String? label,
+    String? type,
+    String? display,
+    List<TableColumnSchema> children,
+  });
 }
 
 /// @nodoc
@@ -793,13 +801,30 @@ class _$TableColumnSchemaCopyWithImpl<$Res, $Val extends TableColumnSchema>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? label = freezed}) {
+  $Res call({
+    Object? label = freezed,
+    Object? type = freezed,
+    Object? display = freezed,
+    Object? children = null,
+  }) {
     return _then(
       _value.copyWith(
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
                       as String?,
+            type: freezed == type
+                ? _value.type
+                : type // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            display: freezed == display
+                ? _value.display
+                : display // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            children: null == children
+                ? _value.children
+                : children // ignore: cast_nullable_to_non_nullable
+                      as List<TableColumnSchema>,
           )
           as $Val,
     );
@@ -815,7 +840,12 @@ abstract class _$$TableColumnSchemaImplCopyWith<$Res>
   ) = __$$TableColumnSchemaImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? label});
+  $Res call({
+    String? label,
+    String? type,
+    String? display,
+    List<TableColumnSchema> children,
+  });
 }
 
 /// @nodoc
@@ -831,13 +861,30 @@ class __$$TableColumnSchemaImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? label = freezed}) {
+  $Res call({
+    Object? label = freezed,
+    Object? type = freezed,
+    Object? display = freezed,
+    Object? children = null,
+  }) {
     return _then(
       _$TableColumnSchemaImpl(
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
                   as String?,
+        type: freezed == type
+            ? _value.type
+            : type // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        display: freezed == display
+            ? _value.display
+            : display // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        children: null == children
+            ? _value._children
+            : children // ignore: cast_nullable_to_non_nullable
+                  as List<TableColumnSchema>,
       ),
     );
   }
@@ -846,17 +893,34 @@ class __$$TableColumnSchemaImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$TableColumnSchemaImpl implements _TableColumnSchema {
-  const _$TableColumnSchemaImpl({this.label});
+  const _$TableColumnSchemaImpl({
+    this.label,
+    this.type,
+    this.display,
+    final List<TableColumnSchema> children = const [],
+  }) : _children = children;
 
   factory _$TableColumnSchemaImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableColumnSchemaImplFromJson(json);
 
   @override
   final String? label;
+  @override
+  final String? type;
+  @override
+  final String? display;
+  final List<TableColumnSchema> _children;
+  @override
+  @JsonKey()
+  List<TableColumnSchema> get children {
+    if (_children is EqualUnmodifiableListView) return _children;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_children);
+  }
 
   @override
   String toString() {
-    return 'TableColumnSchema(label: $label)';
+    return 'TableColumnSchema(label: $label, type: $type, display: $display, children: $children)';
   }
 
   @override
@@ -864,12 +928,21 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TableColumnSchemaImpl &&
-            (identical(other.label, label) || other.label == label));
+            (identical(other.label, label) || other.label == label) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.display, display) || other.display == display) &&
+            const DeepCollectionEquality().equals(other._children, _children));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, label);
+  int get hashCode => Object.hash(
+    runtimeType,
+    label,
+    type,
+    display,
+    const DeepCollectionEquality().hash(_children),
+  );
 
   /// Create a copy of TableColumnSchema
   /// with the given fields replaced by the non-null parameter values.
@@ -889,14 +962,24 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
 }
 
 abstract class _TableColumnSchema implements TableColumnSchema {
-  const factory _TableColumnSchema({final String? label}) =
-      _$TableColumnSchemaImpl;
+  const factory _TableColumnSchema({
+    final String? label,
+    final String? type,
+    final String? display,
+    final List<TableColumnSchema> children,
+  }) = _$TableColumnSchemaImpl;
 
   factory _TableColumnSchema.fromJson(Map<String, dynamic> json) =
       _$TableColumnSchemaImpl.fromJson;
 
   @override
   String? get label;
+  @override
+  String? get type;
+  @override
+  String? get display;
+  @override
+  List<TableColumnSchema> get children;
 
   /// Create a copy of TableColumnSchema
   /// with the given fields replaced by the non-null parameter values.

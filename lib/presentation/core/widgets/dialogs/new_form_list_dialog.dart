@@ -22,6 +22,7 @@ class NewFormDialog extends StatelessWidget {
   }) {
     return showDialog(
       context: context,
+      useSafeArea: (isLandscape()) ? false : true,
       builder: (con) {
         return AlertDialog(
           backgroundColor: AppColors.white,
@@ -63,9 +64,11 @@ class NewFormDialog extends StatelessWidget {
                         }
                       },
                       child: Container(
-                        padding: EdgeInsets.all(getSize(10)),
+                        padding: EdgeInsets.all(
+                          getSize((isLandscape()) ? 25 : 10),
+                        ),
                         margin: EdgeInsets.symmetric(
-                          vertical: getSize(5),
+                          vertical: getSize((isLandscape()) ? 10 : 5),
                           horizontal: getSize(15),
                         ),
                         decoration: BoxDecoration(

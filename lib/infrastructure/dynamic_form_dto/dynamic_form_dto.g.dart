@@ -66,8 +66,22 @@ Map<String, dynamic> _$$FormFieldSchemaImplToJson(
 
 _$TableColumnSchemaImpl _$$TableColumnSchemaImplFromJson(
   Map<String, dynamic> json,
-) => _$TableColumnSchemaImpl(label: json['label'] as String?);
+) => _$TableColumnSchemaImpl(
+  label: json['label'] as String?,
+  type: json['type'] as String?,
+  display: json['display'] as String?,
+  children:
+      (json['children'] as List<dynamic>?)
+          ?.map((e) => TableColumnSchema.fromJson(e as Map<String, dynamic>))
+          .toList() ??
+      const [],
+);
 
 Map<String, dynamic> _$$TableColumnSchemaImplToJson(
   _$TableColumnSchemaImpl instance,
-) => <String, dynamic>{'label': instance.label};
+) => <String, dynamic>{
+  'label': instance.label,
+  'type': instance.type,
+  'display': instance.display,
+  'children': instance.children,
+};

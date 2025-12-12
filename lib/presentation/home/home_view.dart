@@ -43,7 +43,7 @@ class _HomeViewState extends State<HomeView> {
                   },
                 );
               },
-              width: 90,
+              width: (isLandscape()) ? 200 : 90,
               height: 30,
               borderRadius: 10,
               buttonFontSize: 12,

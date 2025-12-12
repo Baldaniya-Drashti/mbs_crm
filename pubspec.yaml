@@ -55,10 +55,12 @@ dependencies:
   shared_preferences: ^2.5.3
   gap: ^3.0.1
   shimmer: ^3.0.0
-  data_table_2: ^2.6.0
+  # data_table_2: ^2.6.0
   flutter_form_builder: ^10.2.0
   form_builder_validators: ^11.2.0
   signature: ^6.3.0
+  syncfusion_flutter_datagrid: ^31.2.18
+  
 
 dev_dependencies:
   flutter_test:

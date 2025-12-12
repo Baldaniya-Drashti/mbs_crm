@@ -32,6 +32,83 @@
                     "rowCount": 4,
                     "tablecolumn": [
                         {
+                            "label": "Equipment Tag",
+                            "key": "equipment_tag",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Installation Zone",
+                            "key": "installation_zone",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Drawing Number",
+                            "key": "drawing_number",
+                            "type": "text",
+                            "display": "single"
+                        },
+                        {
+                            "label": "ATEX Certificate No",
+                            "type": "group",
+                            "children": [
+                                {
+                                    "label": "Certificate No",
+                                    "key": "certificate _no",
+                                    "type": "text"
+                                },
+                                {
+                                    "label": "PROT TYPE",
+                                    "key": "prot_type",
+                                    "type": "text"
+                                },
+                                {
+                                    "label": "EQUIP GRP",
+                                    "key": "equip_grp",
+                                    "type": "text"
+                                },
+                                {
+                                    "label": "TEMP RATING",
+                                    "key": "temp_rating",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Atex Marking",
+                            "key": "atex_marking",
+                            "type": "text"
+                        },
+                        {
+                            "label": "Description",
+                            "type": "group",
+                            "children": [
+                                {
+                                    "label": "Model No.",
+                                    "key": "model_no",
+                                    "type": "text"
+                                }
+                            ]
+                        },
+                        {
+                            "label": "Device Serial No.",
+                            "key": "device_serial",
+                            "type": "text"
+                        },
+                        {
+                            "label": "E.L.I (ohm)",
+                            "key": "eli_ohm",
+                            "type": "group",
+                            "children": [
+                                {
+                                    "label": "I.S.E (ohm)",
+                                    "key": "ise_ohm",
+                                    "type": "text"
+                                }
+                            ]
+                        }
+                    ],
+                    "tablecolumn2": [
+                        {
                             "label": "Equipment Tag"
                         },
                         {
@@ -66,7 +143,7 @@
             "title": "Inspection Grade",
             "fields": [
                 {
-                    "label": "",
+                    "label": "inspection_rade",
                     "type": "radio",
                     "required": false,
                     "options": [

@@ -40,7 +40,13 @@ class FormFieldSchema with _$FormFieldSchema {
 
 @freezed
 class TableColumnSchema with _$TableColumnSchema {
-  const factory TableColumnSchema({String? label}) = _TableColumnSchema;
+  const factory TableColumnSchema({
+    String? label,
+    String? type,
+    String? display,
+    @Default([]) List<TableColumnSchema> children,
+  }) = _TableColumnSchema;
+
   factory TableColumnSchema.fromJson(Map<String, dynamic> json) =>
       _$TableColumnSchemaFromJson(json);
 }
