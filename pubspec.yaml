@@ -60,6 +60,13 @@ dependencies:
   form_builder_validators: ^11.2.0
   signature: ^6.3.0
   syncfusion_flutter_datagrid: ^31.2.18
+  sqflite: ^2.3.0
+  path: ^1.9.0
+  intl: ^0.20.2
+  uuid: ^4.5.2
+  path_provider: ^2.1.5
+  file_picker: ^10.3.7
+
   
 
 dev_dependencies:

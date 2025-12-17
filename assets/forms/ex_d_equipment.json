@@ -1,0 +1,648 @@
+{
+    "id": 1,
+    "title": "Inspection Record For Ex'd' Equipment",
+    "slug": "ex_d_equipment",
+    "sections": [
+        {
+            "title": "Project Information",
+            "fields": [
+                {
+                    "label": "Client",
+                    "key": "client",
+                    "required": false
+                },
+                {
+                    "label": "Site",
+                    "key": "site"
+                },
+                {
+                    "label": "Contract NO",
+                    "key": "contract_no"
+                }
+            ]
+        },
+        {
+            "title": "Instrument Details",
+            "fields": [
+                {
+                    "label": "Make",
+                    "key": "make",
+                    "required": false
+                },
+                {
+                    "label": "Model",
+                    "key": "model",
+                    "required": false
+                },
+                {
+                    "label": "Tag",
+                    "key": "tag",
+                    "required": false
+                },
+                {
+                    "label": "Serial NO",
+                    "key": "serial_no",
+                    "required": false
+                },
+                {
+                    "label": "ATEX Marking",
+                    "key": "atex_marking",
+                    "required": false
+                },
+                {
+                    "label": "ATEX Cert",
+                    "key": "atex_cert",
+                    "required": false
+                },
+                {
+                    "label": "Loop DWG",
+                    "key": "loop_dwg",
+                    "required": false
+                },
+                {
+                    "label": "Location",
+                    "key": "location",
+                    "required": false
+                },
+                {
+                    "label": "HA DWG",
+                    "key": "ha_dwg",
+                    "required": false
+                },
+                {
+                    "label": "Installation Zone",
+                    "key": "installation_zone",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "title": "Inspection Grade",
+            "fields": [
+                {
+                    "label": "IMPORTANT NOTE: REFERENCE SHOULD BE MADE TO IEC STANDARD 60079-17 BEFORE COMPLETING THIS SCHEDULE (BS EN 60079 Pt17)",
+                    "key": "inspection_grade",
+                    "type": "radio",
+                    "required": false,
+                    "options": [
+                        "Detailed = D",
+                        "Close = C",
+                        "Visual = V"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Equipment",
+            "fields": [
+                {
+                    "label": "1 - V, C, D Equipment is appropriate to the EPL / Zone requirements of the location",
+                    "key": "eq_epl_zone_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - C, D Equipment group is correct",
+                    "key": "eq_group_correct",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "3 - C, D Equipment temperature class is correct (only for gas)",
+                    "key": "eq_temp_class_correct",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "4 - V, C, D Degree of protection (IP grade) of equipment is appropriate for the level of protection / group / conductivity",
+                    "key": "eq_ip_grade_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "5 - D Equipment circuit identification is correct",
+                    "key": "eq_circuit_id_correct",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "6 - V, C, D Equipment circuit identification is available",
+                    "key": "eq_circuit_id_available",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "7 - V, C, D Enclosure, glass parts and glass to metal sealing gaskets and / or compounds are satisfactory",
+                    "key": "eq_enclosure_glass_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "8 - D There is no damage or unauthorised modifications",
+                    "key": "eq_no_unauthorised_mods",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "9 - V, C There is no evidence of unauthorised modifications",
+                    "key": "eq_no_mod_evidence",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "10 - C, D Bolts, cable entry devices (direct & indirect) and blanking elements are of the correct type, are complete and tight - Physical Check",
+                    "key": "eq_bolts_cable_entries_physical",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "11 - V Bolts, cable entry devices (direct & indirect) and blanking elements are of the correct type, are complete and tight - Visual Check",
+                    "key": "eq_bolts_cable_entries_visual",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "12 - C, D Threaded covers on enclosures are of the correct type, are tight and secured - Physical Check",
+                    "key": "eq_threaded_covers_physical",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "13 - V Threaded covers on enclosures are of the correct type, are tight and secured - Visual Check",
+                    "key": "eq_threaded_covers_visual",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "14 - D Joint surfaces are clean and undamaged and gaskets, if any, are satisfactory and positioned correctly",
+                    "key": "eq_joint_surfaces_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "15 - D Condition of enclosure gaskets is satisfactory",
+                    "key": "eq_gaskets_condition_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "16 - D Dimensions of flanged joint gaps are within the limits in accordance with manufacturer’s documentation or within maximum values permitted",
+                    "key": "eq_flanged_joint_gap_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "17 - D Breathing operation is satisfactory (type nR only)",
+                    "key": "eq_breathing_operation_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "18 - C, D Breathing and draining devices are satisfactory",
+                    "key": "eq_breathing_draining_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Equipment Specific (Lighting)",
+            "fields": [
+                {
+                    "label": "1 - V, C, D HID lamps are not indicating EOL effects",
+                    "key": "light_hid_no_eol",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - D Lamp type, rating, pin configuration and position are correct",
+                    "key": "light_lamp_spec_correct",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Equipment Specific (Motors)",
+            "fields": [
+                {
+                    "label": "1 - V, C, D Motor fans have sufficient clearance to the enclosure and / or covers, cooling systems are undamaged, motor foundations have no indentations or cracks",
+                    "key": "motor_fan_clearance_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - V, C, D The ventilation airflow is not impeded",
+                    "key": "motor_airflow_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "3 - D Insulation resistance (IR) of the motor windings is satisfactory",
+                    "key": "motor_ir_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Installation",
+            "fields": [
+                {
+                    "label": "1 - D Type of cable is appropriate",
+                    "key": "inst_cable_type_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - V, C, D There is no obvious damage to cables",
+                    "key": "inst_no_cable_damage",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "3 - V, C, D Sealing of trunking, ducts, pipes and / or conduits is satisfactory",
+                    "key": "inst_sealing_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "4 - D Stopping boxes and cable boxes are correctly filled",
+                    "key": "inst_stopping_boxes_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "5 - D Integrity of conduit system and interface with mixed system is maintained",
+                    "key": "inst_conduit_integrity_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "6 - D Earthing connections including any supplementary earth bonding connections are satisfactory (Physical Check)",
+                    "key": "inst_earthing_physical_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "7 - V, C Earthing connections including any supplementary earth bonding connections are satisfactory (Visual Check)",
+                    "key": "inst_earthing_visual_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "8 - D Fault Loop Impedance (TN Systems) or Earthing Resistance (IT Systems) is satisfactory",
+                    "key": "inst_fault_loop_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "9 - D Automatic electrical protective devices are set correctly (auto-reset not possible)",
+                    "key": "inst_protective_devices_set",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "10 - D Automatic electrical protective devices operate within permitted limits",
+                    "key": "inst_protective_devices_operate",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "11 - D Specific conditions of use (if applicable) are complied with",
+                    "key": "inst_conditions_of_use_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "12 - D Cables not in use are correctly terminated",
+                    "key": "inst_unused_cables_terminated",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "13 - V, C, D Obstructions adjacent to flameproof flanged joints are in accordance with 60079-14",
+                    "key": "inst_flameproof_obstructions_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "14 - C, D Variable voltage / frequency installation is in accordance with documentation",
+                    "key": "inst_variable_voltage_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Installation - Heating Systems",
+            "fields": [
+                {
+                    "label": "1 - D Temperature sensors function according to manufacturer’s documentation",
+                    "key": "heat_temp_sensors_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - D Safety cut off devices function according to manufacturer’s documentation",
+                    "key": "heat_safety_cutoff_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "3 - D The setting of the safety cut off is sealed",
+                    "key": "heat_cutoff_sealed",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "4 - D Reset of a heating system safety cut off possible with tool only",
+                    "key": "heat_reset_tool_only",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "5 - D Auto-reset is not possible",
+                    "key": "heat_auto_reset_not_possible",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "6 - D Reset of a safety cut off under fault conditions is prevented",
+                    "key": "heat_reset_fault_prevented",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "7 - D Safety cut off independent from control system",
+                    "key": "heat_cutoff_independent",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "8 - D Level switch is installed and correctly set, if required",
+                    "key": "heat_level_switch_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "9 - D Flow switch is installed and correctly set, if required",
+                    "key": "heat_flow_switch_ok",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Environment",
+            "fields": [
+                {
+                    "label": "1 - V, C, D Apparatus is adequately protected from corrosion, weather, vibration and other adverse conditions",
+                    "key": "env_apparatus_protection",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "2 - V, C, D No undue external accumulation of dust and dirt",
+                    "key": "env_undue_accumulation",
+                    "type": "dropdown",
+                    "options": [
+                        "Yes",
+                        "No",
+                        "N/A"
+                    ]
+                },
+                {
+                    "label": "Comments",
+                    "key": "comments",
+                    "maxLines": 3
+                }
+            ]
+        },
+        {
+            "title": "Inspected By",
+            "fields": [
+                {
+                    "label": "Inspector Name",
+                    "key": "inspector_name"
+                },
+                {
+                    "label": "Inspector Compex Number",
+                    "key": "inspector_compex_number"
+                },
+                {
+                    "label": "Date",
+                    "key": "inspection_date",
+                    "type": "date",
+                    "readOnly": true
+                },
+                {
+                    "label": "Inspector Signature",
+                    "key": "inspector_signature",
+                    "type": "signature",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "title": "Attachments",
+            "fields": [
+                {
+                    "label": "Upload Inspection Photos / Documents",
+                    "key": "attachments",
+                    "type": "attachment",
+                    "required": false,
+                    "multiple": true
+                }
+            ]
+        }
+    ]
+}

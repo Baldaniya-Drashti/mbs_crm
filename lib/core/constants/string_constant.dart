@@ -38,7 +38,11 @@ class StringConstant {
   static const String form = 'Form';
   static const String submit = 'Submit';
   static const String clear = 'Clear';
+  static const String save = 'Save';
   static const String selectTheFormRequired = 'Select the form required';
+  static const String editForm = 'Edit Form';
+  static const String update = 'Update';
+  static const String addFiles = 'Add Files';
   static const String noDataFound = 'No Data Found';
 
   /// ------------- Validator ------------- ///
@@ -47,4 +51,6 @@ class StringConstant {
   static const String pleaseEnterPassword = 'Please enter password';
   static const String passwordShouldBeMinimum8Digit =
       'Password should be minimum 6 digit';
+  static const String someDetailsAreMissingOrInvalidPleaseCheck =
+      'Some details are missing or invalid! Please check';
 }

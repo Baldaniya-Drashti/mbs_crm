@@ -20,28 +20,28 @@ mixin _$HomeEvent {
   bool get isRefresh => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isRefresh) getProductList,
+    required TResult Function(bool isRefresh) getFormsList,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isRefresh)? getProductList,
+    TResult? Function(bool isRefresh)? getFormsList,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getProductList,
+    TResult Function(bool isRefresh)? getFormsList,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetProductList value) getProductList,
+    required TResult Function(GetFormsList value) getFormsList,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetProductList value)? getProductList,
+    TResult? Function(GetFormsList value)? getFormsList,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetProductList value)? getProductList,
+    TResult Function(GetFormsList value)? getFormsList,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 
@@ -88,24 +88,24 @@ class _$HomeEventCopyWithImpl<$Res, $Val extends HomeEvent>
 }
 
 /// @nodoc
-abstract class _$$GetProductListImplCopyWith<$Res>
+abstract class _$$GetFormsListImplCopyWith<$Res>
     implements $HomeEventCopyWith<$Res> {
-  factory _$$GetProductListImplCopyWith(
-    _$GetProductListImpl value,
-    $Res Function(_$GetProductListImpl) then,
-  ) = __$$GetProductListImplCopyWithImpl<$Res>;
+  factory _$$GetFormsListImplCopyWith(
+    _$GetFormsListImpl value,
+    $Res Function(_$GetFormsListImpl) then,
+  ) = __$$GetFormsListImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool isRefresh});
 }
 
 /// @nodoc
-class __$$GetProductListImplCopyWithImpl<$Res>
-    extends _$HomeEventCopyWithImpl<$Res, _$GetProductListImpl>
-    implements _$$GetProductListImplCopyWith<$Res> {
-  __$$GetProductListImplCopyWithImpl(
-    _$GetProductListImpl _value,
-    $Res Function(_$GetProductListImpl) _then,
+class __$$GetFormsListImplCopyWithImpl<$Res>
+    extends _$HomeEventCopyWithImpl<$Res, _$GetFormsListImpl>
+    implements _$$GetFormsListImplCopyWith<$Res> {
+  __$$GetFormsListImplCopyWithImpl(
+    _$GetFormsListImpl _value,
+    $Res Function(_$GetFormsListImpl) _then,
   ) : super(_value, _then);
 
   /// Create a copy of HomeEvent
@@ -114,7 +114,7 @@ class __$$GetProductListImplCopyWithImpl<$Res>
   @override
   $Res call({Object? isRefresh = null}) {
     return _then(
-      _$GetProductListImpl(
+      _$GetFormsListImpl(
         null == isRefresh
             ? _value.isRefresh
             : isRefresh // ignore: cast_nullable_to_non_nullable
@@ -126,22 +126,22 @@ class __$$GetProductListImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$GetProductListImpl implements GetProductList {
-  const _$GetProductListImpl(this.isRefresh);
+class _$GetFormsListImpl implements GetFormsList {
+  const _$GetFormsListImpl(this.isRefresh);
 
   @override
   final bool isRefresh;
 
   @override
   String toString() {
-    return 'HomeEvent.getProductList(isRefresh: $isRefresh)';
+    return 'HomeEvent.getFormsList(isRefresh: $isRefresh)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$GetProductListImpl &&
+            other is _$GetFormsListImpl &&
             (identical(other.isRefresh, isRefresh) ||
                 other.isRefresh == isRefresh));
   }
@@ -154,36 +154,33 @@ class _$GetProductListImpl implements GetProductList {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$GetProductListImplCopyWith<_$GetProductListImpl> get copyWith =>
-      __$$GetProductListImplCopyWithImpl<_$GetProductListImpl>(
-        this,
-        _$identity,
-      );
+  _$$GetFormsListImplCopyWith<_$GetFormsListImpl> get copyWith =>
+      __$$GetFormsListImplCopyWithImpl<_$GetFormsListImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isRefresh) getProductList,
+    required TResult Function(bool isRefresh) getFormsList,
   }) {
-    return getProductList(isRefresh);
+    return getFormsList(isRefresh);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isRefresh)? getProductList,
+    TResult? Function(bool isRefresh)? getFormsList,
   }) {
-    return getProductList?.call(isRefresh);
+    return getFormsList?.call(isRefresh);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getProductList,
+    TResult Function(bool isRefresh)? getFormsList,
     required TResult orElse(),
   }) {
-    if (getProductList != null) {
-      return getProductList(isRefresh);
+    if (getFormsList != null) {
+      return getFormsList(isRefresh);
     }
     return orElse();
   }
@@ -191,34 +188,34 @@ class _$GetProductListImpl implements GetProductList {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(GetProductList value) getProductList,
+    required TResult Function(GetFormsList value) getFormsList,
   }) {
-    return getProductList(this);
+    return getFormsList(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(GetProductList value)? getProductList,
+    TResult? Function(GetFormsList value)? getFormsList,
   }) {
-    return getProductList?.call(this);
+    return getFormsList?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(GetProductList value)? getProductList,
+    TResult Function(GetFormsList value)? getFormsList,
     required TResult orElse(),
   }) {
-    if (getProductList != null) {
-      return getProductList(this);
+    if (getFormsList != null) {
+      return getFormsList(this);
     }
     return orElse();
   }
 }
 
-abstract class GetProductList implements HomeEvent {
-  const factory GetProductList(final bool isRefresh) = _$GetProductListImpl;
+abstract class GetFormsList implements HomeEvent {
+  const factory GetFormsList(final bool isRefresh) = _$GetFormsListImpl;
 
   @override
   bool get isRefresh;
@@ -227,13 +224,13 @@ abstract class GetProductList implements HomeEvent {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$GetProductListImplCopyWith<_$GetProductListImpl> get copyWith =>
+  _$$GetFormsListImplCopyWith<_$GetFormsListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 mixin _$HomeState {
-  List<HomeDTO> get productList => throw _privateConstructorUsedError;
+  List<HomeDTO> get formsList => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get isErrorInAPI => throw _privateConstructorUsedError;
@@ -252,7 +249,7 @@ abstract class $HomeStateCopyWith<$Res> {
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call({
-    List<HomeDTO> productList,
+    List<HomeDTO> formsList,
     bool isLoading,
     bool isSubmitting,
     bool isErrorInAPI,
@@ -275,7 +272,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productList = null,
+    Object? formsList = null,
     Object? isLoading = null,
     Object? isSubmitting = null,
     Object? isErrorInAPI = null,
@@ -283,9 +280,9 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   }) {
     return _then(
       _value.copyWith(
-            productList: null == productList
-                ? _value.productList
-                : productList // ignore: cast_nullable_to_non_nullable
+            formsList: null == formsList
+                ? _value.formsList
+                : formsList // ignore: cast_nullable_to_non_nullable
                       as List<HomeDTO>,
             isLoading: null == isLoading
                 ? _value.isLoading
@@ -319,7 +316,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    List<HomeDTO> productList,
+    List<HomeDTO> formsList,
     bool isLoading,
     bool isSubmitting,
     bool isErrorInAPI,
@@ -341,7 +338,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? productList = null,
+    Object? formsList = null,
     Object? isLoading = null,
     Object? isSubmitting = null,
     Object? isErrorInAPI = null,
@@ -349,9 +346,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$HomeStateImpl(
-        productList: null == productList
-            ? _value._productList
-            : productList // ignore: cast_nullable_to_non_nullable
+        formsList: null == formsList
+            ? _value._formsList
+            : formsList // ignore: cast_nullable_to_non_nullable
                   as List<HomeDTO>,
         isLoading: null == isLoading
             ? _value.isLoading
@@ -378,19 +375,19 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl implements _HomeState {
   _$HomeStateImpl({
-    required final List<HomeDTO> productList,
+    required final List<HomeDTO> formsList,
     required this.isLoading,
     required this.isSubmitting,
     required this.isErrorInAPI,
     required this.isNoDataFound,
-  }) : _productList = productList;
+  }) : _formsList = formsList;
 
-  final List<HomeDTO> _productList;
+  final List<HomeDTO> _formsList;
   @override
-  List<HomeDTO> get productList {
-    if (_productList is EqualUnmodifiableListView) return _productList;
+  List<HomeDTO> get formsList {
+    if (_formsList is EqualUnmodifiableListView) return _formsList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_productList);
+    return EqualUnmodifiableListView(_formsList);
   }
 
   @override
@@ -404,7 +401,7 @@ class _$HomeStateImpl implements _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(productList: $productList, isLoading: $isLoading, isSubmitting: $isSubmitting, isErrorInAPI: $isErrorInAPI, isNoDataFound: $isNoDataFound)';
+    return 'HomeState(formsList: $formsList, isLoading: $isLoading, isSubmitting: $isSubmitting, isErrorInAPI: $isErrorInAPI, isNoDataFound: $isNoDataFound)';
   }
 
   @override
@@ -413,8 +410,8 @@ class _$HomeStateImpl implements _HomeState {
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
             const DeepCollectionEquality().equals(
-              other._productList,
-              _productList,
+              other._formsList,
+              _formsList,
             ) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
@@ -429,7 +426,7 @@ class _$HomeStateImpl implements _HomeState {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    const DeepCollectionEquality().hash(_productList),
+    const DeepCollectionEquality().hash(_formsList),
     isLoading,
     isSubmitting,
     isErrorInAPI,
@@ -447,7 +444,7 @@ class _$HomeStateImpl implements _HomeState {
 
 abstract class _HomeState implements HomeState {
   factory _HomeState({
-    required final List<HomeDTO> productList,
+    required final List<HomeDTO> formsList,
     required final bool isLoading,
     required final bool isSubmitting,
     required final bool isErrorInAPI,
@@ -455,7 +452,7 @@ abstract class _HomeState implements HomeState {
   }) = _$HomeStateImpl;
 
   @override
-  List<HomeDTO> get productList;
+  List<HomeDTO> get formsList;
   @override
   bool get isLoading;
   @override

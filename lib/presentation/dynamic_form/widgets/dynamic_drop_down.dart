@@ -7,17 +7,17 @@ import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 
 class DynamicDropdown extends StatelessWidget {
+  final String keyName;
   final String label;
   final bool required;
   final List<String> options;
-  final String? initialValue;
 
   const DynamicDropdown({
     super.key,
+    required this.keyName,
     required this.label,
     required this.options,
     this.required = false,
-    this.initialValue,
   });
 
   @override
@@ -31,8 +31,7 @@ class DynamicDropdown extends StatelessWidget {
           BaseText(text: label, fontSize: 15, maxLines: 20),
           Gap(getSize(5)),
           FormBuilderDropdown(
-            name: label,
-            initialValue: initialValue,
+            name: keyName,
             borderRadius: BorderRadius.circular(5),
             isDense: true,
             decoration: InputDecoration(
@@ -41,6 +40,9 @@ class DynamicDropdown extends StatelessWidget {
                 borderSide: BorderSide(color: AppColors.black),
               ),
             ),
+            onChanged: (value) {
+              print("Sleetetete-----> $value");
+            },
             dropdownColor: AppColors.white,
             items: options
                 .map(

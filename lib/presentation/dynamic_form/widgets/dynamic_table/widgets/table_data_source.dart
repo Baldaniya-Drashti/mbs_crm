@@ -9,6 +9,7 @@ class TableDataSource extends DataGridSource {
   final List<TableColumnSchema> columns;
   final int rowCount;
   final String tableLabel;
+  final Map<String, String> cache;
 
   late List<DataGridRow> _rows;
   late final List<TableColumnSchema> flatColumns;
@@ -17,21 +18,24 @@ class TableDataSource extends DataGridSource {
     required this.columns,
     required this.rowCount,
     required this.tableLabel,
+    required this.cache,
   }) {
     flatColumns = columns
         .expand((c) => c.children.isNotEmpty ? c.children : [c])
         .toList();
 
-    _rows = List.generate(rowCount, (_) {
+    _rows = List.generate(rowCount, (rowIndex) {
       return DataGridRow(
-        cells: flatColumns
-            .map((c) => DataGridCell(columnName: c.label!, value: ""))
-            .toList(),
+        cells: flatColumns.map((c) {
+          final key = _fieldKey(rowIndex, c.key!);
+          return DataGridCell(columnName: c.key!, value: cache[key] ?? '');
+        }).toList(),
       );
     });
   }
 
-  final Map<String, TextEditingController> _controllers = {};
+  String _fieldKey(int row, String col) =>
+      'table_${tableLabel}_row_${row}_$col';
 
   @override
   List<DataGridRow> get rows => _rows;
@@ -43,45 +47,31 @@ class TableDataSource extends DataGridSource {
 
     return DataGridRowAdapter(
       cells: row.getCells().map((cell) {
-        final column = flatColumns.firstWhere(
-          (e) => e.label == cell.columnName,
-        );
+        final column = flatColumns.firstWhere((e) => e.key == cell.columnName);
 
         // DISPLAY = "single" → show only at center row
-        if (column.display == 'single') {
-          if (rowIndex != centerIndex) return const SizedBox.shrink();
+        if (column.display == 'single' && rowIndex != centerIndex) {
+          return const SizedBox.shrink();
         }
 
-        return _buildTextField(column.label ?? '', rowIndex, tableLabel);
-      }).toList(),
-    );
-  }
+        final fieldKey = _fieldKey(rowIndex, cell.columnName);
 
-  Widget _buildTextField(String columnKey, int rowIndex, String tableLabel) {
-    final fieldName = "table_${tableLabel}_row_${rowIndex}_$columnKey";
-
-    _controllers.putIfAbsent(fieldName, () => TextEditingController());
-
-    return Padding(
-      padding: EdgeInsets.all(getSize(4)),
-      child: FormBuilderTextField(
-        controller: _controllers[fieldName],
-        key: ValueKey(fieldName),
-        name: fieldName,
-        onChanged: (value) {
-          // optional (stays in sync)
-          if (value != null) {
-            _controllers[fieldName]?.text = value;
-          }
-        },
-        decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.primary),
+        // return _buildTextField(column.label ?? '', rowIndex, tableLabel);
+        return Padding(
+          padding: EdgeInsets.all(getSize(4)),
+          child: TextField(
+            key: ValueKey(fieldKey),
+            controller: TextEditingController(text: cache[fieldKey] ?? ''),
+            onChanged: (value) {
+              cache[fieldKey] = value;
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              isDense: true,
+            ),
           ),
-          isDense: true,
-        ),
-      ),
+        );
+      }).toList(),
     );
   }
 }

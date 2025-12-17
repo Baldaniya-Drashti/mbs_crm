@@ -21,6 +21,11 @@ class NetworkListener {
     _listenToNetworkChanges();
   }
 
+  Future<bool> isOnline() async {
+    final result = await Connectivity().checkConnectivity();
+    return result != [ConnectivityResult.none];
+  }
+
   void _listenToNetworkChanges() {
     Connectivity().onConnectivityChanged.listen((
       List<ConnectivityResult> results,

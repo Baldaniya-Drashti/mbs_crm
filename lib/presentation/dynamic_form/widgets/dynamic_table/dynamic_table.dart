@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_table/widgets/table_data_source.dart';
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class DynamicTable extends StatefulWidget {
+  final String keyName;
   final String label;
   final List<TableColumnSchema> columns;
   final int rows;
+  final Map<String, String> tableCache;
 
   const DynamicTable({
     super.key,
+    required this.keyName,
     required this.label,
     required this.columns,
     required this.rows,
+    required this.tableCache,
   });
 
   @override
@@ -29,16 +34,19 @@ class _DynamicTableState extends State<DynamicTable> {
     _dataSource = TableDataSource(
       columns: widget.columns,
       rowCount: widget.rows,
-      tableLabel: widget.label.replaceAll(" ", "_").toLowerCase(),
+      tableLabel: widget.keyName.replaceAll(" ", "_").toLowerCase(),
+      cache: widget.tableCache,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return SfDataGrid(
-      source: _dataSource,
+      // shrinkWrapColumns: true,
       // shrinkWrapRows: true,
-      verticalScrollPhysics: const NeverScrollableScrollPhysics(),
+      columnWidthMode: ColumnWidthMode.none,
+      showHorizontalScrollbar: false,
+      source: _dataSource,
       horizontalScrollPhysics: const BouncingScrollPhysics(),
       gridLinesVisibility: GridLinesVisibility.vertical,
       headerGridLinesVisibility: GridLinesVisibility.both,
@@ -52,18 +60,16 @@ class _DynamicTableState extends State<DynamicTable> {
   // -------------------------------
 
   List<StackedHeaderRow> _buildStackedHeaders() {
-    final cells = widget.columns.map((c) {
-      final List<String> columnNames = c.children.isNotEmpty
-          ? c.children.map((e) => e.label!).toList()
-          : [];
-
-      return StackedHeaderCell(
-        columnNames: columnNames,
-        child: Center(child: _header(c.label!)),
-      );
-    }).toList();
-
-    return [StackedHeaderRow(cells: cells)];
+    return [
+      StackedHeaderRow(
+        cells: widget.columns.map((c) {
+          return StackedHeaderCell(
+            columnNames: c.children.map((e) => e.key!).toList(),
+            child: Center(child: _header(c.label!)),
+          );
+        }).toList(),
+      ),
+    ];
   }
 
   // -------------------------------
@@ -72,11 +78,11 @@ class _DynamicTableState extends State<DynamicTable> {
   List<GridColumn> _buildGridColumns() {
     return widget.columns.expand((c) {
       if (c.children.isEmpty) {
-        return [GridColumn(columnName: c.label!, label: _header(c.label!))];
+        return [GridColumn(columnName: c.key!, label: _header(c.label!))];
       }
       return c.children.map(
         (child) =>
-            GridColumn(columnName: child.label!, label: _header(child.label!)),
+            GridColumn(columnName: child.key!, label: _header(child.label!)),
       );
     }).toList();
   }

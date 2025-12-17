@@ -7,6 +7,7 @@ part 'dynamic_form_dto.g.dart';
 class DynamicFormDTO with _$DynamicFormDTO {
   const factory DynamicFormDTO({
     int? id,
+    String? slug,
     String? title,
     List<FormSection>? sections,
   }) = _DynamicFormDTO;
@@ -25,14 +26,17 @@ class FormSection with _$FormSection {
 @freezed
 class FormFieldSchema with _$FormFieldSchema {
   const factory FormFieldSchema({
+    String? key,
     String? label,
+    int? maxLines,
     String? initialValue,
     String? type, // text, number, dropdown, signature, table, radio
     @Default(false) bool required,
     @Default(false) bool readOnly,
     List<String>? options,
-    int? rowCount, // dropdown
+    int? rowCount, // Table Row Count
     List<TableColumnSchema>? tablecolumn, // table columns
+    @Default(true) bool multipleImages,
   }) = _FormFieldSchema;
   factory FormFieldSchema.fromJson(Map<String, dynamic> json) =>
       _$FormFieldSchemaFromJson(json);
@@ -41,6 +45,7 @@ class FormFieldSchema with _$FormFieldSchema {
 @freezed
 class TableColumnSchema with _$TableColumnSchema {
   const factory TableColumnSchema({
+    String? key,
     String? label,
     String? type,
     String? display,

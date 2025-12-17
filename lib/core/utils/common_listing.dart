@@ -10,12 +10,12 @@ class CommonListing {
     FormDTO(
       id: 2,
       title: "Inspection Record For Ex'd' Equipment",
-      slug: "ex_i_equipment",
+      slug: "ex_d_equipment",
     ),
     FormDTO(
       id: 3,
       title: "Inspection Record For Ex'e' Equipment",
-      slug: "ex_i_equipment",
+      slug: "ex_e_equipment",
     ),
   ];
 }

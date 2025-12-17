@@ -10,7 +10,8 @@ class AppRouter extends RootStackRouter {
     required PageInfo page,
     List<AutoRoute>? children,
     bool initial = false,
-    final RouteTransitionsBuilder? transition = TransitionsBuilders.slideLeft,
+    final RouteTransitionsBuilder?
+    transition /* = TransitionsBuilders.slideLeft */,
     final int? duration = 200,
     final int? reverseDuration = 200,
   }) {

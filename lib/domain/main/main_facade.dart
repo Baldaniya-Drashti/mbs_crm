@@ -54,8 +54,6 @@ class MainFacade implements IMainFacade {
     );
     final json = jsonDecode(jsonString);
 
-    print("json Object -----> $json");
-
     return DynamicFormDTO.fromJson(json);
   }
 }

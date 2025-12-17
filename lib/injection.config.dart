@@ -19,6 +19,7 @@ import 'package:mbs_crm/application/home_bloc/home_bloc.dart' as _i1046;
 import 'package:mbs_crm/application/onboarding_bloc/onboarding_bloc.dart'
     as _i273;
 import 'package:mbs_crm/application/sign_in_bloc/sign_in_bloc.dart' as _i487;
+import 'package:mbs_crm/core/database/db_repository.dart' as _i873;
 import 'package:mbs_crm/core/network/api_service.dart' as _i641;
 import 'package:mbs_crm/domain/auth/auth_facade.dart' as _i520;
 import 'package:mbs_crm/domain/auth/i_auth_facade.dart' as _i774;
@@ -33,6 +34,7 @@ extension GetItInjectableX on _i174.GetIt {
   }) {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.factory<_i273.OnboardingBloc>(() => _i273.OnboardingBloc());
+    gh.lazySingleton<_i873.DBRepository>(() => _i873.DBRepository());
     gh.lazySingleton<_i641.ApiService>(() => _i641.ApiService());
     gh.lazySingleton<_i634.IMainFacade>(
       () => _i623.MainFacade(apiService: gh<_i641.ApiService>()),

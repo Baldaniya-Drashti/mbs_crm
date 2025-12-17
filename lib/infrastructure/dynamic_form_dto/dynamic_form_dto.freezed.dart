@@ -22,6 +22,7 @@ DynamicFormDTO _$DynamicFormDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$DynamicFormDTO {
   int? get id => throw _privateConstructorUsedError;
+  String? get slug => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   List<FormSection>? get sections => throw _privateConstructorUsedError;
 
@@ -42,7 +43,12 @@ abstract class $DynamicFormDTOCopyWith<$Res> {
     $Res Function(DynamicFormDTO) then,
   ) = _$DynamicFormDTOCopyWithImpl<$Res, DynamicFormDTO>;
   @useResult
-  $Res call({int? id, String? title, List<FormSection>? sections});
+  $Res call({
+    int? id,
+    String? slug,
+    String? title,
+    List<FormSection>? sections,
+  });
 }
 
 /// @nodoc
@@ -61,6 +67,7 @@ class _$DynamicFormDTOCopyWithImpl<$Res, $Val extends DynamicFormDTO>
   @override
   $Res call({
     Object? id = freezed,
+    Object? slug = freezed,
     Object? title = freezed,
     Object? sections = freezed,
   }) {
@@ -70,6 +77,10 @@ class _$DynamicFormDTOCopyWithImpl<$Res, $Val extends DynamicFormDTO>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as int?,
+            slug: freezed == slug
+                ? _value.slug
+                : slug // ignore: cast_nullable_to_non_nullable
+                      as String?,
             title: freezed == title
                 ? _value.title
                 : title // ignore: cast_nullable_to_non_nullable
@@ -93,7 +104,12 @@ abstract class _$$DynamicFormDTOImplCopyWith<$Res>
   ) = __$$DynamicFormDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int? id, String? title, List<FormSection>? sections});
+  $Res call({
+    int? id,
+    String? slug,
+    String? title,
+    List<FormSection>? sections,
+  });
 }
 
 /// @nodoc
@@ -111,6 +127,7 @@ class __$$DynamicFormDTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
+    Object? slug = freezed,
     Object? title = freezed,
     Object? sections = freezed,
   }) {
@@ -120,6 +137,10 @@ class __$$DynamicFormDTOImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int?,
+        slug: freezed == slug
+            ? _value.slug
+            : slug // ignore: cast_nullable_to_non_nullable
+                  as String?,
         title: freezed == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
@@ -138,6 +159,7 @@ class __$$DynamicFormDTOImplCopyWithImpl<$Res>
 class _$DynamicFormDTOImpl implements _DynamicFormDTO {
   const _$DynamicFormDTOImpl({
     this.id,
+    this.slug,
     this.title,
     final List<FormSection>? sections,
   }) : _sections = sections;
@@ -147,6 +169,8 @@ class _$DynamicFormDTOImpl implements _DynamicFormDTO {
 
   @override
   final int? id;
+  @override
+  final String? slug;
   @override
   final String? title;
   final List<FormSection>? _sections;
@@ -161,7 +185,7 @@ class _$DynamicFormDTOImpl implements _DynamicFormDTO {
 
   @override
   String toString() {
-    return 'DynamicFormDTO(id: $id, title: $title, sections: $sections)';
+    return 'DynamicFormDTO(id: $id, slug: $slug, title: $title, sections: $sections)';
   }
 
   @override
@@ -170,6 +194,7 @@ class _$DynamicFormDTOImpl implements _DynamicFormDTO {
         (other.runtimeType == runtimeType &&
             other is _$DynamicFormDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(other._sections, _sections));
   }
@@ -179,6 +204,7 @@ class _$DynamicFormDTOImpl implements _DynamicFormDTO {
   int get hashCode => Object.hash(
     runtimeType,
     id,
+    slug,
     title,
     const DeepCollectionEquality().hash(_sections),
   );
@@ -203,6 +229,7 @@ class _$DynamicFormDTOImpl implements _DynamicFormDTO {
 abstract class _DynamicFormDTO implements DynamicFormDTO {
   const factory _DynamicFormDTO({
     final int? id,
+    final String? slug,
     final String? title,
     final List<FormSection>? sections,
   }) = _$DynamicFormDTOImpl;
@@ -212,6 +239,8 @@ abstract class _DynamicFormDTO implements DynamicFormDTO {
 
   @override
   int? get id;
+  @override
+  String? get slug;
   @override
   String? get title;
   @override
@@ -411,16 +440,19 @@ FormFieldSchema _$FormFieldSchemaFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$FormFieldSchema {
+  String? get key => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
+  int? get maxLines => throw _privateConstructorUsedError;
   String? get initialValue => throw _privateConstructorUsedError;
   String? get type =>
       throw _privateConstructorUsedError; // text, number, dropdown, signature, table, radio
   bool get required => throw _privateConstructorUsedError;
   bool get readOnly => throw _privateConstructorUsedError;
   List<String>? get options => throw _privateConstructorUsedError;
-  int? get rowCount => throw _privateConstructorUsedError; // dropdown
+  int? get rowCount => throw _privateConstructorUsedError; // Table Row Count
   List<TableColumnSchema>? get tablecolumn =>
-      throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError; // table columns
+  bool get multipleImages => throw _privateConstructorUsedError;
 
   /// Serializes this FormFieldSchema to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -440,7 +472,9 @@ abstract class $FormFieldSchemaCopyWith<$Res> {
   ) = _$FormFieldSchemaCopyWithImpl<$Res, FormFieldSchema>;
   @useResult
   $Res call({
+    String? key,
     String? label,
+    int? maxLines,
     String? initialValue,
     String? type,
     bool required,
@@ -448,6 +482,7 @@ abstract class $FormFieldSchemaCopyWith<$Res> {
     List<String>? options,
     int? rowCount,
     List<TableColumnSchema>? tablecolumn,
+    bool multipleImages,
   });
 }
 
@@ -466,7 +501,9 @@ class _$FormFieldSchemaCopyWithImpl<$Res, $Val extends FormFieldSchema>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? label = freezed,
+    Object? maxLines = freezed,
     Object? initialValue = freezed,
     Object? type = freezed,
     Object? required = null,
@@ -474,13 +511,22 @@ class _$FormFieldSchemaCopyWithImpl<$Res, $Val extends FormFieldSchema>
     Object? options = freezed,
     Object? rowCount = freezed,
     Object? tablecolumn = freezed,
+    Object? multipleImages = null,
   }) {
     return _then(
       _value.copyWith(
+            key: freezed == key
+                ? _value.key
+                : key // ignore: cast_nullable_to_non_nullable
+                      as String?,
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
                       as String?,
+            maxLines: freezed == maxLines
+                ? _value.maxLines
+                : maxLines // ignore: cast_nullable_to_non_nullable
+                      as int?,
             initialValue: freezed == initialValue
                 ? _value.initialValue
                 : initialValue // ignore: cast_nullable_to_non_nullable
@@ -509,6 +555,10 @@ class _$FormFieldSchemaCopyWithImpl<$Res, $Val extends FormFieldSchema>
                 ? _value.tablecolumn
                 : tablecolumn // ignore: cast_nullable_to_non_nullable
                       as List<TableColumnSchema>?,
+            multipleImages: null == multipleImages
+                ? _value.multipleImages
+                : multipleImages // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -525,7 +575,9 @@ abstract class _$$FormFieldSchemaImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
+    String? key,
     String? label,
+    int? maxLines,
     String? initialValue,
     String? type,
     bool required,
@@ -533,6 +585,7 @@ abstract class _$$FormFieldSchemaImplCopyWith<$Res>
     List<String>? options,
     int? rowCount,
     List<TableColumnSchema>? tablecolumn,
+    bool multipleImages,
   });
 }
 
@@ -550,7 +603,9 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? label = freezed,
+    Object? maxLines = freezed,
     Object? initialValue = freezed,
     Object? type = freezed,
     Object? required = null,
@@ -558,13 +613,22 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
     Object? options = freezed,
     Object? rowCount = freezed,
     Object? tablecolumn = freezed,
+    Object? multipleImages = null,
   }) {
     return _then(
       _$FormFieldSchemaImpl(
+        key: freezed == key
+            ? _value.key
+            : key // ignore: cast_nullable_to_non_nullable
+                  as String?,
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
                   as String?,
+        maxLines: freezed == maxLines
+            ? _value.maxLines
+            : maxLines // ignore: cast_nullable_to_non_nullable
+                  as int?,
         initialValue: freezed == initialValue
             ? _value.initialValue
             : initialValue // ignore: cast_nullable_to_non_nullable
@@ -593,6 +657,10 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
             ? _value._tablecolumn
             : tablecolumn // ignore: cast_nullable_to_non_nullable
                   as List<TableColumnSchema>?,
+        multipleImages: null == multipleImages
+            ? _value.multipleImages
+            : multipleImages // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -602,7 +670,9 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$FormFieldSchemaImpl implements _FormFieldSchema {
   const _$FormFieldSchemaImpl({
+    this.key,
     this.label,
+    this.maxLines,
     this.initialValue,
     this.type,
     this.required = false,
@@ -610,6 +680,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
     final List<String>? options,
     this.rowCount,
     final List<TableColumnSchema>? tablecolumn,
+    this.multipleImages = true,
   }) : _options = options,
        _tablecolumn = tablecolumn;
 
@@ -617,7 +688,11 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
       _$$FormFieldSchemaImplFromJson(json);
 
   @override
+  final String? key;
+  @override
   final String? label;
+  @override
+  final int? maxLines;
   @override
   final String? initialValue;
   @override
@@ -641,9 +716,9 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
 
   @override
   final int? rowCount;
-  // dropdown
+  // Table Row Count
   final List<TableColumnSchema>? _tablecolumn;
-  // dropdown
+  // Table Row Count
   @override
   List<TableColumnSchema>? get tablecolumn {
     final value = _tablecolumn;
@@ -653,9 +728,14 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
     return EqualUnmodifiableListView(value);
   }
 
+  // table columns
+  @override
+  @JsonKey()
+  final bool multipleImages;
+
   @override
   String toString() {
-    return 'FormFieldSchema(label: $label, initialValue: $initialValue, type: $type, required: $required, readOnly: $readOnly, options: $options, rowCount: $rowCount, tablecolumn: $tablecolumn)';
+    return 'FormFieldSchema(key: $key, label: $label, maxLines: $maxLines, initialValue: $initialValue, type: $type, required: $required, readOnly: $readOnly, options: $options, rowCount: $rowCount, tablecolumn: $tablecolumn, multipleImages: $multipleImages)';
   }
 
   @override
@@ -663,7 +743,10 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FormFieldSchemaImpl &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.label, label) || other.label == label) &&
+            (identical(other.maxLines, maxLines) ||
+                other.maxLines == maxLines) &&
             (identical(other.initialValue, initialValue) ||
                 other.initialValue == initialValue) &&
             (identical(other.type, type) || other.type == type) &&
@@ -677,14 +760,18 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
             const DeepCollectionEquality().equals(
               other._tablecolumn,
               _tablecolumn,
-            ));
+            ) &&
+            (identical(other.multipleImages, multipleImages) ||
+                other.multipleImages == multipleImages));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    key,
     label,
+    maxLines,
     initialValue,
     type,
     required,
@@ -692,6 +779,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
     const DeepCollectionEquality().hash(_options),
     rowCount,
     const DeepCollectionEquality().hash(_tablecolumn),
+    multipleImages,
   );
 
   /// Create a copy of FormFieldSchema
@@ -713,7 +801,9 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
 
 abstract class _FormFieldSchema implements FormFieldSchema {
   const factory _FormFieldSchema({
+    final String? key,
     final String? label,
+    final int? maxLines,
     final String? initialValue,
     final String? type,
     final bool required,
@@ -721,13 +811,18 @@ abstract class _FormFieldSchema implements FormFieldSchema {
     final List<String>? options,
     final int? rowCount,
     final List<TableColumnSchema>? tablecolumn,
+    final bool multipleImages,
   }) = _$FormFieldSchemaImpl;
 
   factory _FormFieldSchema.fromJson(Map<String, dynamic> json) =
       _$FormFieldSchemaImpl.fromJson;
 
   @override
+  String? get key;
+  @override
   String? get label;
+  @override
+  int? get maxLines;
   @override
   String? get initialValue;
   @override
@@ -739,9 +834,11 @@ abstract class _FormFieldSchema implements FormFieldSchema {
   @override
   List<String>? get options;
   @override
-  int? get rowCount; // dropdown
+  int? get rowCount; // Table Row Count
   @override
-  List<TableColumnSchema>? get tablecolumn;
+  List<TableColumnSchema>? get tablecolumn; // table columns
+  @override
+  bool get multipleImages;
 
   /// Create a copy of FormFieldSchema
   /// with the given fields replaced by the non-null parameter values.
@@ -757,6 +854,7 @@ TableColumnSchema _$TableColumnSchemaFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$TableColumnSchema {
+  String? get key => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get display => throw _privateConstructorUsedError;
@@ -780,6 +878,7 @@ abstract class $TableColumnSchemaCopyWith<$Res> {
   ) = _$TableColumnSchemaCopyWithImpl<$Res, TableColumnSchema>;
   @useResult
   $Res call({
+    String? key,
     String? label,
     String? type,
     String? display,
@@ -802,6 +901,7 @@ class _$TableColumnSchemaCopyWithImpl<$Res, $Val extends TableColumnSchema>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? label = freezed,
     Object? type = freezed,
     Object? display = freezed,
@@ -809,6 +909,10 @@ class _$TableColumnSchemaCopyWithImpl<$Res, $Val extends TableColumnSchema>
   }) {
     return _then(
       _value.copyWith(
+            key: freezed == key
+                ? _value.key
+                : key // ignore: cast_nullable_to_non_nullable
+                      as String?,
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
@@ -841,6 +945,7 @@ abstract class _$$TableColumnSchemaImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
+    String? key,
     String? label,
     String? type,
     String? display,
@@ -862,6 +967,7 @@ class __$$TableColumnSchemaImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? key = freezed,
     Object? label = freezed,
     Object? type = freezed,
     Object? display = freezed,
@@ -869,6 +975,10 @@ class __$$TableColumnSchemaImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$TableColumnSchemaImpl(
+        key: freezed == key
+            ? _value.key
+            : key // ignore: cast_nullable_to_non_nullable
+                  as String?,
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
@@ -894,6 +1004,7 @@ class __$$TableColumnSchemaImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$TableColumnSchemaImpl implements _TableColumnSchema {
   const _$TableColumnSchemaImpl({
+    this.key,
     this.label,
     this.type,
     this.display,
@@ -903,6 +1014,8 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
   factory _$TableColumnSchemaImpl.fromJson(Map<String, dynamic> json) =>
       _$$TableColumnSchemaImplFromJson(json);
 
+  @override
+  final String? key;
   @override
   final String? label;
   @override
@@ -920,7 +1033,7 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
 
   @override
   String toString() {
-    return 'TableColumnSchema(label: $label, type: $type, display: $display, children: $children)';
+    return 'TableColumnSchema(key: $key, label: $label, type: $type, display: $display, children: $children)';
   }
 
   @override
@@ -928,6 +1041,7 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$TableColumnSchemaImpl &&
+            (identical(other.key, key) || other.key == key) &&
             (identical(other.label, label) || other.label == label) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.display, display) || other.display == display) &&
@@ -938,6 +1052,7 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    key,
     label,
     type,
     display,
@@ -963,6 +1078,7 @@ class _$TableColumnSchemaImpl implements _TableColumnSchema {
 
 abstract class _TableColumnSchema implements TableColumnSchema {
   const factory _TableColumnSchema({
+    final String? key,
     final String? label,
     final String? type,
     final String? display,
@@ -972,6 +1088,8 @@ abstract class _TableColumnSchema implements TableColumnSchema {
   factory _TableColumnSchema.fromJson(Map<String, dynamic> json) =
       _$TableColumnSchemaImpl.fromJson;
 
+  @override
+  String? get key;
   @override
   String? get label;
   @override

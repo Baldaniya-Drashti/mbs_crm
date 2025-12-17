@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_attachment_field.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_drop_down.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_radio.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_signature.dart';
@@ -7,54 +10,50 @@ import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_table/dynamic_
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_text_field.dart';
 
 class BuildFields {
-  static Widget buildField(FormFieldSchema field) {
+  static Widget buildField(BuildContext context, FormFieldSchema field) {
+    print("Context --> $context");
     // Default Values (Requirement #3)
 
     switch (field.type) {
       case "number":
         return DynamicTextField(
-          label: field.label ?? '',
-          required: field.required,
-          readOnly: field.readOnly,
+          field: field,
           keyboardType: TextInputType.number,
-          initialValue: field.initialValue,
         );
-
       case "dropdown":
         return DynamicDropdown(
+          keyName: field.key ?? '',
           label: field.label ?? '',
+
           required: field.required,
           options: field.options ?? [],
-          initialValue: field.initialValue,
         );
-
       case "radio":
         return DynamicRadio(
+          keyName: field.key ?? '',
           label: field.label ?? '',
           required: field.required,
           options: field.options ?? [],
         );
-
       case "signature":
         return DynamicSignature(
+          keyName: field.key ?? '',
           label: field.label ?? '',
           required: field.required,
         );
-
       case "table":
         return DynamicTable(
+          keyName: field.key ?? '',
           label: field.label ?? '',
-          // required: field.required,
           columns: field.tablecolumn ?? [],
           rows: field.rowCount ?? 1,
+          tableCache: context.read<DynamicFormBloc>().tableCache,
         );
+      case "attachment":
+        return DynamicAttachmentField(field: field);
 
       default:
-        return DynamicTextField(
-          label: field.label ?? '',
-          required: field.required,
-          readOnly: field.readOnly,
-        );
+        return DynamicTextField(field: field);
     }
   }
 }
