@@ -88,7 +88,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 return e;
               }).toList();
 
-              print("Get From Local DB isuue--> ${localForms}");
+              print("Get From Local DB--> $localForms");
 
               emit(
                 state.copyWith(

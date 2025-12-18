@@ -9,6 +9,7 @@ class DynamicFormState with _$DynamicFormState {
     @Default(false) bool isLoading,
     @Default(false) bool isSubmitting,
     @Default(false) bool success,
+    @Default(0) int rebuildTick,
     String? errorMessage,
     @Default({}) Map<String, List<AttachmentFileDTO>> attachmentCache,
 

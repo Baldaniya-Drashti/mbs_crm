@@ -43,6 +43,7 @@ class StringConstant {
   static const String editForm = 'Edit Form';
   static const String update = 'Update';
   static const String addFiles = 'Add Files';
+  static const String reason = 'Reason';
   static const String noDataFound = 'No Data Found';
 
   /// ------------- Validator ------------- ///

@@ -261,6 +261,7 @@ FormSection _$FormSectionFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$FormSection {
   String? get title => throw _privateConstructorUsedError;
+  String? get key => throw _privateConstructorUsedError;
   List<FormFieldSchema>? get fields => throw _privateConstructorUsedError;
 
   /// Serializes this FormSection to a JSON map.
@@ -280,7 +281,7 @@ abstract class $FormSectionCopyWith<$Res> {
     $Res Function(FormSection) then,
   ) = _$FormSectionCopyWithImpl<$Res, FormSection>;
   @useResult
-  $Res call({String? title, List<FormFieldSchema>? fields});
+  $Res call({String? title, String? key, List<FormFieldSchema>? fields});
 }
 
 /// @nodoc
@@ -297,12 +298,20 @@ class _$FormSectionCopyWithImpl<$Res, $Val extends FormSection>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? title = freezed, Object? fields = freezed}) {
+  $Res call({
+    Object? title = freezed,
+    Object? key = freezed,
+    Object? fields = freezed,
+  }) {
     return _then(
       _value.copyWith(
             title: freezed == title
                 ? _value.title
                 : title // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            key: freezed == key
+                ? _value.key
+                : key // ignore: cast_nullable_to_non_nullable
                       as String?,
             fields: freezed == fields
                 ? _value.fields
@@ -323,7 +332,7 @@ abstract class _$$FormSectionImplCopyWith<$Res>
   ) = __$$FormSectionImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? title, List<FormFieldSchema>? fields});
+  $Res call({String? title, String? key, List<FormFieldSchema>? fields});
 }
 
 /// @nodoc
@@ -339,12 +348,20 @@ class __$$FormSectionImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? title = freezed, Object? fields = freezed}) {
+  $Res call({
+    Object? title = freezed,
+    Object? key = freezed,
+    Object? fields = freezed,
+  }) {
     return _then(
       _$FormSectionImpl(
         title: freezed == title
             ? _value.title
             : title // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        key: freezed == key
+            ? _value.key
+            : key // ignore: cast_nullable_to_non_nullable
                   as String?,
         fields: freezed == fields
             ? _value._fields
@@ -358,14 +375,19 @@ class __$$FormSectionImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$FormSectionImpl implements _FormSection {
-  const _$FormSectionImpl({this.title, final List<FormFieldSchema>? fields})
-    : _fields = fields;
+  const _$FormSectionImpl({
+    this.title,
+    this.key,
+    final List<FormFieldSchema>? fields,
+  }) : _fields = fields;
 
   factory _$FormSectionImpl.fromJson(Map<String, dynamic> json) =>
       _$$FormSectionImplFromJson(json);
 
   @override
   final String? title;
+  @override
+  final String? key;
   final List<FormFieldSchema>? _fields;
   @override
   List<FormFieldSchema>? get fields {
@@ -378,7 +400,7 @@ class _$FormSectionImpl implements _FormSection {
 
   @override
   String toString() {
-    return 'FormSection(title: $title, fields: $fields)';
+    return 'FormSection(title: $title, key: $key, fields: $fields)';
   }
 
   @override
@@ -387,6 +409,7 @@ class _$FormSectionImpl implements _FormSection {
         (other.runtimeType == runtimeType &&
             other is _$FormSectionImpl &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.key, key) || other.key == key) &&
             const DeepCollectionEquality().equals(other._fields, _fields));
   }
 
@@ -395,6 +418,7 @@ class _$FormSectionImpl implements _FormSection {
   int get hashCode => Object.hash(
     runtimeType,
     title,
+    key,
     const DeepCollectionEquality().hash(_fields),
   );
 
@@ -415,6 +439,7 @@ class _$FormSectionImpl implements _FormSection {
 abstract class _FormSection implements FormSection {
   const factory _FormSection({
     final String? title,
+    final String? key,
     final List<FormFieldSchema>? fields,
   }) = _$FormSectionImpl;
 
@@ -423,6 +448,8 @@ abstract class _FormSection implements FormSection {
 
   @override
   String? get title;
+  @override
+  String? get key;
   @override
   List<FormFieldSchema>? get fields;
 

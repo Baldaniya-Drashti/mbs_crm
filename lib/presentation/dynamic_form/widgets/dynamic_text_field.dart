@@ -48,7 +48,7 @@ class DynamicTextField extends StatelessWidget {
                   // initialValue: initialValue,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.primary),
+                      borderSide: BorderSide(color: AppColors.black),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),
@@ -78,7 +78,7 @@ class DynamicTextField extends StatelessWidget {
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: AppColors.primary),
+                      borderSide: BorderSide(color: AppColors.black),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.primary),

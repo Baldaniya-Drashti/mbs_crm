@@ -5,6 +5,7 @@
     "sections": [
         {
             "title": "Project Information",
+            "key": "project_information",
             "fields": [
                 {
                     "label": "Client",
@@ -23,6 +24,7 @@
         },
         {
             "title": "Instrument Details",
+            "key": "instrument_details",
             "fields": [
                 {
                     "label": "Instrument Table",
@@ -114,6 +116,7 @@
         },
         {
             "title": "Inspection Grade",
+            "key": "inspection_grade",
             "fields": [
                 {
                     "label": "",
@@ -130,6 +133,7 @@
         },
         {
             "title": "Equipment",
+            "key": "equipment",
             "fields": [
                 {
                     "label": "1 - V, C, D Circuit and / or equipment documentation is appropriate to the EPL / Zone requirements of the location",
@@ -305,6 +309,7 @@
         },
         {
             "title": "Installation",
+            "key": "installation",
             "fields": [
                 {
                     "label": "1 - D Cables are installed in accordance with documentation",
@@ -440,6 +445,7 @@
         },
         {
             "title": "Environment",
+            "key": "environment",
             "fields": [
                 {
                     "label": "1 - V, C, D Apparatus is adequately protected from corrosion, weather, vibration and other adverse conditions",
@@ -465,6 +471,7 @@
         },
         {
             "title": "Inspected By",
+            "key": "inspected_by",
             "fields": [
                 {
                     "label": "Calibration Due Date",
@@ -496,6 +503,7 @@
         },
         {
             "title": "Attachments",
+            "key": "attachments",
             "fields": [
                 {
                     "label": "Upload Inspection Photos / Documents",

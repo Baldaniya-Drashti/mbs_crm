@@ -28,13 +28,18 @@ Map<String, dynamic> _$$DynamicFormDTOImplToJson(
 _$FormSectionImpl _$$FormSectionImplFromJson(Map<String, dynamic> json) =>
     _$FormSectionImpl(
       title: json['title'] as String?,
+      key: json['key'] as String?,
       fields: (json['fields'] as List<dynamic>?)
           ?.map((e) => FormFieldSchema.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$$FormSectionImplToJson(_$FormSectionImpl instance) =>
-    <String, dynamic>{'title': instance.title, 'fields': instance.fields};
+    <String, dynamic>{
+      'title': instance.title,
+      'key': instance.key,
+      'fields': instance.fields,
+    };
 
 _$FormFieldSchemaImpl _$$FormFieldSchemaImplFromJson(
   Map<String, dynamic> json,

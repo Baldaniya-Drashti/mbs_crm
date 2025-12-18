@@ -16,6 +16,7 @@ import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/core/widgets/utility/normalization_utilities.dart';
+import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
 import 'package:uuid/uuid.dart';
 
 part 'dynamic_form_event.dart';
@@ -29,7 +30,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
   final currentContext = getIt<AppRouter>().navigatorKey.currentContext!;
   final Map<String, String> tableCache = {};
-  // final Map<String, List<AttachmentFileDTO>> attachmentCache = {};
 
   DynamicFormBloc(this.mainFacade) : super(DynamicFormState.initial()) {
     on<DynamicFormEvent>((event, emit) async {
@@ -49,39 +49,115 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             print("Catch Error---> $e");
           }
         },
+
         getFormDetails: (e) async {
           try {
             final form = await DBRepository().getFormById(e.id);
+
             final rawData = Map<String, dynamic>.from(form?.data ?? {});
+            debugPrint(
+              'Edit restored OK---> ${jsonEncode(form)}',
+              wrapWidth: 5000,
+            );
 
-            /// ------- RESTORE TABLE DATA ---------- ///
-            final expanded = expandTableValues(rawData);
+            final Map<String, dynamic> flatData = {};
+            final Map<String, List<AttachmentFileDTO>> restoredAttachments = {};
 
-            tableCache.clear();
-            expanded.forEach((k, v) {
-              if (k.startsWith('table_')) {
-                tableCache[k] = v?.toString() ?? '';
+            /// ---------- LOOP SECTIONS ----------
+            rawData.forEach((sectionKey, sectionValue) {
+              if (sectionValue is! Map<String, dynamic>) return;
+
+              /// ---------- TABLES ----------
+              if (sectionValue.containsKey('tables')) {
+                final tables = sectionValue['tables'] as Map<String, dynamic>;
+
+                tables.forEach((tableName, rows) {
+                  final rowMap = rows as Map<String, dynamic>;
+
+                  rowMap.forEach((rowIndex, columns) {
+                    final colMap = columns as Map<String, dynamic>;
+
+                    colMap.forEach((colKey, value) {
+                      final fieldKey =
+                          'table_${tableName}_row_${rowIndex}_$colKey';
+                      flatData[fieldKey] = value;
+                      tableCache[fieldKey] = value?.toString() ?? '';
+                    });
+                  });
+                });
               }
+
+              /// ---------- NORMAL / DROPDOWN ----------
+              sectionValue.forEach((fieldKey, fieldValue) {
+                if (fieldKey == 'tables') return;
+
+                /// ---- DROPDOWN OBJECT ----
+                if (fieldValue is Map<String, dynamic> &&
+                    fieldValue.containsKey('answer')) {
+                  final answer = fieldValue['answer'];
+
+                  final fieldSchema = state.schema?.sections
+                      ?.expand((s) => s.fields ?? [])
+                      .firstWhere(
+                        (f) => f.key == fieldKey,
+                        orElse: () => FormFieldSchema(key: fieldKey),
+                      );
+
+                  flatData[fieldKey] = normalizeFromJson(
+                    DynamicFormHelper.answerToValue(answer),
+                    fieldSchema,
+                  );
+
+                  /// ---- REASON ----
+                  if (fieldValue['reason'] != null) {
+                    flatData['${fieldKey}_reason'] = fieldValue['reason'];
+                  }
+
+                  /// ---- DROPDOWN ATTACHMENTS ----
+                  if (fieldValue['attachments'] is List) {
+                    restoredAttachments['${fieldKey}_attachments'] =
+                        (fieldValue['attachments'] as List)
+                            .map((e) => AttachmentFileDTO.fromJson(e))
+                            .toList();
+                  }
+                }
+                /// ---- NORMAL FIELD ----
+                else {
+                  final fieldSchema = state.schema?.sections
+                      ?.expand((s) => s.fields ?? [])
+                      .firstWhere(
+                        (f) => f.key == fieldKey,
+                        orElse: () => FormFieldSchema(key: fieldKey),
+                      );
+
+                  flatData[fieldKey] = normalizeFromJson(
+                    fieldValue,
+                    fieldSchema,
+                  );
+                }
+              });
             });
 
-            /// ------- RESTORE ATTACHMENT DATA --------- ///
-            final attachments = rawData['attachments'] as Map<String, dynamic>?;
+            /// ---------- GLOBAL ATTACHMENTS ----------
+            final attachments = rawData['attachments'];
 
-            Map<String, List<AttachmentFileDTO>> restoredAttachments = {};
-
-            if (attachments != null) {
+            if (attachments is List) {
+              restoredAttachments['attachments'] = attachments
+                  .map((e) => AttachmentFileDTO.fromJson(e))
+                  .toList();
+            } else if (attachments is Map<String, dynamic>) {
               attachments.forEach((key, list) {
-                restoredAttachments[key] = (list as List)
-                    .map((e) => AttachmentFileDTO.fromJson(e))
-                    .toList();
+                if (list is List) {
+                  restoredAttachments[key] = list
+                      .map((e) => AttachmentFileDTO.fromJson(e))
+                      .toList();
+                }
               });
             }
 
-            /// ------- Restore NORMAL FIELDS --------- ///
-            final normalizedData = normalizeFormData(expanded, state.schema!);
-
+            /// ---------- PATCH FORM ----------
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              formKey.currentState?.patchValue(normalizedData);
+              formKey.currentState?.patchValue(flatData);
             });
 
             emit(
@@ -90,12 +166,35 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                 attachmentCache: restoredAttachments,
               ),
             );
-            print("getFormDetails---> ${form?.data?['tables']}");
           } catch (e) {
-            print("Error --Get Valye ---> $e");
+            debugPrint("Error -- getFormDetails ---> $e");
           }
         },
 
+        onDropDownChanged: (e) {
+          final formState = formKey.currentState;
+          if (formState == null) return;
+
+          if (e.value != "No") {
+            formState.fields['${e.fieldKey}_reason']?.didChange(null);
+
+            final updatedAttachments =
+                Map<String, List<AttachmentFileDTO>>.from(
+                  state.attachmentCache,
+                );
+
+            updatedAttachments.remove('${e.fieldKey}_attachments');
+
+            emit(
+              state.copyWith(
+                attachmentCache: updatedAttachments,
+                rebuildTick: state.rebuildTick + 1,
+              ),
+            );
+          } else {
+            emit(state.copyWith(rebuildTick: state.rebuildTick + 1));
+          }
+        },
         attachFileEvent: (e) async {
           final result = await FilePicker.platform.pickFiles(
             allowMultiple: e.field.multipleImages,
@@ -140,9 +239,11 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             ),
           );
         },
+
         submitForm: (e) async {
           emit(state.copyWith(isSubmitting: true, success: false));
           final data = Map<String, dynamic>.from(e.values);
+
           data.addAll(tableCache);
 
           try {
@@ -163,16 +264,83 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             });
 
             data.removeWhere((key, value) => key.startsWith("table_"));
-            data["tables"] = tables;
 
-            /// ------- ATTACHMENTS → JSON --------
-            if (state.attachmentCache.isNotEmpty) {
-              data["attachments"] = state.attachmentCache.map(
-                (key, files) =>
-                    MapEntry(key, files.map((f) => f.toJson()).toList()),
+            /// -------- NEW PAYLOAD ----------
+            final Map<String, dynamic> payload = {};
+            for (FormSection section in state.schema?.sections ?? []) {
+              final sectionKey = (section.title ?? '').toLowerCase().replaceAll(
+                ' ',
+                '_',
               );
+
+              final Map<String, dynamic> sectionData = {};
+
+              for (FormFieldSchema field in section.fields ?? []) {
+                final key = field.key;
+                if (key == null) continue;
+
+                /// -------- TABLE (FIXED) ----------
+                if (field.type == 'table') {
+                  if (tables.isNotEmpty) {
+                    sectionData['tables'] = tables;
+                  }
+                  continue;
+                }
+
+                /// For non-table fields, ensure value exists
+                if (!data.containsKey(key)) continue;
+
+                /// -------- DROPDOWN ----------
+                if (field.type == 'dropdown') {
+                  final answer = DynamicFormHelper.mapAnswer(data[key]);
+                  if (answer == null) continue;
+
+                  final fieldObj = <String, dynamic>{'answer': answer};
+
+                  if (answer == 2) {
+                    final reason = data['${key}_reason'];
+                    if (reason != null && reason.toString().isNotEmpty) {
+                      fieldObj['reason'] = reason;
+                    }
+
+                    final files = state.attachmentCache['${key}_attachments'];
+                    if (files != null && files.isNotEmpty) {
+                      fieldObj['attachments'] = files
+                          .map((e) => e.toJson())
+                          .toList();
+                    }
+                  }
+
+                  sectionData[key] = fieldObj;
+                  continue;
+                }
+
+                /// -------- NORMAL FIELD ----------
+                sectionData[key] = data[key];
+              }
+
+              if (sectionData.isNotEmpty) {
+                payload[sectionKey] = sectionData;
+              }
             }
-            final cleaned = removeNulls(prepareForJson(data));
+
+            /// -------- GLOBAL ATTACHMENTS (RESTORED) ----------
+            final List<Map<String, dynamic>> globalFiles = [];
+
+            state.attachmentCache.forEach((key, files) {
+              // skip dropdown attachments
+              if (key.endsWith('_attachments')) return;
+
+              for (final file in files) {
+                globalFiles.add(file.toJson());
+              }
+            });
+
+            if (globalFiles.isNotEmpty) {
+              payload['attachments'] = globalFiles;
+            }
+
+            final cleaned = removeNulls(prepareForJson(payload));
 
             final form = HomeDTO(
               id: state.updateFormId,
@@ -191,16 +359,12 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               await DBRepository().updateFormOffline(form: form);
             }
 
-            debugPrint(
-              "Sending Data:- ${jsonEncode(cleaned)}",
-              wrapWidth: 5024,
-            );
+            debugPrint("Sending Data:- ${jsonEncode(cleaned)}");
 
             emit(state.copyWith(isSubmitting: false, success: true));
             currentContext.maybePop(true);
           } catch (e) {
             emit(state.copyWith(isSubmitting: false, success: false));
-            print("Submit error--> $e");
           }
         },
       );

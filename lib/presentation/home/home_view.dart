@@ -77,9 +77,9 @@ class _HomeViewState extends State<HomeView> {
                 ? CenterLoadingIndicator()
                 : PaginatedListView(
                     onLoading: () {
-                      context.read<HomeBloc>().add(
-                        HomeEvent.getFormsList(false),
-                      );
+                      // context.read<HomeBloc>().add(
+                      //   HomeEvent.getFormsList(false),
+                      // );
                     },
                     onRefresh: () {
                       context.read<HomeBloc>().add(

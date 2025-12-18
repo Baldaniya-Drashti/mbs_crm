@@ -11,4 +11,9 @@ class DynamicFormEvent with _$DynamicFormEvent {
       SubmitForm;
   const factory DynamicFormEvent.attachFileEvent(FormFieldSchema field) =
       AttachFileEvent;
+
+  const factory DynamicFormEvent.onDropDownChanged({
+    required String fieldKey,
+    required dynamic value,
+  }) = OnDropDownChanged;
 }

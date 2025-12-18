@@ -17,8 +17,11 @@ class DynamicFormDTO with _$DynamicFormDTO {
 
 @freezed
 class FormSection with _$FormSection {
-  const factory FormSection({String? title, List<FormFieldSchema>? fields}) =
-      _FormSection;
+  const factory FormSection({
+    String? title,
+    String? key,
+    List<FormFieldSchema>? fields,
+  }) = _FormSection;
   factory FormSection.fromJson(Map<String, dynamic> json) =>
       _$FormSectionFromJson(json);
 }

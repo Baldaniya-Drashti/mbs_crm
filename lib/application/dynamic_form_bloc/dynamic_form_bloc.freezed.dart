@@ -23,6 +23,7 @@ mixin _$DynamicFormEvent {
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -30,6 +31,7 @@ mixin _$DynamicFormEvent {
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -37,6 +39,7 @@ mixin _$DynamicFormEvent {
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -45,6 +48,7 @@ mixin _$DynamicFormEvent {
     required TResult Function(GetFormDetails value) getFormDetails,
     required TResult Function(SubmitForm value) submitForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -52,6 +56,7 @@ mixin _$DynamicFormEvent {
     TResult? Function(GetFormDetails value)? getFormDetails,
     TResult? Function(SubmitForm value)? submitForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -59,6 +64,7 @@ mixin _$DynamicFormEvent {
     TResult Function(GetFormDetails value)? getFormDetails,
     TResult Function(SubmitForm value)? submitForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -167,6 +173,7 @@ class _$LoadFormImpl implements LoadForm {
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return loadForm(formType, id);
   }
@@ -178,6 +185,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return loadForm?.call(formType, id);
   }
@@ -189,6 +197,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (loadForm != null) {
@@ -204,6 +213,7 @@ class _$LoadFormImpl implements LoadForm {
     required TResult Function(GetFormDetails value) getFormDetails,
     required TResult Function(SubmitForm value) submitForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return loadForm(this);
   }
@@ -215,6 +225,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(GetFormDetails value)? getFormDetails,
     TResult? Function(SubmitForm value)? submitForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return loadForm?.call(this);
   }
@@ -226,6 +237,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(GetFormDetails value)? getFormDetails,
     TResult Function(SubmitForm value)? submitForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (loadForm != null) {
@@ -326,6 +338,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return getFormDetails(id);
   }
@@ -337,6 +350,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return getFormDetails?.call(id);
   }
@@ -348,6 +362,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (getFormDetails != null) {
@@ -363,6 +378,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     required TResult Function(GetFormDetails value) getFormDetails,
     required TResult Function(SubmitForm value) submitForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return getFormDetails(this);
   }
@@ -374,6 +390,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(GetFormDetails value)? getFormDetails,
     TResult? Function(SubmitForm value)? submitForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return getFormDetails?.call(this);
   }
@@ -385,6 +402,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(GetFormDetails value)? getFormDetails,
     TResult Function(SubmitForm value)? submitForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (getFormDetails != null) {
@@ -486,6 +504,7 @@ class _$SubmitFormImpl implements SubmitForm {
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return submitForm(values);
   }
@@ -497,6 +516,7 @@ class _$SubmitFormImpl implements SubmitForm {
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return submitForm?.call(values);
   }
@@ -508,6 +528,7 @@ class _$SubmitFormImpl implements SubmitForm {
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (submitForm != null) {
@@ -523,6 +544,7 @@ class _$SubmitFormImpl implements SubmitForm {
     required TResult Function(GetFormDetails value) getFormDetails,
     required TResult Function(SubmitForm value) submitForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return submitForm(this);
   }
@@ -534,6 +556,7 @@ class _$SubmitFormImpl implements SubmitForm {
     TResult? Function(GetFormDetails value)? getFormDetails,
     TResult? Function(SubmitForm value)? submitForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return submitForm?.call(this);
   }
@@ -545,6 +568,7 @@ class _$SubmitFormImpl implements SubmitForm {
     TResult Function(GetFormDetails value)? getFormDetails,
     TResult Function(SubmitForm value)? submitForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (submitForm != null) {
@@ -656,6 +680,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return attachFileEvent(field);
   }
@@ -667,6 +692,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return attachFileEvent?.call(field);
   }
@@ -678,6 +704,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (attachFileEvent != null) {
@@ -693,6 +720,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult Function(GetFormDetails value) getFormDetails,
     required TResult Function(SubmitForm value) submitForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return attachFileEvent(this);
   }
@@ -704,6 +732,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(GetFormDetails value)? getFormDetails,
     TResult? Function(SubmitForm value)? submitForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return attachFileEvent?.call(this);
   }
@@ -715,6 +744,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(GetFormDetails value)? getFormDetails,
     TResult Function(SubmitForm value)? submitForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
     if (attachFileEvent != null) {
@@ -738,12 +768,192 @@ abstract class AttachFileEvent implements DynamicFormEvent {
 }
 
 /// @nodoc
+abstract class _$$OnDropDownChangedImplCopyWith<$Res> {
+  factory _$$OnDropDownChangedImplCopyWith(
+    _$OnDropDownChangedImpl value,
+    $Res Function(_$OnDropDownChangedImpl) then,
+  ) = __$$OnDropDownChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String fieldKey, dynamic value});
+}
+
+/// @nodoc
+class __$$OnDropDownChangedImplCopyWithImpl<$Res>
+    extends _$DynamicFormEventCopyWithImpl<$Res, _$OnDropDownChangedImpl>
+    implements _$$OnDropDownChangedImplCopyWith<$Res> {
+  __$$OnDropDownChangedImplCopyWithImpl(
+    _$OnDropDownChangedImpl _value,
+    $Res Function(_$OnDropDownChangedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? fieldKey = null, Object? value = freezed}) {
+    return _then(
+      _$OnDropDownChangedImpl(
+        fieldKey: null == fieldKey
+            ? _value.fieldKey
+            : fieldKey // ignore: cast_nullable_to_non_nullable
+                  as String,
+        value: freezed == value
+            ? _value.value
+            : value // ignore: cast_nullable_to_non_nullable
+                  as dynamic,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$OnDropDownChangedImpl implements OnDropDownChanged {
+  const _$OnDropDownChangedImpl({required this.fieldKey, required this.value});
+
+  @override
+  final String fieldKey;
+  @override
+  final dynamic value;
+
+  @override
+  String toString() {
+    return 'DynamicFormEvent.onDropDownChanged(fieldKey: $fieldKey, value: $value)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$OnDropDownChangedImpl &&
+            (identical(other.fieldKey, fieldKey) ||
+                other.fieldKey == fieldKey) &&
+            const DeepCollectionEquality().equals(other.value, value));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    runtimeType,
+    fieldKey,
+    const DeepCollectionEquality().hash(value),
+  );
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$OnDropDownChangedImplCopyWith<_$OnDropDownChangedImpl> get copyWith =>
+      __$$OnDropDownChangedImplCopyWithImpl<_$OnDropDownChangedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(int id) getFormDetails,
+    required TResult Function(Map<String, dynamic> values) submitForm,
+    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+  }) {
+    return onDropDownChanged(fieldKey, value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(int id)? getFormDetails,
+    TResult? Function(Map<String, dynamic> values)? submitForm,
+    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+  }) {
+    return onDropDownChanged?.call(fieldKey, value);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(int id)? getFormDetails,
+    TResult Function(Map<String, dynamic> values)? submitForm,
+    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    required TResult orElse(),
+  }) {
+    if (onDropDownChanged != null) {
+      return onDropDownChanged(fieldKey, value);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadForm value) loadForm,
+    required TResult Function(GetFormDetails value) getFormDetails,
+    required TResult Function(SubmitForm value) submitForm,
+    required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
+  }) {
+    return onDropDownChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadForm value)? loadForm,
+    TResult? Function(GetFormDetails value)? getFormDetails,
+    TResult? Function(SubmitForm value)? submitForm,
+    TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+  }) {
+    return onDropDownChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadForm value)? loadForm,
+    TResult Function(GetFormDetails value)? getFormDetails,
+    TResult Function(SubmitForm value)? submitForm,
+    TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    required TResult orElse(),
+  }) {
+    if (onDropDownChanged != null) {
+      return onDropDownChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class OnDropDownChanged implements DynamicFormEvent {
+  const factory OnDropDownChanged({
+    required final String fieldKey,
+    required final dynamic value,
+  }) = _$OnDropDownChangedImpl;
+
+  String get fieldKey;
+  dynamic get value;
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$OnDropDownChangedImplCopyWith<_$OnDropDownChangedImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$DynamicFormState {
   DynamicFormDTO? get schema => throw _privateConstructorUsedError;
   int? get updateFormId => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
   bool get success => throw _privateConstructorUsedError;
+  int get rebuildTick => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
   Map<String, List<AttachmentFileDTO>> get attachmentCache =>
       throw _privateConstructorUsedError;
@@ -768,6 +978,7 @@ abstract class $DynamicFormStateCopyWith<$Res> {
     bool isLoading,
     bool isSubmitting,
     bool success,
+    int rebuildTick,
     String? errorMessage,
     Map<String, List<AttachmentFileDTO>> attachmentCache,
   });
@@ -795,6 +1006,7 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
     Object? isLoading = null,
     Object? isSubmitting = null,
     Object? success = null,
+    Object? rebuildTick = null,
     Object? errorMessage = freezed,
     Object? attachmentCache = null,
   }) {
@@ -820,6 +1032,10 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
                 ? _value.success
                 : success // ignore: cast_nullable_to_non_nullable
                       as bool,
+            rebuildTick: null == rebuildTick
+                ? _value.rebuildTick
+                : rebuildTick // ignore: cast_nullable_to_non_nullable
+                      as int,
             errorMessage: freezed == errorMessage
                 ? _value.errorMessage
                 : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -863,6 +1079,7 @@ abstract class _$$DynamicFormStateImplCopyWith<$Res>
     bool isLoading,
     bool isSubmitting,
     bool success,
+    int rebuildTick,
     String? errorMessage,
     Map<String, List<AttachmentFileDTO>> attachmentCache,
   });
@@ -890,6 +1107,7 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? isSubmitting = null,
     Object? success = null,
+    Object? rebuildTick = null,
     Object? errorMessage = freezed,
     Object? attachmentCache = null,
   }) {
@@ -915,6 +1133,10 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
             ? _value.success
             : success // ignore: cast_nullable_to_non_nullable
                   as bool,
+        rebuildTick: null == rebuildTick
+            ? _value.rebuildTick
+            : rebuildTick // ignore: cast_nullable_to_non_nullable
+                  as int,
         errorMessage: freezed == errorMessage
             ? _value.errorMessage
             : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -937,6 +1159,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     this.isLoading = false,
     this.isSubmitting = false,
     this.success = false,
+    this.rebuildTick = 0,
     this.errorMessage,
     final Map<String, List<AttachmentFileDTO>> attachmentCache = const {},
   }) : _attachmentCache = attachmentCache;
@@ -955,6 +1178,9 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
   @JsonKey()
   final bool success;
   @override
+  @JsonKey()
+  final int rebuildTick;
+  @override
   final String? errorMessage;
   final Map<String, List<AttachmentFileDTO>> _attachmentCache;
   @override
@@ -967,7 +1193,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
 
   @override
   String toString() {
-    return 'DynamicFormState(schema: $schema, updateFormId: $updateFormId, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, errorMessage: $errorMessage, attachmentCache: $attachmentCache)';
+    return 'DynamicFormState(schema: $schema, updateFormId: $updateFormId, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache)';
   }
 
   @override
@@ -983,6 +1209,8 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
             (identical(other.success, success) || other.success == success) &&
+            (identical(other.rebuildTick, rebuildTick) ||
+                other.rebuildTick == rebuildTick) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             const DeepCollectionEquality().equals(
@@ -999,6 +1227,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     isLoading,
     isSubmitting,
     success,
+    rebuildTick,
     errorMessage,
     const DeepCollectionEquality().hash(_attachmentCache),
   );
@@ -1022,6 +1251,7 @@ abstract class _DynamicFormState implements DynamicFormState {
     final bool isLoading,
     final bool isSubmitting,
     final bool success,
+    final int rebuildTick,
     final String? errorMessage,
     final Map<String, List<AttachmentFileDTO>> attachmentCache,
   }) = _$DynamicFormStateImpl;
@@ -1036,6 +1266,8 @@ abstract class _DynamicFormState implements DynamicFormState {
   bool get isSubmitting;
   @override
   bool get success;
+  @override
+  int get rebuildTick;
   @override
   String? get errorMessage;
   @override

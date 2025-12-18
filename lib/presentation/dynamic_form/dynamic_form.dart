@@ -60,21 +60,16 @@ class DynamicForm extends StatelessWidget {
                                 _buildSection(context, section: section),
                             Gap(getSize(10)),
                             CommonButton(
-                              isSubmitting: state.isSubmitting,
+                              // isSubmitting: state.isSubmitting,
                               onPressed: () async {
-                                final _formKey = context
+                                final formKey = context
                                     .read<DynamicFormBloc>()
                                     .formKey;
-                                if (_formKey.currentState?.saveAndValidate() ??
+                                if (formKey.currentState?.saveAndValidate() ??
                                     false) {
-                                  final Map<String, dynamic> data =
-                                      Map<String, dynamic>.from(
-                                        _formKey.currentState!.value,
-                                      );
-
                                   context.read<DynamicFormBloc>().add(
                                     DynamicFormEvent.submitForm(
-                                      _formKey.currentState?.value ?? {},
+                                      formKey.currentState?.value ?? {},
                                     ),
                                   );
                                 } else {
