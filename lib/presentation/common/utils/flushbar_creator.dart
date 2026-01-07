@@ -24,6 +24,7 @@ Flushbar showSuccess({
   required String message,
   String? title,
   Duration duration = const Duration(seconds: 2),
+  FlushbarPosition position = FlushbarPosition.TOP,
 }) {
   return Flushbar(
     title: title,
@@ -31,7 +32,7 @@ Flushbar showSuccess({
     icon: Icon(Icons.check_circle, color: AppColors.white),
     leftBarIndicatorColor: AppColors.primary,
     backgroundColor: AppColors.primary,
-    flushbarPosition: FlushbarPosition.TOP,
+    flushbarPosition: position,
     duration: duration,
   );
 }

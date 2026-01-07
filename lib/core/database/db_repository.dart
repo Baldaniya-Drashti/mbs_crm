@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/constants/storage_constants.dart';
 import 'package:mbs_crm/core/database/app_db.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
-import 'package:sqflite/sql.dart';
 
 @LazySingleton()
 class DBRepository {

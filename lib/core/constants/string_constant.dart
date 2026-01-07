@@ -45,6 +45,7 @@ class StringConstant {
   static const String addFiles = 'Add Files';
   static const String reason = 'Reason';
   static const String noDataFound = 'No Data Found';
+  static const String syncing = 'Syncing...';
 
   /// ------------- Validator ------------- ///
   static const String pleaseEnterEmail = 'Please enter email';

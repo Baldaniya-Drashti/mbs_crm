@@ -6,7 +6,7 @@ import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,20 +17,20 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthStatusBloc, AuthStatusState>(
-      listener: (context, state) async {
-        await NetworkListener().navigateWhenOnline(() async {
+      listener: (context, state) {
+        /* await NetworkListener().navigateWhenOnline(() async {
           await Future.delayed(const Duration(seconds: 1));
-          await state.map(
-            initial: (_) {},
-            authenticated: (value) async {
-              await context.router.replace(PageRouteInfo(HomeView.name));
-            },
-            unAuthenticated: (value) async {
-              // await context.router.replace(PageRouteInfo(OnBoarding.name));
-              await context.router.replace(PageRouteInfo(HomeView.name));
-            },
-          );
-        });
+        }); */
+        state.map(
+          initial: (_) {},
+          authenticated: (value) async {
+            await context.router.replace(PageRouteInfo(HomeView.name));
+          },
+          unAuthenticated: (value) async {
+            // await context.router.replace(PageRouteInfo(OnBoarding.name));
+            await context.router.replace(PageRouteInfo(HomeView.name));
+          },
+        );
       },
       child: Scaffold(
         backgroundColor: AppColors.primary,

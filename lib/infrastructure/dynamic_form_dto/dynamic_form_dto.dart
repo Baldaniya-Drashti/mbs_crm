@@ -31,6 +31,7 @@ class FormFieldSchema with _$FormFieldSchema {
   const factory FormFieldSchema({
     String? key,
     String? label,
+    String? grade,
     int? maxLines,
     String? initialValue,
     String? type, // text, number, dropdown, signature, table, radio

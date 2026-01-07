@@ -41,6 +41,12 @@ class NetworkListener {
     });
   }
 
+  static Stream<bool> internetStatusStream() {
+    return Connectivity().onConnectivityChanged.map((results) {
+      return !results.contains(ConnectivityResult.none);
+    });
+  }
+
   Future<void> navigateWhenOnline(
     Future<void> Function() navigationCallback,
   ) async {

@@ -469,6 +469,7 @@ FormFieldSchema _$FormFieldSchemaFromJson(Map<String, dynamic> json) {
 mixin _$FormFieldSchema {
   String? get key => throw _privateConstructorUsedError;
   String? get label => throw _privateConstructorUsedError;
+  String? get grade => throw _privateConstructorUsedError;
   int? get maxLines => throw _privateConstructorUsedError;
   String? get initialValue => throw _privateConstructorUsedError;
   String? get type =>
@@ -501,6 +502,7 @@ abstract class $FormFieldSchemaCopyWith<$Res> {
   $Res call({
     String? key,
     String? label,
+    String? grade,
     int? maxLines,
     String? initialValue,
     String? type,
@@ -530,6 +532,7 @@ class _$FormFieldSchemaCopyWithImpl<$Res, $Val extends FormFieldSchema>
   $Res call({
     Object? key = freezed,
     Object? label = freezed,
+    Object? grade = freezed,
     Object? maxLines = freezed,
     Object? initialValue = freezed,
     Object? type = freezed,
@@ -549,6 +552,10 @@ class _$FormFieldSchemaCopyWithImpl<$Res, $Val extends FormFieldSchema>
             label: freezed == label
                 ? _value.label
                 : label // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            grade: freezed == grade
+                ? _value.grade
+                : grade // ignore: cast_nullable_to_non_nullable
                       as String?,
             maxLines: freezed == maxLines
                 ? _value.maxLines
@@ -604,6 +611,7 @@ abstract class _$$FormFieldSchemaImplCopyWith<$Res>
   $Res call({
     String? key,
     String? label,
+    String? grade,
     int? maxLines,
     String? initialValue,
     String? type,
@@ -632,6 +640,7 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
   $Res call({
     Object? key = freezed,
     Object? label = freezed,
+    Object? grade = freezed,
     Object? maxLines = freezed,
     Object? initialValue = freezed,
     Object? type = freezed,
@@ -651,6 +660,10 @@ class __$$FormFieldSchemaImplCopyWithImpl<$Res>
         label: freezed == label
             ? _value.label
             : label // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        grade: freezed == grade
+            ? _value.grade
+            : grade // ignore: cast_nullable_to_non_nullable
                   as String?,
         maxLines: freezed == maxLines
             ? _value.maxLines
@@ -699,6 +712,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
   const _$FormFieldSchemaImpl({
     this.key,
     this.label,
+    this.grade,
     this.maxLines,
     this.initialValue,
     this.type,
@@ -718,6 +732,8 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
   final String? key;
   @override
   final String? label;
+  @override
+  final String? grade;
   @override
   final int? maxLines;
   @override
@@ -762,7 +778,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
 
   @override
   String toString() {
-    return 'FormFieldSchema(key: $key, label: $label, maxLines: $maxLines, initialValue: $initialValue, type: $type, required: $required, readOnly: $readOnly, options: $options, rowCount: $rowCount, tablecolumn: $tablecolumn, multipleImages: $multipleImages)';
+    return 'FormFieldSchema(key: $key, label: $label, grade: $grade, maxLines: $maxLines, initialValue: $initialValue, type: $type, required: $required, readOnly: $readOnly, options: $options, rowCount: $rowCount, tablecolumn: $tablecolumn, multipleImages: $multipleImages)';
   }
 
   @override
@@ -772,6 +788,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
             other is _$FormFieldSchemaImpl &&
             (identical(other.key, key) || other.key == key) &&
             (identical(other.label, label) || other.label == label) &&
+            (identical(other.grade, grade) || other.grade == grade) &&
             (identical(other.maxLines, maxLines) ||
                 other.maxLines == maxLines) &&
             (identical(other.initialValue, initialValue) ||
@@ -798,6 +815,7 @@ class _$FormFieldSchemaImpl implements _FormFieldSchema {
     runtimeType,
     key,
     label,
+    grade,
     maxLines,
     initialValue,
     type,
@@ -830,6 +848,7 @@ abstract class _FormFieldSchema implements FormFieldSchema {
   const factory _FormFieldSchema({
     final String? key,
     final String? label,
+    final String? grade,
     final int? maxLines,
     final String? initialValue,
     final String? type,
@@ -848,6 +867,8 @@ abstract class _FormFieldSchema implements FormFieldSchema {
   String? get key;
   @override
   String? get label;
+  @override
+  String? get grade;
   @override
   int? get maxLines;
   @override

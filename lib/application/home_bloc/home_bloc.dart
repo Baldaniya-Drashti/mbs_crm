@@ -1,5 +1,4 @@
 import 'package:mbs_crm/core/database/db_repository.dart';
-import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +20,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeEvent>((event, emit) async {
       await event.map(
         getFormsList: (e) async {
-          final isOnline = await NetworkListener().isOnline();
+          // final isOnline = await NetworkListener().isOnline();
           /* if (isOnline) {
             if (e.isRefresh) {
               page = 1;
@@ -87,9 +86,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
               final localForms = rows.map((e) {
                 return e;
               }).toList();
-
-              print("Get From Local DB--> $localForms");
-
               emit(
                 state.copyWith(
                   isLoading: false,

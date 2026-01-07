@@ -1,14 +1,14 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
-import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
+import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
-import 'package:mbs_crm/infrastructure/form_dto/form_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:mbs_crm/presentation/common/widgets/center_loading_indicator.dart';
 import 'package:mbs_crm/presentation/common/widgets/paginated_list_view.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
@@ -50,7 +50,6 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           )
                           .then((value) {
-                            print("On Pop Value--> $value");
                             if (value == true) {
                               context.read<HomeBloc>().add(
                                 HomeEvent.getFormsList(true),
@@ -77,9 +76,9 @@ class _HomeViewState extends State<HomeView> {
                 ? CenterLoadingIndicator()
                 : PaginatedListView(
                     onLoading: () {
-                      // context.read<HomeBloc>().add(
-                      //   HomeEvent.getFormsList(false),
-                      // );
+                      context.read<HomeBloc>().add(
+                        HomeEvent.getFormsList(false),
+                      );
                     },
                     onRefresh: () {
                       context.read<HomeBloc>().add(

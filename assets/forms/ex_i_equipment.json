@@ -10,15 +10,17 @@
                 {
                     "label": "Client",
                     "key": "client",
-                    "required": false
+                    "required": true
                 },
                 {
                     "label": "Site",
-                    "key": "site"
+                    "key": "site",
+                    "required": true
                 },
                 {
                     "label": "Contract No",
-                    "key": "contract_no"
+                    "key": "contract_no",
+                    "required": true
                 }
             ]
         },
@@ -82,10 +84,15 @@
                             "type": "text"
                         },
                         {
-                            "label": "Description",
-                            "key": "description",
+                            "label": "Description/ Model No.",
+                            "key": "description_model_no",
                             "type": "group",
                             "children": [
+                                {
+                                    "label": "Description",
+                                    "key": "description",
+                                    "type": "text"
+                                },
                                 {
                                     "label": "Model No.",
                                     "key": "model_no",
@@ -99,10 +106,15 @@
                             "type": "text"
                         },
                         {
-                            "label": "E.L.I (ohm)",
-                            "key": "eli_ohm",
+                            "label": "E.L.I (ohm)/I.S.E (ohm)",
+                            "key": "main_ohm",
                             "type": "group",
                             "children": [
+                                {
+                                    "label": "E.L.I (ohm)",
+                                    "key": "eli_ohm",
+                                    "type": "text"
+                                },
                                 {
                                     "label": "I.S.E (ohm)",
                                     "key": "ise_ohm",
@@ -136,7 +148,8 @@
             "key": "equipment",
             "fields": [
                 {
-                    "label": "1 - V, C, D Circuit and / or equipment documentation is appropriate to the EPL / Zone requirements of the location",
+                    "label": "Circuit and / or equipment documentation is appropriate to the EPL / Zone requirements of the location",
+                    "grade": "V,C,D",
                     "key": "eq_doc_epl_zone",
                     "type": "dropdown",
                     "options": [
@@ -146,7 +159,8 @@
                     ]
                 },
                 {
-                    "label": "2 - C, D Equipment installed is that specified in the documentation",
+                    "label": "Equipment installed is that specified in the documentation",
+                    "grade": "C,D",
                     "key": "eq_installed_match_doc",
                     "type": "dropdown",
                     "options": [
@@ -156,7 +170,8 @@
                     ]
                 },
                 {
-                    "label": "3 - C, D Circuit and / or equipment category and group correct",
+                    "label": "Circuit and / or equipment category and group correct",
+                    "grade": "C,D",
                     "key": "eq_category_group",
                     "type": "dropdown",
                     "options": [
@@ -166,7 +181,8 @@
                     ]
                 },
                 {
-                    "label": "4 - C, D IP rating of equipment is appropriate to the Group III material present",
+                    "label": "IP rating of equipment is appropriate to the Group III material present",
+                    "grade": "C,D",
                     "key": "eq_ip_rating",
                     "type": "dropdown",
                     "options": [
@@ -176,7 +192,8 @@
                     ]
                 },
                 {
-                    "label": "5 - C, D Equipment temperature class is correct",
+                    "label": "Equipment temperature class is correct",
+                    "grade": "C,D",
                     "key": "eq_temp_class",
                     "type": "dropdown",
                     "options": [
@@ -186,7 +203,8 @@
                     ]
                 },
                 {
-                    "label": "6 - C, D Ambient temperature range of the apparatus is correct for the installation",
+                    "label": "Ambient temperature range of the apparatus is correct for the installation",
+                    "grade": "C,D",
                     "key": "eq_ambient_temp",
                     "type": "dropdown",
                     "options": [
@@ -196,7 +214,8 @@
                     ]
                 },
                 {
-                    "label": "7 - C, D Service temperature range of the apparatus is correct for the installation",
+                    "label": "Service temperature range of the apparatus is correct for the installation",
+                    "grade": "C,D",
                     "key": "eq_service_temp",
                     "type": "dropdown",
                     "options": [
@@ -206,7 +225,8 @@
                     ]
                 },
                 {
-                    "label": "8 - C, D Installation is clearly labelled",
+                    "label": "Installation is clearly labelled",
+                    "grade": "C,D",
                     "key": "eq_install_label",
                     "type": "dropdown",
                     "options": [
@@ -216,7 +236,8 @@
                     ]
                 },
                 {
-                    "label": "9 - C, D Enclosure, glass parts and glass to metal sealing gaskets and / or compounds are satisfactory",
+                    "label": "Enclosure, glass parts and glass to metal sealing gaskets and / or compounds are satisfactory",
+                    "grade": "C,D",
                     "key": "eq_enclosure_condition",
                     "type": "dropdown",
                     "options": [
@@ -226,7 +247,8 @@
                     ]
                 },
                 {
-                    "label": "10 - V, C, D Bolts, cable entry devices (direct & indirect) and blanking elements are of the correct type, are complete and tight",
+                    "label": "Bolts, cable entry devices (direct & indirect) and blanking elements are of the correct type, are complete and tight",
+                    "grade": "V,C,D",
                     "key": "eq_bolts_cable_entries",
                     "type": "dropdown",
                     "options": [
@@ -236,7 +258,8 @@
                     ]
                 },
                 {
-                    "label": "11 - D There are no unauthorised modifications",
+                    "label": "There are no unauthorised modifications",
+                    "grade": "D",
                     "key": "eq_no_unauth_mods",
                     "type": "dropdown",
                     "options": [
@@ -246,7 +269,8 @@
                     ]
                 },
                 {
-                    "label": "12 - V, C There are no evidence of unauthorised modifications",
+                    "label": "There are no evidence of unauthorised modifications",
+                    "grade": "V,C",
                     "key": "eq_no_mod_evidence",
                     "type": "dropdown",
                     "options": [
@@ -256,7 +280,8 @@
                     ]
                 },
                 {
-                    "label": "13 - V, C, D Diode safety barriers, galvanic isolators, relays and other energy limiting devices are of the approved type, installed in accordance with the certification requirements and are securely earthed where required",
+                    "label": "Diode safety barriers, galvanic isolators, relays and other energy limiting devices are of the approved type, installed in accordance with the certification requirements and are securely earthed where required",
+                    "grade": "V,C,D",
                     "key": "eq_energy_limit_devices",
                     "type": "dropdown",
                     "options": [
@@ -266,7 +291,8 @@
                     ]
                 },
                 {
-                    "label": "14 - D Condition of enclosure gaskets is satisfactory",
+                    "label": "Condition of enclosure gaskets is satisfactory",
+                    "grade": "D",
                     "key": "eq_gasket_condition",
                     "type": "dropdown",
                     "options": [
@@ -276,7 +302,8 @@
                     ]
                 },
                 {
-                    "label": "15 - D Electrical connections are tight",
+                    "label": "Electrical connections are tight",
+                    "grade": "D",
                     "key": "eq_connections_tight",
                     "type": "dropdown",
                     "options": [
@@ -286,7 +313,8 @@
                     ]
                 },
                 {
-                    "label": "16 - D Printed circuit boards are clean and undamaged",
+                    "label": "Printed circuit boards are clean and undamaged",
+                    "grade": "D",
                     "key": "eq_pcb_condition",
                     "type": "dropdown",
                     "options": [
@@ -296,7 +324,8 @@
                     ]
                 },
                 {
-                    "label": "17 - C, D The maximum voltage Um of the associated apparatus is not exceeded",
+                    "label": "The maximum voltage Um of the associated apparatus is not exceeded",
+                    "grade": "C,D",
                     "key": "eq_max_voltage_um",
                     "type": "dropdown",
                     "options": [
@@ -312,7 +341,8 @@
             "key": "installation",
             "fields": [
                 {
-                    "label": "1 - D Cables are installed in accordance with documentation",
+                    "label": "Cables are installed in accordance with documentation",
+                    "grade": "D",
                     "key": "inst_cables_doc",
                     "type": "dropdown",
                     "options": [
@@ -322,7 +352,8 @@
                     ]
                 },
                 {
-                    "label": "2 - D Cable screens are earthed in accordance with documentation",
+                    "label": "Cable screens are earthed in accordance with documentation",
+                    "grade": "D",
                     "key": "inst_cable_earthing",
                     "type": "dropdown",
                     "options": [
@@ -332,7 +363,8 @@
                     ]
                 },
                 {
-                    "label": "3 - V, C, D There is no obvious damage to cables",
+                    "label": "There is no obvious damage to cables",
+                    "grade": "V,C,D",
                     "key": "inst_no_cable_damage",
                     "type": "dropdown",
                     "options": [
@@ -342,7 +374,8 @@
                     ]
                 },
                 {
-                    "label": "4 - V, C, D Sealing of trunking, ducts, pipes and / or conduits is satisfactory",
+                    "label": "Sealing of trunking, ducts, pipes and / or conduits is satisfactory",
+                    "grade": "V,C,D",
                     "key": "inst_sealing_ok",
                     "type": "dropdown",
                     "options": [
@@ -352,7 +385,8 @@
                     ]
                 },
                 {
-                    "label": "5 - D Point to point connections are all correct (initial inspection only)",
+                    "label": "Point to point connections are all correct (initial inspection only)",
+                    "grade": "D",
                     "key": "inst_ptp_connections",
                     "type": "dropdown",
                     "options": [
@@ -362,7 +396,8 @@
                     ]
                 },
                 {
-                    "label": "6 - D Earth continuity is satisfactory (e.g connections are tight and conductors of sufficient CSA) for non-galvanically isolated circuits",
+                    "label": "Earth continuity is satisfactory (e.g connections are tight and conductors of sufficient CSA) for non-galvanically isolated circuits",
+                    "grade": "D",
                     "key": "inst_earth_continuity",
                     "type": "dropdown",
                     "options": [
@@ -372,7 +407,8 @@
                     ]
                 },
                 {
-                    "label": "7 - V, C, D Earth connections maintain the integrity of the type of protection",
+                    "label": "Earth connections maintain the integrity of the type of protection",
+                    "grade": "V,C,D",
                     "key": "inst_earth_integrity",
                     "type": "dropdown",
                     "options": [
@@ -382,7 +418,8 @@
                     ]
                 },
                 {
-                    "label": "8 - D The intrinsically safe circuit earthing is satisfactory",
+                    "label": "The intrinsically safe circuit earthing is satisfactory",
+                    "grade": "D",
                     "key": "inst_is_earthing",
                     "type": "dropdown",
                     "options": [
@@ -392,7 +429,8 @@
                     ]
                 },
                 {
-                    "label": "9 - D Insulation resistance is satisfactory",
+                    "label": "Insulation resistance is satisfactory",
+                    "grade": "D",
                     "key": "inst_insulation_resistance",
                     "type": "dropdown",
                     "options": [
@@ -402,7 +440,8 @@
                     ]
                 },
                 {
-                    "label": "10 - D Separation is maintained between intrinsically safe and non-intrinsically safe circuits in common distribution boxes or relay cubicles",
+                    "label": "Separation is maintained between intrinsically safe and non-intrinsically safe circuits in common distribution boxes or relay cubicles",
+                    "grade": "D",
                     "key": "inst_circuit_separation",
                     "type": "dropdown",
                     "options": [
@@ -412,7 +451,8 @@
                     ]
                 },
                 {
-                    "label": "11 - D Short circuit protection of the power supply is in accordance with documentation",
+                    "label": "Short circuit protection of the power supply is in accordance with documentation",
+                    "grade": "D",
                     "key": "inst_short_circuit_protection",
                     "type": "dropdown",
                     "options": [
@@ -422,7 +462,8 @@
                     ]
                 },
                 {
-                    "label": "12 - D Specific conditions of use (if applicable) are complicated with",
+                    "label": "Specific conditions of use (if applicable) are complicated with",
+                    "grade": "D",
                     "key": "inst_special_conditions",
                     "type": "dropdown",
                     "options": [
@@ -432,7 +473,8 @@
                     ]
                 },
                 {
-                    "label": "13 - D Cables not in use are correctly terminated",
+                    "label": "Cables not in use are correctly terminated",
+                    "grade": "D",
                     "key": "inst_unused_cable_termination",
                     "type": "dropdown",
                     "options": [
@@ -448,7 +490,8 @@
             "key": "environment",
             "fields": [
                 {
-                    "label": "1 - V, C, D Apparatus is adequately protected from corrosion, weather, vibration and other adverse conditions",
+                    "label": "Apparatus is adequately protected from corrosion, weather, vibration and other adverse conditions",
+                    "grade": "V,C,D",
                     "key": "env_protection",
                     "type": "dropdown",
                     "options": [
@@ -458,7 +501,8 @@
                     ]
                 },
                 {
-                    "label": "2 - V, C, D No undue external accumulation of dust and dirt",
+                    "label": "No undue external accumulation of dust and dirt",
+                    "grade": "V,C,D",
                     "key": "env_no_dust_dirt",
                     "type": "dropdown",
                     "options": [

@@ -10,7 +10,11 @@ import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_table/dynamic_
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_text_field.dart';
 
 class BuildFields {
-  static Widget buildField(BuildContext context, FormFieldSchema field) {
+  static Widget buildField(
+    BuildContext context,
+    FormFieldSchema field,
+    int index,
+  ) {
     // Default Values (Requirement #3)
 
     switch (field.type) {
@@ -21,10 +25,12 @@ class BuildFields {
         );
       case "dropdown":
         return DynamicDropdown(
-          keyName: field.key ?? '',
-          label: field.label ?? '',
-          required: field.required,
-          options: field.options ?? [],
+          index: index,
+          field: field,
+          // keyName: field.key ?? '',
+          // label: field.label ?? '',
+          // required: field.required,
+          // options: field.options ?? [],
         );
       case "radio":
         return DynamicRadio(

@@ -47,6 +47,9 @@ class DynamicTextField extends StatelessWidget {
                   format: DateFormat('dd/MM/yyyy'),
                   // initialValue: initialValue,
                   decoration: InputDecoration(
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.red),
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.black),
                     ),
@@ -77,6 +80,12 @@ class DynamicTextField extends StatelessWidget {
                   // initialValue: initialValue,
                   cursorColor: AppColors.primary,
                   decoration: InputDecoration(
+                    errorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.red),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: AppColors.red),
+                    ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: AppColors.black),
                     ),

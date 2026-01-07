@@ -46,6 +46,7 @@ _$FormFieldSchemaImpl _$$FormFieldSchemaImplFromJson(
 ) => _$FormFieldSchemaImpl(
   key: json['key'] as String?,
   label: json['label'] as String?,
+  grade: json['grade'] as String?,
   maxLines: (json['maxLines'] as num?)?.toInt(),
   initialValue: json['initialValue'] as String?,
   type: json['type'] as String?,
@@ -66,6 +67,7 @@ Map<String, dynamic> _$$FormFieldSchemaImplToJson(
 ) => <String, dynamic>{
   'key': instance.key,
   'label': instance.label,
+  'grade': instance.grade,
   'maxLines': instance.maxLines,
   'initialValue': instance.initialValue,
   'type': instance.type,

@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:mbs_crm/core/environment/environment.dart';
-import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/core/app_widget.dart';
@@ -54,12 +53,10 @@ Future<void> main() async {
     );
     EnvironmentConfig().initConfig(environment);
 
-    NetworkListener().initialize(
-      // getIt<AppRouter>().navigatorKey.currentContext!,
-    );
+    // NetworkListener().initialize();
 
     runApp(const RestartWidget(child: AppWidget()));
-    //     });
+    //});
   }, (error, stack) {});
 }
 

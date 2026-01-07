@@ -21,7 +21,7 @@ import 'package:mbs_crm/presentation/dynamic_form/widgets/build_fields.dart';
 class DynamicForm extends StatelessWidget {
   final String formType;
   final int? id;
-  DynamicForm({this.id, super.key, required this.formType});
+  const DynamicForm({this.id, super.key, required this.formType});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class DynamicForm extends StatelessWidget {
                         child: Column(
                           children: [
                             BaseText(
-                              text: state.schema?.title ?? '',
+                              text: state.schema?.title ?? "",
                               fontSize: 18,
                               fontFamily: FontConstant.jost,
                               fontWeight: FontWeight.w500,
@@ -60,7 +60,7 @@ class DynamicForm extends StatelessWidget {
                                 _buildSection(context, section: section),
                             Gap(getSize(10)),
                             CommonButton(
-                              // isSubmitting: state.isSubmitting,
+                              isSubmitting: state.isSubmitting,
                               onPressed: () async {
                                 final formKey = context
                                     .read<DynamicFormBloc>()
@@ -118,8 +118,8 @@ class DynamicForm extends StatelessWidget {
         childrenPadding: EdgeInsets.all(getSize(10)),
         children: [
           if (section.fields != null)
-            for (var field in section.fields!)
-              BuildFields.buildField(context, field),
+            for (int i = 0; i < section.fields!.length; i++)
+              BuildFields.buildField(context, section.fields![i], i),
           /* DynamicTextField(
               label: field.label,
               validator: field.required == true

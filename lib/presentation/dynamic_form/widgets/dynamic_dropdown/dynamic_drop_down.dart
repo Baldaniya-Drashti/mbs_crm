@@ -13,18 +13,10 @@ import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_attachment_fie
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_text_field.dart';
 
 class DynamicDropdown extends StatelessWidget {
-  final String keyName;
-  final String label;
-  final bool required;
-  final List<String> options;
+  final FormFieldSchema field;
+  final int index;
 
-  const DynamicDropdown({
-    super.key,
-    required this.keyName,
-    required this.label,
-    required this.options,
-    this.required = false,
-  });
+  const DynamicDropdown({super.key, required this.field, required this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -37,21 +29,24 @@ class DynamicDropdown extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          BaseText(text: label, fontSize: 15, maxLines: 20),
+          BaseText(
+            text: "${index + 1}. ${field.grade ?? ''} ${field.label ?? ''}",
+            fontSize: 15,
+            maxLines: 20,
+          ),
           Gap(getSize(5)),
           FormBuilderDropdown(
-            name: keyName,
-            validator: required ? FormBuilderValidators.required() : null,
+            name: field.key ?? '',
+            validator: field.required ? FormBuilderValidators.required() : null,
             onChanged: (value) {
-              // Trigger rebuild when dropdown changes
               context.read<DynamicFormBloc>().add(
                 DynamicFormEvent.onDropDownChanged(
-                  fieldKey: keyName,
+                  fieldKey: field.key ?? '',
                   value: value,
                 ),
               );
             },
-            items: options
+            items: (field.options ?? [])
                 .map(
                   (e) => DropdownMenuItem(
                     alignment: Alignment.centerLeft,
@@ -76,14 +71,13 @@ class DynamicDropdown extends StatelessWidget {
           // Always render reason + attachment fields
           BlocBuilder<DynamicFormBloc, DynamicFormState>(
             builder: (context, state) {
-              final dropdownValue = formState?.fields[keyName]?.value;
-              final reasonValue = formState?.fields['${keyName}_reason']?.value;
-
+              final dropdownValue = formState?.fields[field.key ?? '']?.value;
+              final reasonValue =
+                  formState?.fields['${field.key ?? ''}_reason']?.value;
               // Show reason/attachment if dropdown = "No" OR reason already has value (edit mode)
               final showExtra =
                   dropdownValue == "No" ||
                   (reasonValue != null && reasonValue.toString().isNotEmpty);
-
               return Visibility(
                 visible: showExtra,
                 maintainState: true,
@@ -94,7 +88,7 @@ class DynamicDropdown extends StatelessWidget {
                     Gap(getSize(10)),
                     DynamicTextField(
                       field: FormFieldSchema(
-                        key: '${keyName}_reason',
+                        key: '${field.key ?? ''}_reason',
                         label: StringConstant.reason,
                         maxLines: 3,
                       ),
@@ -102,7 +96,7 @@ class DynamicDropdown extends StatelessWidget {
                     Gap(getSize(10)),
                     DynamicAttachmentField(
                       field: FormFieldSchema(
-                        key: '${keyName}_attachments',
+                        key: '${field.key ?? ''}_attachments',
                         multipleImages: true,
                       ),
                     ),
@@ -152,7 +146,7 @@ class DynamicDropdown extends StatelessWidget {
                 ],
               );
             },
-          ), */
+          ),*/
         ],
       ),
     );
