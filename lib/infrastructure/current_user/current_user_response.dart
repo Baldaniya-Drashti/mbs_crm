@@ -7,14 +7,14 @@ class CurrentUserDTO {
   final String? lastName;
   final String? nicename;
   final String? displayname;
-  final String? token;
+  final AuthDTO? auth;
 
   CurrentUserDTO({
     this.userId,
     this.firstName,
     this.lastName,
     this.email,
-    this.token,
+    this.auth,
     this.displayname,
     this.nicename,
   });
@@ -25,9 +25,9 @@ class CurrentUserDTO {
       firstName: json['first_name'] as String?,
       lastName: json['last_name'] as String?,
       email: json['email'] as String?,
-      token: json['token'] as String?,
       displayname: json['displayname'] as String?,
       nicename: json['nicename'] as String?,
+      auth: json['auth'] != null ? AuthDTO.fromJson(json['auth']) : null,
     );
   }
 
@@ -37,9 +37,23 @@ class CurrentUserDTO {
       'first_name': firstName,
       'last_name': lastName,
       'email': email,
-      'token': token,
       'nicename': nicename,
       'displayname': displayname,
+      'auth': auth?.toJson(),
     };
+  }
+}
+
+class AuthDTO {
+  final String? token;
+
+  AuthDTO({this.token});
+
+  factory AuthDTO.fromJson(Map<String, dynamic> json) {
+    return AuthDTO(token: json['token'] as String?);
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'token': token};
   }
 }

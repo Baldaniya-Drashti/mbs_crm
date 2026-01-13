@@ -7,8 +7,6 @@ class SignInState with _$SignInState {
     required Password password,
     required bool isObscure,
     required bool isSubmitting,
-    required bool isLoading,
-    required bool rememberMe,
     required bool showError,
   }) = _SignInState;
   factory SignInState.initial() => SignInState(
@@ -16,8 +14,6 @@ class SignInState with _$SignInState {
     password: Password(""),
     isObscure: true,
     isSubmitting: false,
-    isLoading: false,
-    rememberMe: false,
     showError: false,
   );
 }

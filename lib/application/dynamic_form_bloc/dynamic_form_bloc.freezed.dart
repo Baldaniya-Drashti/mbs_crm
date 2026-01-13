@@ -19,7 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$DynamicFormEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
@@ -27,7 +27,7 @@ mixin _$DynamicFormEvent {
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
@@ -35,7 +35,7 @@ mixin _$DynamicFormEvent {
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -98,7 +98,9 @@ abstract class _$$LoadFormImplCopyWith<$Res> {
     $Res Function(_$LoadFormImpl) then,
   ) = __$$LoadFormImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String formType, int? id});
+  $Res call({FormDTO form, int? id});
+
+  $FormDTOCopyWith<$Res> get form;
 }
 
 /// @nodoc
@@ -114,13 +116,13 @@ class __$$LoadFormImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? formType = null, Object? id = freezed}) {
+  $Res call({Object? form = null, Object? id = freezed}) {
     return _then(
       _$LoadFormImpl(
-        null == formType
-            ? _value.formType
-            : formType // ignore: cast_nullable_to_non_nullable
-                  as String,
+        null == form
+            ? _value.form
+            : form // ignore: cast_nullable_to_non_nullable
+                  as FormDTO,
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
@@ -128,21 +130,31 @@ class __$$LoadFormImplCopyWithImpl<$Res>
       ),
     );
   }
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FormDTOCopyWith<$Res> get form {
+    return $FormDTOCopyWith<$Res>(_value.form, (value) {
+      return _then(_value.copyWith(form: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$LoadFormImpl implements LoadForm {
-  const _$LoadFormImpl(this.formType, {this.id});
+  const _$LoadFormImpl(this.form, {this.id});
 
   @override
-  final String formType;
+  final FormDTO form;
   @override
   final int? id;
 
   @override
   String toString() {
-    return 'DynamicFormEvent.loadForm(formType: $formType, id: $id)';
+    return 'DynamicFormEvent.loadForm(form: $form, id: $id)';
   }
 
   @override
@@ -150,13 +162,12 @@ class _$LoadFormImpl implements LoadForm {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoadFormImpl &&
-            (identical(other.formType, formType) ||
-                other.formType == formType) &&
+            (identical(other.form, form) || other.form == form) &&
             (identical(other.id, id) || other.id == id));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, formType, id);
+  int get hashCode => Object.hash(runtimeType, form, id);
 
   /// Create a copy of DynamicFormEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -169,31 +180,31 @@ class _$LoadFormImpl implements LoadForm {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
-    return loadForm(formType, id);
+    return loadForm(form, id);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
-    return loadForm?.call(formType, id);
+    return loadForm?.call(form, id);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -201,7 +212,7 @@ class _$LoadFormImpl implements LoadForm {
     required TResult orElse(),
   }) {
     if (loadForm != null) {
-      return loadForm(formType, id);
+      return loadForm(form, id);
     }
     return orElse();
   }
@@ -248,10 +259,9 @@ class _$LoadFormImpl implements LoadForm {
 }
 
 abstract class LoadForm implements DynamicFormEvent {
-  const factory LoadForm(final String formType, {final int? id}) =
-      _$LoadFormImpl;
+  const factory LoadForm(final FormDTO form, {final int? id}) = _$LoadFormImpl;
 
-  String get formType;
+  FormDTO get form;
   int? get id;
 
   /// Create a copy of DynamicFormEvent
@@ -334,7 +344,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
@@ -346,7 +356,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
@@ -358,7 +368,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -500,7 +510,7 @@ class _$SubmitFormImpl implements SubmitForm {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
@@ -512,7 +522,7 @@ class _$SubmitFormImpl implements SubmitForm {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
@@ -524,7 +534,7 @@ class _$SubmitFormImpl implements SubmitForm {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -676,7 +686,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
@@ -688,7 +698,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
@@ -700,7 +710,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -852,7 +862,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String formType, int? id) loadForm,
+    required TResult Function(FormDTO form, int? id) loadForm,
     required TResult Function(int id) getFormDetails,
     required TResult Function(Map<String, dynamic> values) submitForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
@@ -864,7 +874,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String formType, int? id)? loadForm,
+    TResult? Function(FormDTO form, int? id)? loadForm,
     TResult? Function(int id)? getFormDetails,
     TResult? Function(Map<String, dynamic> values)? submitForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
@@ -876,7 +886,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String formType, int? id)? loadForm,
+    TResult Function(FormDTO form, int? id)? loadForm,
     TResult Function(int id)? getFormDetails,
     TResult Function(Map<String, dynamic> values)? submitForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
@@ -949,6 +959,7 @@ abstract class OnDropDownChanged implements DynamicFormEvent {
 /// @nodoc
 mixin _$DynamicFormState {
   DynamicFormDTO? get schema => throw _privateConstructorUsedError;
+  FormDTO? get selectedForm => throw _privateConstructorUsedError;
   int? get updateFormId => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
@@ -974,6 +985,7 @@ abstract class $DynamicFormStateCopyWith<$Res> {
   @useResult
   $Res call({
     DynamicFormDTO? schema,
+    FormDTO? selectedForm,
     int? updateFormId,
     bool isLoading,
     bool isSubmitting,
@@ -984,6 +996,7 @@ abstract class $DynamicFormStateCopyWith<$Res> {
   });
 
   $DynamicFormDTOCopyWith<$Res>? get schema;
+  $FormDTOCopyWith<$Res>? get selectedForm;
 }
 
 /// @nodoc
@@ -1002,6 +1015,7 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
   @override
   $Res call({
     Object? schema = freezed,
+    Object? selectedForm = freezed,
     Object? updateFormId = freezed,
     Object? isLoading = null,
     Object? isSubmitting = null,
@@ -1016,6 +1030,10 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
                 ? _value.schema
                 : schema // ignore: cast_nullable_to_non_nullable
                       as DynamicFormDTO?,
+            selectedForm: freezed == selectedForm
+                ? _value.selectedForm
+                : selectedForm // ignore: cast_nullable_to_non_nullable
+                      as FormDTO?,
             updateFormId: freezed == updateFormId
                 ? _value.updateFormId
                 : updateFormId // ignore: cast_nullable_to_non_nullable
@@ -1062,6 +1080,20 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
       return _then(_value.copyWith(schema: value) as $Val);
     });
   }
+
+  /// Create a copy of DynamicFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FormDTOCopyWith<$Res>? get selectedForm {
+    if (_value.selectedForm == null) {
+      return null;
+    }
+
+    return $FormDTOCopyWith<$Res>(_value.selectedForm!, (value) {
+      return _then(_value.copyWith(selectedForm: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -1075,6 +1107,7 @@ abstract class _$$DynamicFormStateImplCopyWith<$Res>
   @useResult
   $Res call({
     DynamicFormDTO? schema,
+    FormDTO? selectedForm,
     int? updateFormId,
     bool isLoading,
     bool isSubmitting,
@@ -1086,6 +1119,8 @@ abstract class _$$DynamicFormStateImplCopyWith<$Res>
 
   @override
   $DynamicFormDTOCopyWith<$Res>? get schema;
+  @override
+  $FormDTOCopyWith<$Res>? get selectedForm;
 }
 
 /// @nodoc
@@ -1103,6 +1138,7 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? schema = freezed,
+    Object? selectedForm = freezed,
     Object? updateFormId = freezed,
     Object? isLoading = null,
     Object? isSubmitting = null,
@@ -1117,6 +1153,10 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
             ? _value.schema
             : schema // ignore: cast_nullable_to_non_nullable
                   as DynamicFormDTO?,
+        selectedForm: freezed == selectedForm
+            ? _value.selectedForm
+            : selectedForm // ignore: cast_nullable_to_non_nullable
+                  as FormDTO?,
         updateFormId: freezed == updateFormId
             ? _value.updateFormId
             : updateFormId // ignore: cast_nullable_to_non_nullable
@@ -1155,6 +1195,7 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
 class _$DynamicFormStateImpl implements _DynamicFormState {
   const _$DynamicFormStateImpl({
     this.schema,
+    this.selectedForm,
     this.updateFormId,
     this.isLoading = false,
     this.isSubmitting = false,
@@ -1166,6 +1207,8 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
 
   @override
   final DynamicFormDTO? schema;
+  @override
+  final FormDTO? selectedForm;
   @override
   final int? updateFormId;
   @override
@@ -1193,7 +1236,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
 
   @override
   String toString() {
-    return 'DynamicFormState(schema: $schema, updateFormId: $updateFormId, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache)';
+    return 'DynamicFormState(schema: $schema, selectedForm: $selectedForm, updateFormId: $updateFormId, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache)';
   }
 
   @override
@@ -1202,6 +1245,8 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
         (other.runtimeType == runtimeType &&
             other is _$DynamicFormStateImpl &&
             (identical(other.schema, schema) || other.schema == schema) &&
+            (identical(other.selectedForm, selectedForm) ||
+                other.selectedForm == selectedForm) &&
             (identical(other.updateFormId, updateFormId) ||
                 other.updateFormId == updateFormId) &&
             (identical(other.isLoading, isLoading) ||
@@ -1223,6 +1268,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
   int get hashCode => Object.hash(
     runtimeType,
     schema,
+    selectedForm,
     updateFormId,
     isLoading,
     isSubmitting,
@@ -1247,6 +1293,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
 abstract class _DynamicFormState implements DynamicFormState {
   const factory _DynamicFormState({
     final DynamicFormDTO? schema,
+    final FormDTO? selectedForm,
     final int? updateFormId,
     final bool isLoading,
     final bool isSubmitting,
@@ -1258,6 +1305,8 @@ abstract class _DynamicFormState implements DynamicFormState {
 
   @override
   DynamicFormDTO? get schema;
+  @override
+  FormDTO? get selectedForm;
   @override
   int? get updateFormId;
   @override

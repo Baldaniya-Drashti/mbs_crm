@@ -46,13 +46,16 @@ class StringConstant {
   static const String reason = 'Reason';
   static const String noDataFound = 'No Data Found';
   static const String syncing = 'Syncing...';
+  static const String changePassword = 'Change Password';
+  static const String users = 'Users';
+  static const String addUser = 'Add User';
 
   /// ------------- Validator ------------- ///
   static const String pleaseEnterEmail = 'Please enter email';
   static const String pleaseEnterValidEmail = 'Please enter valid email';
   static const String pleaseEnterPassword = 'Please enter password';
-  static const String passwordShouldBeMinimum8Digit =
-      'Password should be minimum 6 digit';
+  static const String passwordShouldBeMinimum3Digit =
+      'Password should be minimum 3 digit';
   static const String someDetailsAreMissingOrInvalidPleaseCheck =
       'Some details are missing or invalid! Please check';
 }

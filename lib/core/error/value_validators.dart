@@ -98,7 +98,7 @@ Either<ValueFailure<String>, String> validatePassword(String input) {
   if (input.isEmpty) {
     return left(ValueFailure.empty(failedValue: input));
   } else {
-    if (input.length >= 6) {
+    if (input.length >= 3) {
       return right(input);
     } else {
       return left(ValueFailure.shortPassword(failedValue: input));

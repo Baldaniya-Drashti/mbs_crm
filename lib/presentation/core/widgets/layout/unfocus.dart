@@ -7,8 +7,7 @@ class CustomUnFocus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      overlayColor: WidgetStateColor.transparent,
+    return GestureDetector(
       onTap: () {
         AppFocus.unfocus(context);
       },

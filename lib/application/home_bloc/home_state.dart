@@ -4,6 +4,7 @@ part of 'home_bloc.dart';
 class HomeState with _$HomeState {
   factory HomeState({
     required List<HomeDTO> formsList,
+    required List<UserDTO> usersList,
     required bool isLoading,
     required bool isSubmitting,
     required bool isErrorInAPI,
@@ -11,6 +12,7 @@ class HomeState with _$HomeState {
   }) = _HomeState;
   factory HomeState.initial() => HomeState(
     formsList: [],
+    usersList: [],
     isErrorInAPI: false,
     isLoading: false,
     isNoDataFound: false,

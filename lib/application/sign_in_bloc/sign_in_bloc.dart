@@ -32,9 +32,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
         obscureChanged: (e) {
           emit(state.copyWith(isObscure: !state.isObscure));
         },
-        rememberMeEvent: (e) {
-          emit(state.copyWith(rememberMe: !state.rememberMe));
-        },
+
         loginPressed: (e) async {
           Either<AuthFailure, String>? failureOrSuccess;
 
@@ -47,7 +45,6 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
             failureOrSuccess = await _authFacade.login(
               email: state.email.getValue(),
               password: state.password.getValue(),
-              isRemember: state.rememberMe,
             );
 
             final currentContext =
@@ -67,7 +64,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
               (r) {
                 AppFocus.unfocus(currentContext);
                 currentContext.router.replaceAll([
-                  PageRouteInfo(HomeView.name),
+                  PageRouteInfo(MainTabView.name),
                 ]);
               },
             );

@@ -22,13 +22,16 @@ HomeDTO _$HomeDTOFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$HomeDTO {
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'form_type')
+  int? get formType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'form_name')
+  String? get formName => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   String? get slug => throw _privateConstructorUsedError;
   String? get image_url => throw _privateConstructorUsedError;
   String? get formId => throw _privateConstructorUsedError;
   Map<String, dynamic>? get data => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  String? get createdAt => throw _privateConstructorUsedError;
   String? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this HomeDTO to a JSON map.
@@ -47,13 +50,14 @@ abstract class $HomeDTOCopyWith<$Res> {
   @useResult
   $Res call({
     int? id,
-    String? name,
+    @JsonKey(name: 'form_type') int? formType,
+    @JsonKey(name: 'form_name') String? formName,
+    String? createdAt,
     String? slug,
     String? image_url,
     String? formId,
     Map<String, dynamic>? data,
     String? status,
-    String? createdAt,
     String? updatedAt,
   });
 }
@@ -74,13 +78,14 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? formType = freezed,
+    Object? formName = freezed,
+    Object? createdAt = freezed,
     Object? slug = freezed,
     Object? image_url = freezed,
     Object? formId = freezed,
     Object? data = freezed,
     Object? status = freezed,
-    Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(
@@ -89,9 +94,17 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
                       as int?,
-            name: freezed == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
+            formType: freezed == formType
+                ? _value.formType
+                : formType // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            formName: freezed == formName
+                ? _value.formName
+                : formName // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            createdAt: freezed == createdAt
+                ? _value.createdAt
+                : createdAt // ignore: cast_nullable_to_non_nullable
                       as String?,
             slug: freezed == slug
                 ? _value.slug
@@ -113,10 +126,6 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
                 ? _value.status
                 : status // ignore: cast_nullable_to_non_nullable
                       as String?,
-            createdAt: freezed == createdAt
-                ? _value.createdAt
-                : createdAt // ignore: cast_nullable_to_non_nullable
-                      as String?,
             updatedAt: freezed == updatedAt
                 ? _value.updatedAt
                 : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -137,13 +146,14 @@ abstract class _$$HomeDTOImplCopyWith<$Res> implements $HomeDTOCopyWith<$Res> {
   @useResult
   $Res call({
     int? id,
-    String? name,
+    @JsonKey(name: 'form_type') int? formType,
+    @JsonKey(name: 'form_name') String? formName,
+    String? createdAt,
     String? slug,
     String? image_url,
     String? formId,
     Map<String, dynamic>? data,
     String? status,
-    String? createdAt,
     String? updatedAt,
   });
 }
@@ -163,13 +173,14 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
+    Object? formType = freezed,
+    Object? formName = freezed,
+    Object? createdAt = freezed,
     Object? slug = freezed,
     Object? image_url = freezed,
     Object? formId = freezed,
     Object? data = freezed,
     Object? status = freezed,
-    Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(
@@ -178,9 +189,17 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int?,
-        name: freezed == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
+        formType: freezed == formType
+            ? _value.formType
+            : formType // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        formName: freezed == formName
+            ? _value.formName
+            : formName // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        createdAt: freezed == createdAt
+            ? _value.createdAt
+            : createdAt // ignore: cast_nullable_to_non_nullable
                   as String?,
         slug: freezed == slug
             ? _value.slug
@@ -202,10 +221,6 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
             ? _value.status
             : status // ignore: cast_nullable_to_non_nullable
                   as String?,
-        createdAt: freezed == createdAt
-            ? _value.createdAt
-            : createdAt // ignore: cast_nullable_to_non_nullable
-                  as String?,
         updatedAt: freezed == updatedAt
             ? _value.updatedAt
             : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -220,13 +235,14 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
 class _$HomeDTOImpl implements _HomeDTO {
   const _$HomeDTOImpl({
     this.id,
-    this.name,
+    @JsonKey(name: 'form_type') this.formType,
+    @JsonKey(name: 'form_name') this.formName,
+    this.createdAt,
     this.slug,
     this.image_url,
     this.formId,
     final Map<String, dynamic>? data,
     this.status,
-    this.createdAt,
     this.updatedAt,
   }) : _data = data;
 
@@ -236,7 +252,13 @@ class _$HomeDTOImpl implements _HomeDTO {
   @override
   final int? id;
   @override
-  final String? name;
+  @JsonKey(name: 'form_type')
+  final int? formType;
+  @override
+  @JsonKey(name: 'form_name')
+  final String? formName;
+  @override
+  final String? createdAt;
   @override
   final String? slug;
   @override
@@ -256,13 +278,11 @@ class _$HomeDTOImpl implements _HomeDTO {
   @override
   final String? status;
   @override
-  final String? createdAt;
-  @override
   final String? updatedAt;
 
   @override
   String toString() {
-    return 'HomeDTO(id: $id, name: $name, slug: $slug, image_url: $image_url, formId: $formId, data: $data, status: $status, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'HomeDTO(id: $id, formType: $formType, formName: $formName, createdAt: $createdAt, slug: $slug, image_url: $image_url, formId: $formId, data: $data, status: $status, updatedAt: $updatedAt)';
   }
 
   @override
@@ -271,15 +291,18 @@ class _$HomeDTOImpl implements _HomeDTO {
         (other.runtimeType == runtimeType &&
             other is _$HomeDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.formType, formType) ||
+                other.formType == formType) &&
+            (identical(other.formName, formName) ||
+                other.formName == formName) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.image_url, image_url) ||
                 other.image_url == image_url) &&
             (identical(other.formId, formId) || other.formId == formId) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt));
   }
@@ -289,13 +312,14 @@ class _$HomeDTOImpl implements _HomeDTO {
   int get hashCode => Object.hash(
     runtimeType,
     id,
-    name,
+    formType,
+    formName,
+    createdAt,
     slug,
     image_url,
     formId,
     const DeepCollectionEquality().hash(_data),
     status,
-    createdAt,
     updatedAt,
   );
 
@@ -316,13 +340,14 @@ class _$HomeDTOImpl implements _HomeDTO {
 abstract class _HomeDTO implements HomeDTO {
   const factory _HomeDTO({
     final int? id,
-    final String? name,
+    @JsonKey(name: 'form_type') final int? formType,
+    @JsonKey(name: 'form_name') final String? formName,
+    final String? createdAt,
     final String? slug,
     final String? image_url,
     final String? formId,
     final Map<String, dynamic>? data,
     final String? status,
-    final String? createdAt,
     final String? updatedAt,
   }) = _$HomeDTOImpl;
 
@@ -331,7 +356,13 @@ abstract class _HomeDTO implements HomeDTO {
   @override
   int? get id;
   @override
-  String? get name;
+  @JsonKey(name: 'form_type')
+  int? get formType;
+  @override
+  @JsonKey(name: 'form_name')
+  String? get formName;
+  @override
+  String? get createdAt;
   @override
   String? get slug;
   @override
@@ -342,8 +373,6 @@ abstract class _HomeDTO implements HomeDTO {
   Map<String, dynamic>? get data;
   @override
   String? get status;
-  @override
-  String? get createdAt;
   @override
   String? get updatedAt;
 

@@ -14,7 +14,6 @@ abstract class IAuthFacade {
   Future<Either<AuthFailure, String>> login({
     required String email,
     required String password,
-    required bool isRemember,
   });
   Future<Either<AuthFailure, String>> logout();
   Future<Either<AuthFailure, String>> editProfile({

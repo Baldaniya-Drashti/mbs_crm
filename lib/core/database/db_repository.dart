@@ -11,7 +11,7 @@ class DBRepository {
     final db = await AppDatabase().database;
     Map<String, dynamic> map = {
       'form_id': form.formId,
-      'name': form.name,
+      'name': form.formName,
       'slug': form.slug,
       'data': jsonEncode(form.data),
       'status': form.status ?? 'draft',
@@ -26,7 +26,7 @@ class DBRepository {
     final db = await AppDatabase().database;
     Map<String, dynamic> map = {
       'form_id': form.formId,
-      'name': form.name,
+      'name': form.formName,
       'slug': form.slug,
       'data': jsonEncode(form.data),
       'status': form.status ?? 'draft',

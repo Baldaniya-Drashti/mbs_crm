@@ -34,7 +34,15 @@ class AppRouter extends RootStackRouter {
       transition: TransitionsBuilders.slideBottom,
       duration: 300,
     ),
-    _custom(page: HomeView.page),
+
     _custom(page: DynamicForm.page),
+    AutoRoute(
+      page: MainTabView.page,
+      children: [
+        _custom(page: HomeView.page),
+        _custom(page: MyAccountView.page),
+      ],
+    ),
+    _custom(page: AddUser.page),
   ];
 }

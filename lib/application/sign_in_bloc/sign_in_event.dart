@@ -5,6 +5,5 @@ class SignInEvent with _$SignInEvent {
   const factory SignInEvent.emailChanged(String email) = EmailChanged;
   const factory SignInEvent.passwordChanged(String password) = PasswordChanged;
   const factory SignInEvent.obscureChanged() = ObscureChanged;
-  const factory SignInEvent.rememberMeEvent() = RememberMeEvent;
   const factory SignInEvent.loginPressed() = LoginPressed;
 }

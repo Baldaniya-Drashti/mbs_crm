@@ -22,7 +22,6 @@ mixin _$SignInEvent {
     required TResult Function(String email) emailChanged,
     required TResult Function(String password) passwordChanged,
     required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
     required TResult Function() loginPressed,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -30,7 +29,6 @@ mixin _$SignInEvent {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String password)? passwordChanged,
     TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
     TResult? Function()? loginPressed,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,7 +36,6 @@ mixin _$SignInEvent {
     TResult Function(String email)? emailChanged,
     TResult Function(String password)? passwordChanged,
     TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
     TResult Function()? loginPressed,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -47,7 +44,6 @@ mixin _$SignInEvent {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
     required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
     required TResult Function(LoginPressed value) loginPressed,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -55,7 +51,6 @@ mixin _$SignInEvent {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
     TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
     TResult? Function(LoginPressed value)? loginPressed,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -63,7 +58,6 @@ mixin _$SignInEvent {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
     TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
     TResult Function(LoginPressed value)? loginPressed,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -164,7 +158,6 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String password) passwordChanged,
     required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
     required TResult Function() loginPressed,
   }) {
     return emailChanged(email);
@@ -176,7 +169,6 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String password)? passwordChanged,
     TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
     TResult? Function()? loginPressed,
   }) {
     return emailChanged?.call(email);
@@ -188,7 +180,6 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String password)? passwordChanged,
     TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
     TResult Function()? loginPressed,
     required TResult orElse(),
   }) {
@@ -204,7 +195,6 @@ class _$EmailChangedImpl implements EmailChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
     required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
     required TResult Function(LoginPressed value) loginPressed,
   }) {
     return emailChanged(this);
@@ -216,7 +206,6 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
     TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
     TResult? Function(LoginPressed value)? loginPressed,
   }) {
     return emailChanged?.call(this);
@@ -228,7 +217,6 @@ class _$EmailChangedImpl implements EmailChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
     TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
     TResult Function(LoginPressed value)? loginPressed,
     required TResult orElse(),
   }) {
@@ -328,7 +316,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String password) passwordChanged,
     required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
     required TResult Function() loginPressed,
   }) {
     return passwordChanged(password);
@@ -340,7 +327,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String password)? passwordChanged,
     TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
     TResult? Function()? loginPressed,
   }) {
     return passwordChanged?.call(password);
@@ -352,7 +338,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String password)? passwordChanged,
     TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
     TResult Function()? loginPressed,
     required TResult orElse(),
   }) {
@@ -368,7 +353,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
     required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
     required TResult Function(LoginPressed value) loginPressed,
   }) {
     return passwordChanged(this);
@@ -380,7 +364,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
     TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
     TResult? Function(LoginPressed value)? loginPressed,
   }) {
     return passwordChanged?.call(this);
@@ -392,7 +375,6 @@ class _$PasswordChangedImpl implements PasswordChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
     TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
     TResult Function(LoginPressed value)? loginPressed,
     required TResult orElse(),
   }) {
@@ -461,7 +443,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     required TResult Function(String email) emailChanged,
     required TResult Function(String password) passwordChanged,
     required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
     required TResult Function() loginPressed,
   }) {
     return obscureChanged();
@@ -473,7 +454,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String password)? passwordChanged,
     TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
     TResult? Function()? loginPressed,
   }) {
     return obscureChanged?.call();
@@ -485,7 +465,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     TResult Function(String email)? emailChanged,
     TResult Function(String password)? passwordChanged,
     TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
     TResult Function()? loginPressed,
     required TResult orElse(),
   }) {
@@ -501,7 +480,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
     required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
     required TResult Function(LoginPressed value) loginPressed,
   }) {
     return obscureChanged(this);
@@ -513,7 +491,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
     TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
     TResult? Function(LoginPressed value)? loginPressed,
   }) {
     return obscureChanged?.call(this);
@@ -525,7 +502,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
     TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
     TResult Function(LoginPressed value)? loginPressed,
     required TResult orElse(),
   }) {
@@ -538,131 +514,6 @@ class _$ObscureChangedImpl implements ObscureChanged {
 
 abstract class ObscureChanged implements SignInEvent {
   const factory ObscureChanged() = _$ObscureChangedImpl;
-}
-
-/// @nodoc
-abstract class _$$RememberMeEventImplCopyWith<$Res> {
-  factory _$$RememberMeEventImplCopyWith(
-    _$RememberMeEventImpl value,
-    $Res Function(_$RememberMeEventImpl) then,
-  ) = __$$RememberMeEventImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$RememberMeEventImplCopyWithImpl<$Res>
-    extends _$SignInEventCopyWithImpl<$Res, _$RememberMeEventImpl>
-    implements _$$RememberMeEventImplCopyWith<$Res> {
-  __$$RememberMeEventImplCopyWithImpl(
-    _$RememberMeEventImpl _value,
-    $Res Function(_$RememberMeEventImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of SignInEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$RememberMeEventImpl implements RememberMeEvent {
-  const _$RememberMeEventImpl();
-
-  @override
-  String toString() {
-    return 'SignInEvent.rememberMeEvent()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RememberMeEventImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String email) emailChanged,
-    required TResult Function(String password) passwordChanged,
-    required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
-    required TResult Function() loginPressed,
-  }) {
-    return rememberMeEvent();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(String email)? emailChanged,
-    TResult? Function(String password)? passwordChanged,
-    TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
-    TResult? Function()? loginPressed,
-  }) {
-    return rememberMeEvent?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String email)? emailChanged,
-    TResult Function(String password)? passwordChanged,
-    TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
-    TResult Function()? loginPressed,
-    required TResult orElse(),
-  }) {
-    if (rememberMeEvent != null) {
-      return rememberMeEvent();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(EmailChanged value) emailChanged,
-    required TResult Function(PasswordChanged value) passwordChanged,
-    required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
-    required TResult Function(LoginPressed value) loginPressed,
-  }) {
-    return rememberMeEvent(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(EmailChanged value)? emailChanged,
-    TResult? Function(PasswordChanged value)? passwordChanged,
-    TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
-    TResult? Function(LoginPressed value)? loginPressed,
-  }) {
-    return rememberMeEvent?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(EmailChanged value)? emailChanged,
-    TResult Function(PasswordChanged value)? passwordChanged,
-    TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
-    TResult Function(LoginPressed value)? loginPressed,
-    required TResult orElse(),
-  }) {
-    if (rememberMeEvent != null) {
-      return rememberMeEvent(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class RememberMeEvent implements SignInEvent {
-  const factory RememberMeEvent() = _$RememberMeEventImpl;
 }
 
 /// @nodoc
@@ -711,7 +562,6 @@ class _$LoginPressedImpl implements LoginPressed {
     required TResult Function(String email) emailChanged,
     required TResult Function(String password) passwordChanged,
     required TResult Function() obscureChanged,
-    required TResult Function() rememberMeEvent,
     required TResult Function() loginPressed,
   }) {
     return loginPressed();
@@ -723,7 +573,6 @@ class _$LoginPressedImpl implements LoginPressed {
     TResult? Function(String email)? emailChanged,
     TResult? Function(String password)? passwordChanged,
     TResult? Function()? obscureChanged,
-    TResult? Function()? rememberMeEvent,
     TResult? Function()? loginPressed,
   }) {
     return loginPressed?.call();
@@ -735,7 +584,6 @@ class _$LoginPressedImpl implements LoginPressed {
     TResult Function(String email)? emailChanged,
     TResult Function(String password)? passwordChanged,
     TResult Function()? obscureChanged,
-    TResult Function()? rememberMeEvent,
     TResult Function()? loginPressed,
     required TResult orElse(),
   }) {
@@ -751,7 +599,6 @@ class _$LoginPressedImpl implements LoginPressed {
     required TResult Function(EmailChanged value) emailChanged,
     required TResult Function(PasswordChanged value) passwordChanged,
     required TResult Function(ObscureChanged value) obscureChanged,
-    required TResult Function(RememberMeEvent value) rememberMeEvent,
     required TResult Function(LoginPressed value) loginPressed,
   }) {
     return loginPressed(this);
@@ -763,7 +610,6 @@ class _$LoginPressedImpl implements LoginPressed {
     TResult? Function(EmailChanged value)? emailChanged,
     TResult? Function(PasswordChanged value)? passwordChanged,
     TResult? Function(ObscureChanged value)? obscureChanged,
-    TResult? Function(RememberMeEvent value)? rememberMeEvent,
     TResult? Function(LoginPressed value)? loginPressed,
   }) {
     return loginPressed?.call(this);
@@ -775,7 +621,6 @@ class _$LoginPressedImpl implements LoginPressed {
     TResult Function(EmailChanged value)? emailChanged,
     TResult Function(PasswordChanged value)? passwordChanged,
     TResult Function(ObscureChanged value)? obscureChanged,
-    TResult Function(RememberMeEvent value)? rememberMeEvent,
     TResult Function(LoginPressed value)? loginPressed,
     required TResult orElse(),
   }) {
@@ -796,8 +641,6 @@ mixin _$SignInState {
   Password get password => throw _privateConstructorUsedError;
   bool get isObscure => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  bool get rememberMe => throw _privateConstructorUsedError;
   bool get showError => throw _privateConstructorUsedError;
 
   /// Create a copy of SignInState
@@ -819,8 +662,6 @@ abstract class $SignInStateCopyWith<$Res> {
     Password password,
     bool isObscure,
     bool isSubmitting,
-    bool isLoading,
-    bool rememberMe,
     bool showError,
   });
 }
@@ -844,8 +685,6 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
     Object? password = null,
     Object? isObscure = null,
     Object? isSubmitting = null,
-    Object? isLoading = null,
-    Object? rememberMe = null,
     Object? showError = null,
   }) {
     return _then(
@@ -865,14 +704,6 @@ class _$SignInStateCopyWithImpl<$Res, $Val extends SignInState>
             isSubmitting: null == isSubmitting
                 ? _value.isSubmitting
                 : isSubmitting // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            isLoading: null == isLoading
-                ? _value.isLoading
-                : isLoading // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            rememberMe: null == rememberMe
-                ? _value.rememberMe
-                : rememberMe // ignore: cast_nullable_to_non_nullable
                       as bool,
             showError: null == showError
                 ? _value.showError
@@ -898,8 +729,6 @@ abstract class _$$SignInStateImplCopyWith<$Res>
     Password password,
     bool isObscure,
     bool isSubmitting,
-    bool isLoading,
-    bool rememberMe,
     bool showError,
   });
 }
@@ -922,8 +751,6 @@ class __$$SignInStateImplCopyWithImpl<$Res>
     Object? password = null,
     Object? isObscure = null,
     Object? isSubmitting = null,
-    Object? isLoading = null,
-    Object? rememberMe = null,
     Object? showError = null,
   }) {
     return _then(
@@ -944,14 +771,6 @@ class __$$SignInStateImplCopyWithImpl<$Res>
             ? _value.isSubmitting
             : isSubmitting // ignore: cast_nullable_to_non_nullable
                   as bool,
-        isLoading: null == isLoading
-            ? _value.isLoading
-            : isLoading // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        rememberMe: null == rememberMe
-            ? _value.rememberMe
-            : rememberMe // ignore: cast_nullable_to_non_nullable
-                  as bool,
         showError: null == showError
             ? _value.showError
             : showError // ignore: cast_nullable_to_non_nullable
@@ -969,8 +788,6 @@ class _$SignInStateImpl implements _SignInState {
     required this.password,
     required this.isObscure,
     required this.isSubmitting,
-    required this.isLoading,
-    required this.rememberMe,
     required this.showError,
   });
 
@@ -983,15 +800,11 @@ class _$SignInStateImpl implements _SignInState {
   @override
   final bool isSubmitting;
   @override
-  final bool isLoading;
-  @override
-  final bool rememberMe;
-  @override
   final bool showError;
 
   @override
   String toString() {
-    return 'SignInState(email: $email, password: $password, isObscure: $isObscure, isSubmitting: $isSubmitting, isLoading: $isLoading, rememberMe: $rememberMe, showError: $showError)';
+    return 'SignInState(email: $email, password: $password, isObscure: $isObscure, isSubmitting: $isSubmitting, showError: $showError)';
   }
 
   @override
@@ -1006,10 +819,6 @@ class _$SignInStateImpl implements _SignInState {
                 other.isObscure == isObscure) &&
             (identical(other.isSubmitting, isSubmitting) ||
                 other.isSubmitting == isSubmitting) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
-            (identical(other.rememberMe, rememberMe) ||
-                other.rememberMe == rememberMe) &&
             (identical(other.showError, showError) ||
                 other.showError == showError));
   }
@@ -1021,8 +830,6 @@ class _$SignInStateImpl implements _SignInState {
     password,
     isObscure,
     isSubmitting,
-    isLoading,
-    rememberMe,
     showError,
   );
 
@@ -1041,8 +848,6 @@ abstract class _SignInState implements SignInState {
     required final Password password,
     required final bool isObscure,
     required final bool isSubmitting,
-    required final bool isLoading,
-    required final bool rememberMe,
     required final bool showError,
   }) = _$SignInStateImpl;
 
@@ -1054,10 +859,6 @@ abstract class _SignInState implements SignInState {
   bool get isObscure;
   @override
   bool get isSubmitting;
-  @override
-  bool get isLoading;
-  @override
-  bool get rememberMe;
   @override
   bool get showError;
 

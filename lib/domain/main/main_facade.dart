@@ -10,6 +10,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 
 @LazySingleton(as: IMainFacade)
 class MainFacade implements IMainFacade {
@@ -19,14 +20,79 @@ class MainFacade implements IMainFacade {
   MainFacade({required this.apiService});
 
   @override
-  Future<Either<MainFailure, CommonResponse>> homeListAPI({
+  Future<Either<MainFailure, CommonResponse>> formListAPI({
     required int page,
   }) async {
     try {
-      Map<String, dynamic> mapData = {'page': page, 'per_page': _perPage};
-      final response = await apiService.getMethod(
-        ApiConstants.home,
-        queryParameters: mapData,
+      Map<String, dynamic> mapData = {'page': page, 'limit': _perPage};
+      final response = await apiService.postMethod(
+        ApiConstants.formList,
+        mapData,
+      );
+
+      return right(response);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        var commonRespose = CommonResponse.fromJson(err.response?.data);
+        if (commonRespose.dioMessage != null) {
+          return left(
+            MainFailure.showAPIResponseMessage(commonRespose.dioMessage!),
+          );
+        }
+        return left(MainFailure.showAPIResponseMessage(err.message ?? ''));
+      } else if (err.type == DioExceptionType.connectionError) {
+        return left(const MainFailure.networkError());
+      }
+
+      return left(const MainFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, CommonResponse>> userListAPI({
+    required int page,
+  }) async {
+    try {
+      Map<String, dynamic> mapData = {'page': page, 'limit': _perPage};
+      final response = await apiService.postMethod(ApiConstants.users, mapData);
+
+      return right(response);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        var commonRespose = CommonResponse.fromJson(err.response?.data);
+        if (commonRespose.dioMessage != null) {
+          return left(
+            MainFailure.showAPIResponseMessage(commonRespose.dioMessage!),
+          );
+        }
+        return left(MainFailure.showAPIResponseMessage(err.message ?? ''));
+      } else if (err.type == DioExceptionType.connectionError) {
+        return left(const MainFailure.networkError());
+      }
+
+      return left(const MainFailure.serverError());
+    }
+  }
+
+  @override
+  Future<Either<MainFailure, CommonResponse>> addFormAPI({
+    required HomeDTO form,
+    /* required String formType,
+    required String formName,
+    required dynamic formJson, */
+  }) async {
+    try {
+      Map<String, dynamic> mapData = {
+        'form_type': form.formType,
+        'form_name': form.slug,
+        'form_json': form.data.toString(),
+      };
+
+      print("Sending Data---> ${jsonEncode(form)}");
+
+      final response = await apiService.postMethod(
+        ApiConstants.addForm,
+        mapData,
       );
 
       return right(response);
@@ -53,7 +119,6 @@ class MainFacade implements IMainFacade {
       "${ApiConstants.jsonBaseUrl}$formId.json",
     );
     final json = jsonDecode(jsonString);
-
     return DynamicFormDTO.fromJson(json);
   }
 }

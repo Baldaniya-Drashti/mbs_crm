@@ -43,7 +43,7 @@ class AuthFacade implements IAuthFacade {
       );
 
       final account = CurrentUserDTO.fromJson(response.data);
-      await setToken(account.token ?? "");
+      await setToken(account.auth?.token ?? "");
       await setUserData(account);
       // setCurrentUser(account);
       return right(response.dioMessage ?? "");
@@ -68,7 +68,6 @@ class AuthFacade implements IAuthFacade {
   Future<Either<AuthFailure, String>> login({
     required String email,
     required String password,
-    required bool isRemember,
   }) async {
     try {
       final response = await apiService.postMethod(ApiConstants.login, {
@@ -78,7 +77,7 @@ class AuthFacade implements IAuthFacade {
 
       final account = CurrentUserDTO.fromJson(response.data);
 
-      await setToken(account.token ?? "");
+      await setToken(account.auth?.token ?? "");
       await setUserData(account);
       return right(response.dioMessage ?? "");
     } on DioException catch (err) {
@@ -103,7 +102,6 @@ class AuthFacade implements IAuthFacade {
     try {
       return apiService.getMethod(ApiConstants.logout).then((value) async {
         clearLocalStorage();
-
         return right(value.dioMessage ?? "");
       });
     } on DioException catch (err) {
@@ -151,7 +149,12 @@ class AuthFacade implements IAuthFacade {
   @override
   Future<Either<AuthFailure, String>> getCurrentUser() async {
     try {
-      final response = await apiService.getMethod(ApiConstants.getUserDetail);
+      final currentUser = await getUserData();
+      final response = await apiService.getMethod(
+        ApiConstants.getUserDetail,
+
+        queryParameters: {'id': currentUser.userId},
+      );
 
       final account = CurrentUserDTO.fromJson(response.data);
 

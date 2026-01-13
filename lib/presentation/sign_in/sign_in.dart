@@ -1,7 +1,6 @@
 import 'package:mbs_crm/application/sign_in_bloc/sign_in_bloc.dart';
 import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
-import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
@@ -123,7 +122,7 @@ class SignIn extends StatelessWidget {
                                         empty: (value) =>
                                             StringConstant.pleaseEnterPassword,
                                         shortPassword: (_) => StringConstant
-                                            .passwordShouldBeMinimum8Digit,
+                                            .passwordShouldBeMinimum3Digit,
                                         /* invalidPassword: (value) => StringConstant
                                                       .invalidPasswordErrorText, */
                                         orElse: () => null,
@@ -133,13 +132,11 @@ class SignIn extends StatelessWidget {
                               ),
                               Gap(getSize(40)),
                               CommonButton(
+                                isSubmitting: state.isSubmitting,
                                 onPressed: () {
-                                  context.router.replaceAll([
-                                    PageRouteInfo(HomeView.name),
-                                  ]);
-                                  /* context.read<SignInBloc>().add(
+                                  context.read<SignInBloc>().add(
                                     SignInEvent.loginPressed(),
-                                  ); */
+                                  );
                                 },
                                 buttonText: StringConstant.logIn,
                               ),

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:mbs_crm/application/account_bloc/account_bloc.dart';
 import 'package:mbs_crm/application/auth_status/auth_status_bloc.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
@@ -17,6 +18,10 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) =>
+              getIt<AccountBloc>()..add(AccountEvent.getAccountDetailEvent()),
+        ),
         BlocProvider(
           create: (context) => getIt<AuthStatusBloc>()
             ..add(const AuthStatusEvent.started())

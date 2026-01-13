@@ -16,6 +16,9 @@ import 'package:mbs_crm/application/auth_status/auth_status_bloc.dart' as _i493;
 import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart'
     as _i53;
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart' as _i1046;
+import 'package:mbs_crm/application/main/favorites_bloc/favorites_bloc.dart'
+    as _i439;
+import 'package:mbs_crm/application/main/main_tab/main_tab_bloc.dart' as _i913;
 import 'package:mbs_crm/application/onboarding_bloc/onboarding_bloc.dart'
     as _i273;
 import 'package:mbs_crm/application/sign_in_bloc/sign_in_bloc.dart' as _i487;
@@ -46,6 +49,9 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i53.DynamicFormBloc(gh<_i634.IMainFacade>()),
     );
     gh.factory<_i1046.HomeBloc>(() => _i1046.HomeBloc(gh<_i634.IMainFacade>()));
+    gh.factory<_i439.FavoritesBloc>(
+      () => _i439.FavoritesBloc(gh<_i634.IMainFacade>()),
+    );
     gh.factory<_i487.SignInBloc>(
       () => _i487.SignInBloc(gh<_i774.IAuthFacade>()),
     );
@@ -54,6 +60,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i70.AccountBloc>(
       () => _i70.AccountBloc(gh<_i774.IAuthFacade>()),
+    );
+    gh.factory<_i913.MainTabBloc>(
+      () => _i913.MainTabBloc(gh<_i774.IAuthFacade>()),
     );
     return this;
   }

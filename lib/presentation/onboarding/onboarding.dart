@@ -82,7 +82,6 @@ class OnBoarding extends StatelessWidget {
                             ],
                           ),
                         ),
-
                         Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: getSize(20),

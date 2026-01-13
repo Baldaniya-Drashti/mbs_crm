@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
-import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
+import 'package:mbs_crm/infrastructure/user_dto/user_dto.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/styles.dart';
 
-class FormTile extends StatelessWidget {
-  final HomeDTO form;
-  const FormTile({super.key, required this.form});
+class UserDetailTile extends StatelessWidget {
+  final UserDTO user;
+  const UserDetailTile({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -29,21 +28,16 @@ class FormTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              BaseText(text: "${form.id ?? 0}. "),
-              Expanded(child: BaseText(text: form.name ?? "", maxLines: 2)),
+              BaseText(text: "${user.id ?? 0}. "),
+              Expanded(
+                child: BaseText(
+                  text: "${user.first_name ?? ""} ${user.last_name ?? ""}",
+                  maxLines: 2,
+                ),
+              ),
             ],
           ),
           Gap(getSize(10)),
-          Align(
-            alignment: Alignment.centerRight,
-            child: BaseText(
-              text: DateFormat(
-                'dd-MM-yyyy',
-              ).format(DateTime.parse(form.createdAt ?? "")),
-              fontSize: 12,
-              textColor: AppColors.grey,
-            ),
-          ),
         ],
       ),
     );

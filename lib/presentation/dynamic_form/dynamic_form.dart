@@ -8,6 +8,7 @@ import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/form_dto/form_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
@@ -19,9 +20,9 @@ import 'package:mbs_crm/presentation/dynamic_form/widgets/build_fields.dart';
 
 @RoutePage(name: 'DynamicForm')
 class DynamicForm extends StatelessWidget {
-  final String formType;
+  final FormDTO form;
   final int? id;
-  const DynamicForm({this.id, super.key, required this.formType});
+  const DynamicForm({this.id, super.key, required this.form});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class DynamicForm extends StatelessWidget {
       body: BlocProvider(
         create: (context) =>
             getIt<DynamicFormBloc>()
-              ..add(DynamicFormEvent.loadForm(formType, id: id)),
+              ..add(DynamicFormEvent.loadForm(form, id: id)),
         child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
           builder: (context, state) {
             final schema = state.schema ?? DynamicFormDTO();
