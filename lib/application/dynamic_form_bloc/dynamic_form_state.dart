@@ -4,8 +4,7 @@ part of 'dynamic_form_bloc.dart';
 class DynamicFormState with _$DynamicFormState {
   const factory DynamicFormState({
     DynamicFormDTO? schema,
-    FormDTO? selectedForm,
-    int? updateFormId,
+    HomeDTO? existingForm,
     @Default(false) bool isLoading,
     @Default(false) bool isSubmitting,
     @Default(false) bool success,

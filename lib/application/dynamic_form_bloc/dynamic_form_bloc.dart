@@ -9,12 +9,12 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/database/db_repository.dart';
+import 'package:mbs_crm/core/helper/form_identifier.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
-import 'package:mbs_crm/infrastructure/form_dto/form_dto.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
@@ -38,30 +38,48 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
     on<DynamicFormEvent>((event, emit) async {
       await event.map(
         loadForm: (e) async {
-          emit(
-            state.copyWith(
-              isLoading: true,
-              updateFormId: e.id,
-              selectedForm: e.form,
-            ),
-          );
+          emit(state.copyWith(isLoading: true));
           try {
-            final schema = await mainFacade.loadSchema(e.form.slug ?? '');
+            final schema = await mainFacade.loadSchema(e.formSlug);
             emit(state.copyWith(schema: schema));
 
-            if (e.id != null) {
-              add(DynamicFormEvent.getFormDetails(e.id ?? -1));
-            } else {
+            if (e.formId == null) {
               emit(state.copyWith(isLoading: false));
+              return;
             }
+
+            add(DynamicFormEvent.getFormDetails(e.formId!));
           } catch (e) {
             print("Catch Error---> $e");
           }
         },
-
         getFormDetails: (e) async {
           try {
-            final form = await DBRepository().getFormById(e.id);
+            final isOnline = await NetworkListener().isOnline();
+            HomeDTO? form;
+            if (isOnline && e.formId.serverId != null) {
+              final res = await mainFacade.getFormDetailAPI(
+                id: e.formId.serverId!,
+              );
+              res.fold(
+                (l) {
+                  showError(
+                    message: l.maybeMap(
+                      showAPIResponseMessage: (value) => value.message,
+                      networkError: (value) =>
+                          'Please check your internet connectivity',
+                      orElse: () => "Server Error. Try again later.",
+                    ),
+                  ).show(currentContext);
+                },
+                (r) {
+                  form = r;
+                },
+              );
+            } else {
+              print("e.formId.localId---> ${e.formId.localId}");
+              form = await DBRepository().getFormByLocalId(e.formId.localId!);
+            }
 
             final rawData = Map<String, dynamic>.from(form?.data ?? {});
             debugPrint(
@@ -78,7 +96,9 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
               /// ---------- TABLES ----------
               if (sectionValue.containsKey('tables')) {
-                final tables = sectionValue['tables'] as Map<String, dynamic>;
+                final tables = Map<String, dynamic>.from(
+                  sectionValue['tables'],
+                );
 
                 tables.forEach((tableName, rows) {
                   final rowMap = rows as Map<String, dynamic>;
@@ -88,7 +108,8 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
                     colMap.forEach((colKey, value) {
                       final fieldKey =
-                          'table_${tableName}_row_${rowIndex}_$colKey';
+                          'table_${tableName}_row_${rowIndex.replaceFirst('row_', '')}_$colKey';
+
                       flatData[fieldKey] = value;
                       tableCache[fieldKey] = value?.toString() ?? '';
                     });
@@ -106,7 +127,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   final answer = fieldValue['answer'];
 
                   final fieldSchema = state.schema?.sections
-                      ?.expand((s) => s.fields ?? [])
+                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
                       .firstWhere(
                         (f) => f.key == fieldKey,
                         orElse: () => FormFieldSchema(key: fieldKey),
@@ -133,7 +154,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                 /// ---- NORMAL FIELD ----
                 else {
                   final fieldSchema = state.schema?.sections
-                      ?.expand((s) => s.fields ?? [])
+                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
                       .firstWhere(
                         (f) => f.key == fieldKey,
                         orElse: () => FormFieldSchema(key: fieldKey),
@@ -172,6 +193,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             emit(
               state.copyWith(
                 isLoading: false,
+                existingForm: form,
                 attachmentCache: restoredAttachments,
               ),
             );
@@ -180,6 +202,155 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           }
         },
 
+        /* getFormDetails: (e) async {
+          try {
+            final isOnline = await NetworkListener().isOnline();
+            HomeDTO? form;
+            if (isOnline && e.formId.serverId != null) {
+              final res = await mainFacade.getFormDetailAPI(
+                id: e.formId.serverId!,
+              );
+              res.fold(
+                (l) {
+                  showError(
+                    message: l.maybeMap(
+                      showAPIResponseMessage: (value) => value.message,
+                      networkError: (value) =>
+                          'Please check your internet connectivity',
+                      orElse: () => "Server Error. Try again later.",
+                    ),
+                  ).show(currentContext);
+                },
+                (r) {
+                  form = r;
+                },
+              );
+            } else {
+              print("e.formId.localId---> ${e.formId.localId}");
+              form = await DBRepository().getFormByLocalId(e.formId.localId!);
+            }
+
+            final rawData = Map<String, dynamic>.from(form?.data ?? {});
+            debugPrint(
+              'Edit restored OK---> ${jsonEncode(form)}',
+              wrapWidth: 5000,
+            );
+
+            final Map<String, dynamic> flatData = {};
+            final Map<String, List<AttachmentFileDTO>> restoredAttachments = {};
+
+            /// ---------- LOOP SECTIONS ----------
+            rawData.forEach((sectionKey, sectionValue) {
+              if (sectionValue is! Map<String, dynamic>) return;
+
+              /// ---------- TABLES ----------
+              if (sectionValue.containsKey('tables')) {
+                final tables = Map<String, dynamic>.from(
+                  sectionValue['tables'],
+                );
+
+                tables.forEach((tableName, rows) {
+                  final rowMap = rows as Map<String, dynamic>;
+
+                  rowMap.forEach((rowIndex, columns) {
+                    final colMap = columns as Map<String, dynamic>;
+
+                    colMap.forEach((colKey, value) {
+                      final fieldKey =
+                          'table_${tableName}_row_${rowIndex.replaceFirst('row_', '')}_$colKey';
+
+                      flatData[fieldKey] = value;
+                      tableCache[fieldKey] = value?.toString() ?? '';
+                    });
+                  });
+                });
+              }
+
+              /// ---------- NORMAL / DROPDOWN ----------
+              sectionValue.forEach((fieldKey, fieldValue) {
+                if (fieldKey == 'tables') return;
+
+                /// ---- DROPDOWN OBJECT ----
+                if (fieldValue is Map<String, dynamic> &&
+                    fieldValue.containsKey('answer')) {
+                  final answer = fieldValue['answer'];
+
+                  final fieldSchema = state.schema?.sections
+                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
+                      .firstWhere(
+                        (f) => f.key == fieldKey,
+                        orElse: () => FormFieldSchema(key: fieldKey),
+                      );
+
+                  flatData[fieldKey] = normalizeFromJson(
+                    DynamicFormHelper.answerToValue(answer),
+                    fieldSchema,
+                  );
+
+                  /// ---- REASON ----
+                  if (fieldValue['reason'] != null) {
+                    flatData['${fieldKey}_reason'] = fieldValue['reason'];
+                  }
+
+                  /// ---- DROPDOWN ATTACHMENTS ----
+                  if (fieldValue['attachments'] is List) {
+                    restoredAttachments['${fieldKey}_attachments'] =
+                        (fieldValue['attachments'] as List)
+                            .map((e) => AttachmentFileDTO.fromJson(e))
+                            .toList();
+                  }
+                }
+                /// ---- NORMAL FIELD ----
+                else {
+                  final fieldSchema = state.schema?.sections
+                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
+                      .firstWhere(
+                        (f) => f.key == fieldKey,
+                        orElse: () => FormFieldSchema(key: fieldKey),
+                      );
+
+                  flatData[fieldKey] = normalizeFromJson(
+                    fieldValue,
+                    fieldSchema,
+                  );
+                }
+              });
+            });
+
+            /// ---------- GLOBAL ATTACHMENTS ----------
+            final attachments = rawData['attachments'];
+
+            if (attachments is List) {
+              restoredAttachments['attachments'] = attachments
+                  .map((e) => AttachmentFileDTO.fromJson(e))
+                  .toList();
+            } else if (attachments is Map<String, dynamic>) {
+              attachments.forEach((key, list) {
+                if (list is List) {
+                  restoredAttachments[key] = list
+                      .map((e) => AttachmentFileDTO.fromJson(e))
+                      .toList();
+                }
+              });
+            }
+
+            /// ---------- PATCH FORM ----------
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              formKey.currentState?.patchValue(flatData);
+            });
+
+            emit(
+              state.copyWith(
+                isLoading: false,
+                existingForm: form,
+                attachmentCache: restoredAttachments,
+              ),
+            );
+          } catch (e) {
+            debugPrint("Error -- getFormDetails ---> $e");
+          }
+        },
+         */
         onDropDownChanged: (e) {
           final formState = formKey.currentState;
           if (formState == null) return;
@@ -248,22 +419,21 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             ),
           );
         },
-
-        submitForm: (e) async {
+        createForm: (e) async {
           emit(state.copyWith(isSubmitting: true, success: false));
 
           try {
             final payload = _buildPayload(e);
-            final form = _buildForm(payload);
+            final form = _buildForm(payload).copyWith(
+              localId: const Uuid().v4(),
+              createdAt: DateTime.now().toIso8601String(),
+            );
+
+            await DBRepository().saveFormOffline(form: form);
 
             final isOnline = await NetworkListener().isOnline();
             if (isOnline) {
-              var res = await mainFacade.addFormAPI(
-                form: form,
-                // formName: state.selectedForm?.slug ?? '',
-                // formType: (state.selectedForm?.id ?? -1).toString(),
-                // formJson: form.toJson().toString(),
-              );
+              var res = await mainFacade.addFormAPI(form: form);
 
               res.fold(
                 (l) {
@@ -277,143 +447,65 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   ).show(currentContext);
                   emit(state.copyWith(isSubmitting: false, success: false));
                 },
-                (r) {
-                  emit(state.copyWith(isSubmitting: false, success: true));
-                  currentContext.maybePop(true);
+                (r) async {
+                  print("Create Mark Sync---> ${r?.server_id}");
+                  await DBRepository().markAsSynced(
+                    localId: form.localId,
+                    serverId: r?.server_id ?? -1,
+                  );
                 },
               );
-            } else {
-              await _saveOffline(form);
-              emit(state.copyWith(isSubmitting: false, success: true));
-              currentContext.maybePop(true);
             }
+            emit(state.copyWith(isSubmitting: false, success: true));
+            Navigator.pop(currentContext, true);
           } catch (e) {
-            print("Submit Form Error: $e");
+            print("Create Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
           }
-          /* final data = Map<String, dynamic>.from(e.values);
-          data.addAll(tableCache);
+        },
+        updateForm: (e) async {
+          emit(state.copyWith(isSubmitting: true, success: false));
 
           try {
-            Map<String, dynamic> tables = {};
-
-            data.forEach((key, value) {
-              if (key.startsWith("table_")) {
-                final parts = key.split("_");
-
-                final tableName = "${parts[1]}_${parts[2]}";
-                final rowIndex = parts[4];
-                final columnKey = parts.sublist(5).join("_");
-
-                tables[tableName] ??= {};
-                tables[tableName][rowIndex] ??= {};
-                tables[tableName][rowIndex][columnKey] = value;
-              }
-            });
-
-            data.removeWhere((key, value) => key.startsWith("table_"));
-
-            /// -------- NEW PAYLOAD ----------
-            final Map<String, dynamic> payload = {};
-            for (FormSection section in state.schema?.sections ?? []) {
-              final sectionKey = (section.title ?? '').toLowerCase().replaceAll(
-                ' ',
-                '_',
-              );
-
-              final Map<String, dynamic> sectionData = {};
-
-              for (FormFieldSchema field in section.fields ?? []) {
-                final key = field.key;
-                if (key == null) continue;
-
-                /// -------- TABLE (FIXED) ----------
-                if (field.type == 'table') {
-                  if (tables.isNotEmpty) {
-                    sectionData['tables'] = tables;
-                  }
-                  continue;
-                }
-
-                /// For non-table fields, ensure value exists
-                if (!data.containsKey(key)) continue;
-
-                /// -------- DROPDOWN ----------
-                if (field.type == 'dropdown') {
-                  final answer = DynamicFormHelper.mapAnswer(data[key]);
-                  if (answer == null) continue;
-
-                  final fieldObj = <String, dynamic>{'answer': answer};
-
-                  if (answer == 2) {
-                    final reason = data['${key}_reason'];
-                    if (reason != null && reason.toString().isNotEmpty) {
-                      fieldObj['reason'] = reason;
-                    }
-
-                    final files = state.attachmentCache['${key}_attachments'];
-                    if (files != null && files.isNotEmpty) {
-                      fieldObj['attachments'] = files
-                          .map((e) => e.toJson())
-                          .toList();
-                    }
-                  }
-
-                  sectionData[key] = fieldObj;
-                  continue;
-                }
-
-                /// -------- NORMAL FIELD ----------
-                sectionData[key] = data[key];
-              }
-
-              if (sectionData.isNotEmpty) {
-                payload[sectionKey] = sectionData;
-              }
-            }
-
-            /// -------- GLOBAL ATTACHMENTS (RESTORED) ----------
-            final List<Map<String, dynamic>> globalFiles = [];
-
-            state.attachmentCache.forEach((key, files) {
-              // skip dropdown attachments
-              if (key.endsWith('_attachments')) return;
-
-              for (final file in files) {
-                globalFiles.add(file.toJson());
-              }
-            });
-
-            if (globalFiles.isNotEmpty) {
-              payload['attachments'] = globalFiles;
-            }
-
-            final cleaned = removeNulls(prepareForJson(payload));
-
-            final form = HomeDTO(
-              id: state.updateFormId,
-              formId: state.schema?.id.toString(),
-              name: state.schema?.title,
-              slug: state.schema?.slug,
-              data: cleaned,
-              status: 'draft',
-              createdAt: DateTime.now().toIso8601String(),
+            final payload = _buildPayload(e);
+            final form = _buildForm(payload).copyWith(
+              localId: e.formId.localId!,
+              server_id: e.formId.serverId,
+              createdAt: state.existingForm?.createdAt,
               updatedAt: DateTime.now().toIso8601String(),
             );
 
-            if (state.updateFormId == null) {
-              await DBRepository().saveFormOffline(form: form);
-            } else {
-              await DBRepository().updateFormOffline(form: form);
+            await DBRepository().updateFormOffline(form: form);
+
+            final isOnline = await NetworkListener().isOnline();
+            if (isOnline) {
+              var res = await mainFacade.updateFormAPI(form: form);
+              res.fold(
+                (l) {
+                  showError(
+                    message: l.maybeMap(
+                      showAPIResponseMessage: (value) => value.message,
+                      networkError: (value) =>
+                          'Please check your internet connectivity',
+                      orElse: () => "Server Error. Try again later.",
+                    ),
+                  ).show(currentContext);
+                  emit(state.copyWith(isSubmitting: false, success: false));
+                },
+                (r) async {
+                  await DBRepository().markAsSynced(
+                    localId: form.localId,
+                    serverId: r?.server_id ?? -1,
+                  );
+                },
+              );
             }
-
-            debugPrint("Sending Data:- ${jsonEncode(cleaned)}");
-
             emit(state.copyWith(isSubmitting: false, success: true));
-            currentContext.maybePop(true);
+            Navigator.pop(currentContext, true);
           } catch (e) {
+            print("Update Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
-          } */
+          }
         },
       );
     });
@@ -427,7 +519,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
     final Map<String, dynamic> payload = {};
 
-    for (final section in state.schema?.sections ?? []) {
+    for (FormSection section in state.schema?.sections ?? []) {
       final sectionKey = (section.title ?? '').toLowerCase().replaceAll(
         ' ',
         '_',
@@ -452,12 +544,13 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
       final parts = key.split("_");
       final tableName = "${parts[1]}_${parts[2]}";
-      final rowIndex = parts[4];
+      final rowIndex = 'row_${parts[4]}';
       final columnKey = parts.sublist(5).join("_");
-
-      tables.putIfAbsent(tableName, () => {});
-      tables[tableName].putIfAbsent(rowIndex, () => {});
-      tables[tableName][rowIndex][columnKey] = value;
+      tables[tableName] ??= <String, dynamic>{};
+      final table = tables[tableName] as Map<String, dynamic>;
+      table[rowIndex] ??= <String, dynamic>{};
+      final row = table[rowIndex] as Map<String, dynamic>;
+      row[columnKey] = value;
     });
 
     return tables;
@@ -470,7 +563,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
   ) {
     final Map<String, dynamic> sectionData = {};
 
-    for (final field in section.fields ?? []) {
+    for (FormFieldSchema field in section.fields ?? []) {
       final key = field.key;
       if (key == null) continue;
 
@@ -490,8 +583,15 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
         }
         continue;
       }
+      final value = data[key];
 
-      sectionData[key] = data[key];
+      if (value == null) continue;
+
+      if (value is String && value.trim().isEmpty) continue;
+      if (value is List && value.isEmpty) continue;
+      if (value is Map && value.isEmpty) continue;
+
+      sectionData[key] = value;
     }
 
     return sectionData;
@@ -536,7 +636,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
   HomeDTO _buildForm(Map<String, dynamic> payload) {
     return HomeDTO(
-      id: state.updateFormId,
       formType: state.schema?.id,
       formName: state.schema?.title,
       slug: state.schema?.slug,
@@ -545,57 +644,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),
     );
-  }
-
-  Future<void> _saveOffline(HomeDTO form) async {
-    if (state.updateFormId == null) {
-      await DBRepository().saveFormOffline(form: form);
-    } else {
-      await DBRepository().updateFormOffline(form: form);
-    }
-  }
-
-  Map<String, dynamic> normalizeFormData(
-    Map<String, dynamic> rawData,
-    DynamicFormDTO schema,
-  ) {
-    final normalized = <String, dynamic>{};
-
-    for (FormSection section in schema.sections ?? []) {
-      for (FormFieldSchema field in section.fields ?? []) {
-        final key = field.key;
-
-        if (key == null || !rawData.containsKey(key)) continue;
-
-        normalized[key] = normalizeFromJson(rawData[key], field);
-      }
-    }
-
-    return normalized;
-  }
-
-  Map<String, dynamic> expandTableValues(Map<String, dynamic> data) {
-    final result = Map<String, dynamic>.from(data);
-
-    if (!data.containsKey('tables')) return result;
-
-    final tables = data['tables'] as Map<String, dynamic>;
-
-    tables.forEach((tableName, rows) {
-      final rowMap = rows as Map<String, dynamic>;
-
-      rowMap.forEach((rowIndex, columns) {
-        final colMap = columns as Map<String, dynamic>;
-
-        colMap.forEach((colKey, value) {
-          final fieldKey = 'table_${tableName}_row_${rowIndex}_$colKey';
-          result[fieldKey] = value;
-        });
-      });
-    });
-
-    result.remove('tables');
-    return result;
   }
 
   dynamic prepareForJson(dynamic value) {

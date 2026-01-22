@@ -5,7 +5,6 @@ import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
-
 import 'package:flutter/services.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {

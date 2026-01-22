@@ -3,55 +3,53 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:mbs_crm/application/account_bloc/account_bloc.dart';
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
-import 'package:mbs_crm/application/main/main_tab/main_tab_bloc.dart';
+import 'package:mbs_crm/application/main/user_main_tab/user_main_tab_bloc.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
+import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:mbs_crm/presentation/core/widgets/dialogs/new_form_list_dialog.dart';
+import 'package:mbs_crm/presentation/core/widgets/dialogs/sync_banner.dart';
+import 'package:mbs_crm/presentation/main/tabs/home/widgets/user_home_view/user_home_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/my_account/my_account.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/app_focus.dart';
 import 'package:mbs_crm/presentation/core/widgets/inputs/custom_app_bar.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/home_view.dart';
-import 'package:mbs_crm/presentation/main/widgets/custom_bottom_navigation.dart';
+import 'package:mbs_crm/presentation/main/widgets/user_bottom_navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart' as autoroute;
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage(name: 'MainTabView')
-class MainTabView extends StatefulWidget {
+@RoutePage(name: 'UserMainTabView')
+class UserMainTabView extends StatefulWidget {
   final bool isFromLogin;
-  const MainTabView({super.key, this.isFromLogin = false});
+  const UserMainTabView({super.key, this.isFromLogin = false});
 
   @override
-  State<MainTabView> createState() => _MainTabViewState();
+  State<UserMainTabView> createState() => _UserMainTabViewState();
 }
 
-class _MainTabViewState extends State<MainTabView> {
+class _UserMainTabViewState extends State<UserMainTabView> {
   @override
   void initState() {
     super.initState();
     context.read<AccountBloc>().add(AccountEvent.getAccountDetailEvent());
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      getIt<SyncService>().postLoginInit();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => getIt<UserMainTabBloc>()),
         BlocProvider(
-          create: (context) =>
-              getIt<MainTabBloc>()..add(MainTabEvent.setUserType()),
-        ),
-        BlocProvider(
-          create: (context) => getIt<HomeBloc>()
-            ..add(
-              (context.read<MainTabBloc>().state.currentUserType == 1)
-                  ? HomeEvent.getUsersList(true)
-                  : HomeEvent.getFormsList(true),
-            ),
+          create: (context) => getIt<HomeBloc>()..add(HomeEvent.getAPIList()),
         ),
       ],
-      child: BlocBuilder<MainTabBloc, MainTabState>(
+      child: BlocBuilder<UserMainTabBloc, UserMainTabState>(
         builder: (context, state) {
           return DefaultTabController(
             length: 1,
@@ -62,13 +60,13 @@ class _MainTabViewState extends State<MainTabView> {
                 child: IndexedStack(
                   index: state.pageIndex,
                   children: List<Widget>.generate(
-                    context.read<MainTabBloc>().pageList.length,
+                    context.read<UserMainTabBloc>().pageList.length,
                     (int index) {
                       return Navigator(
                         onGenerateRoute: (RouteSettings settings) {
                           return onGenerateRoute(
                             settings,
-                            context.read<MainTabBloc>().pageList[index],
+                            context.read<UserMainTabBloc>().pageList[index],
                           );
                         },
                       );
@@ -85,7 +83,9 @@ class _MainTabViewState extends State<MainTabView> {
                           .push(
                             PageRouteInfo(
                               autoroute.DynamicForm.name,
-                              args: autoroute.DynamicFormArgs(form: form),
+                              args: autoroute.DynamicFormArgs(
+                                formSlug: form.slug ?? "",
+                              ),
                             ),
                           )
                           .then((value) {
@@ -110,7 +110,7 @@ class _MainTabViewState extends State<MainTabView> {
               ),
               floatingActionButtonLocation:
                   FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: CustomBottomNavigationWidget(),
+              bottomNavigationBar: UserBottomNavigationWidget(),
             ),
           );
         },
@@ -119,17 +119,20 @@ class _MainTabViewState extends State<MainTabView> {
   }
 }
 
-getAppbar(MainTabState state, BuildContext context) {
+getAppbar(UserMainTabState state, BuildContext context) {
   switch (state.selectedTab) {
     case 0:
       return CustomAppBar(
-        title: (context.read<MainTabBloc>().state.currentUserType == 1)
-            ? StringConstant.users
-            : StringConstant.forms,
+        title: StringConstant.forms,
         showBackBtn: false,
+        actions: [SyncBanner()],
       );
     case 1:
-      return CustomAppBar(title: StringConstant.myAccount, showBackBtn: false);
+      return CustomAppBar(
+        title: StringConstant.myAccount,
+        showBackBtn: false,
+        actions: [SyncBanner()],
+      );
     default:
   }
 }
@@ -138,8 +141,8 @@ Route? onGenerateRoute(RouteSettings settings, String tabItem) {
   return MaterialPageRoute(
     settings: settings,
     builder: (context) {
-      if (tabItem == autoroute.HomeView.name) {
-        return HomeView();
+      if (tabItem == autoroute.UserHomeView.name) {
+        return UserHomeView();
       } else if (tabItem == autoroute.MyAccountView.name) {
         return MyAccountView();
       }

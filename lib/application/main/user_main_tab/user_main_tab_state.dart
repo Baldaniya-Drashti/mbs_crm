@@ -1,22 +1,19 @@
-part of 'main_tab_bloc.dart';
+part of 'user_main_tab_bloc.dart';
 
 @freezed
-class MainTabState with _$MainTabState {
-  factory MainTabState({
-    required int currentUserType,
+class UserMainTabState with _$UserMainTabState {
+  factory UserMainTabState({
     required int selectedTab,
     required int pageIndex,
     required String homePage,
     required String myAccountPage,
     // required bool authenticated,
-  }) = _MainTabState;
-  factory MainTabState.initial() => MainTabState(
-    currentUserType: 2,
+  }) = _UserMainTabState;
+  factory UserMainTabState.initial() => UserMainTabState(
     selectedTab: 0,
     pageIndex: 0,
-    homePage: HomeView.name,
+    homePage: UserHomeView.name,
     myAccountPage: MyAccountView.name,
-
     // authenticated: false,
   );
 }

@@ -12,17 +12,23 @@
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:mbs_crm/application/account_bloc/account_bloc.dart' as _i70;
+import 'package:mbs_crm/application/add_user_bloc/add_user_bloc.dart' as _i18;
 import 'package:mbs_crm/application/auth_status/auth_status_bloc.dart' as _i493;
 import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart'
     as _i53;
+import 'package:mbs_crm/application/form_tab_bloc/form_tab_bloc.dart' as _i163;
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart' as _i1046;
+import 'package:mbs_crm/application/main/admin_main_tab_bloc/admin_main_tab_bloc.dart'
+    as _i226;
 import 'package:mbs_crm/application/main/favorites_bloc/favorites_bloc.dart'
     as _i439;
-import 'package:mbs_crm/application/main/main_tab/main_tab_bloc.dart' as _i913;
+import 'package:mbs_crm/application/main/user_main_tab/user_main_tab_bloc.dart'
+    as _i79;
 import 'package:mbs_crm/application/onboarding_bloc/onboarding_bloc.dart'
     as _i273;
 import 'package:mbs_crm/application/sign_in_bloc/sign_in_bloc.dart' as _i487;
 import 'package:mbs_crm/core/database/db_repository.dart' as _i873;
+import 'package:mbs_crm/core/helper/sync_service.dart' as _i1012;
 import 'package:mbs_crm/core/network/api_service.dart' as _i641;
 import 'package:mbs_crm/domain/auth/auth_facade.dart' as _i520;
 import 'package:mbs_crm/domain/auth/i_auth_facade.dart' as _i774;
@@ -48,6 +54,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i53.DynamicFormBloc>(
       () => _i53.DynamicFormBloc(gh<_i634.IMainFacade>()),
     );
+    gh.factory<_i163.FormTabBloc>(
+      () => _i163.FormTabBloc(gh<_i634.IMainFacade>()),
+    );
+    gh.factory<_i18.AddUserBloc>(
+      () => _i18.AddUserBloc(gh<_i634.IMainFacade>()),
+    );
     gh.factory<_i1046.HomeBloc>(() => _i1046.HomeBloc(gh<_i634.IMainFacade>()));
     gh.factory<_i439.FavoritesBloc>(
       () => _i439.FavoritesBloc(gh<_i634.IMainFacade>()),
@@ -61,8 +73,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i70.AccountBloc>(
       () => _i70.AccountBloc(gh<_i774.IAuthFacade>()),
     );
-    gh.factory<_i913.MainTabBloc>(
-      () => _i913.MainTabBloc(gh<_i774.IAuthFacade>()),
+    gh.lazySingleton<_i1012.SyncService>(
+      () =>
+          _i1012.SyncService(gh<_i873.DBRepository>(), gh<_i634.IMainFacade>()),
+    );
+    gh.factory<_i226.AdminMainTabBloc>(
+      () => _i226.AdminMainTabBloc(gh<_i774.IAuthFacade>()),
+    );
+    gh.factory<_i79.UserMainTabBloc>(
+      () => _i79.UserMainTabBloc(gh<_i774.IAuthFacade>()),
     );
     return this;
   }

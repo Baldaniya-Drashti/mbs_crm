@@ -22,49 +22,6 @@ class AuthFacade implements IAuthFacade {
   }
 
   @override
-  Future<Either<AuthFailure, String>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-  }) async {
-    try {
-      var mapData = {
-        "email": email,
-        "password": password,
-        'first_name': firstName,
-        'last_name': lastName,
-      };
-
-      final response = await apiService.postMethod(
-        ApiConstants.register,
-        mapData,
-      );
-
-      final account = CurrentUserDTO.fromJson(response.data);
-      await setToken(account.auth?.token ?? "");
-      await setUserData(account);
-      // setCurrentUser(account);
-      return right(response.dioMessage ?? "");
-    } on DioException catch (err) {
-      if (err.response != null) {
-        var commonRespose = CommonResponse.fromJson(err.response?.data);
-        if (commonRespose.dioMessage != null) {
-          return left(
-            AuthFailure.showAPIResponseMessage(commonRespose.dioMessage!),
-          );
-        }
-        return left(AuthFailure.showAPIResponseMessage(err.message ?? ''));
-      } else if (err.type == DioExceptionType.connectionError) {
-        return left(const AuthFailure.networkError());
-      }
-
-      return left(const AuthFailure.serverError());
-    }
-  }
-
-  @override
   Future<Either<AuthFailure, String>> login({
     required String email,
     required String password,
@@ -152,7 +109,6 @@ class AuthFacade implements IAuthFacade {
       final currentUser = await getUserData();
       final response = await apiService.getMethod(
         ApiConstants.getUserDetail,
-
         queryParameters: {'id': currentUser.userId},
       );
 

@@ -22,8 +22,8 @@ class CommonResponse<T> {
     dioMessage = json['message'];
     data = json['data'];
     errors = json['errors'] != null ? Errors.fromJson(json['errors']) : null;
-    if (json.containsKey("meta") && json["meta"] != null) {
-      meta = Meta.fromJson(json['meta']);
+    if (json.containsKey("pagination") && json["pagination"] != null) {
+      meta = Meta.fromJson(json['pagination']);
     }
   }
 
@@ -43,7 +43,7 @@ class CommonResponse<T> {
       }
     }
     if (meta != null) {
-      data['meta'] = meta?.toJson();
+      data['pagination'] = meta?.toJson();
     }
     return data;
   }
@@ -205,8 +205,8 @@ class Meta {
   Meta.fromJson(Map<String, dynamic> json) {
     total = json['total'];
     lastPage = json['last_page'];
-    perPage = json['perPage'];
-    currentPage = json['currentPage'];
+    perPage = json['per_page'];
+    currentPage = json['current_page'];
     from = json['from'];
     to = json['to'];
   }
@@ -214,9 +214,9 @@ class Meta {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['total'] = total;
-    data['lastPage'] = lastPage;
-    data['perPage'] = perPage;
-    data['currentPage'] = currentPage;
+    data['last_page'] = lastPage;
+    data['per_page'] = perPage;
+    data['current_page'] = currentPage;
     data['from'] = from;
     data['to'] = to;
     return data;

@@ -85,7 +85,6 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         },
         toggleFavourite: (e) async {
           /* await setFavoriteIds(e.id);
-
           final ids = await getFavouriteIds();
           emit(state.copyWith(favouriteIds: ids)); */
         },

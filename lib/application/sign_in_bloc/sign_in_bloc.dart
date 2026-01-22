@@ -1,3 +1,4 @@
+import 'package:mbs_crm/core/database/local_preference.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/domain/auth/auth_failure.dart';
@@ -35,7 +36,7 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
 
         loginPressed: (e) async {
           Either<AuthFailure, String>? failureOrSuccess;
-
+          final userType = await getUserType();
           final isEmailValid = state.email.isValid();
           final isPasswordValid = state.password.isValid();
 
@@ -64,7 +65,11 @@ class SignInBloc extends Bloc<SignInEvent, SignInState> {
               (r) {
                 AppFocus.unfocus(currentContext);
                 currentContext.router.replaceAll([
-                  PageRouteInfo(MainTabView.name),
+                  PageRouteInfo(
+                    (userType == 1)
+                        ? AdminMainTabView.name
+                        : UserMainTabView.name,
+                  ),
                 ]);
               },
             );

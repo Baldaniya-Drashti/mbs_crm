@@ -25,3 +25,5 @@ String attributeToString(FilterAttribute attribute) {
       return "chamfers-angles";
   }
 }
+
+enum SyncStage { idle, syncingLocal, fetchingServer, completed, failed }

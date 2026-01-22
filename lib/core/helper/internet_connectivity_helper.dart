@@ -1,9 +1,11 @@
-import 'package:mbs_crm/core/constants/string_constant.dart';
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
+import 'package:mbs_crm/core/database/local_preference.dart';
+import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
-import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/injection.dart';
-import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
-import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 
@@ -12,124 +14,36 @@ class NetworkListener {
   factory NetworkListener() => _instance;
   NetworkListener._internal();
 
-  bool _isDialogShowing = false;
-  GlobalKey<NavigatorState>? _navigatorKey;
   static VoidCallback? _queuedNavigation;
 
   void initialize() {
-    _navigatorKey = getIt<AppRouter>().navigatorKey;
     _listenToNetworkChanges();
   }
 
   Future<bool> isOnline() async {
     final result = await Connectivity().checkConnectivity();
-    return result != [ConnectivityResult.none];
+
+    return !result.contains(ConnectivityResult.none);
   }
 
   void _listenToNetworkChanges() {
     Connectivity().onConnectivityChanged.listen((
       List<ConnectivityResult> results,
-    ) {
+    ) async {
       final hasInternet = !results.contains(ConnectivityResult.none);
-      if (!hasInternet) {
-        _showNoInternetDialog();
-      } else {
-        _dismissNoInternetDialog();
-        _queuedNavigation?.call();
-        _queuedNavigation = null;
-      }
+      if (!hasInternet) return;
+
+      final token = await getToken();
+      if (token.isEmpty) return;
+
+      getIt<SyncService>().runFullSyncIfOnline();
+
+      final context = getIt<AppRouter>().navigatorKey.currentContext!;
+      context.read<HomeBloc>().add(HomeEvent.getFormsList(true));
+
+      print("Pending Forms Syncing");
+      _queuedNavigation?.call();
+      _queuedNavigation = null;
     });
-  }
-
-  static Stream<bool> internetStatusStream() {
-    return Connectivity().onConnectivityChanged.map((results) {
-      return !results.contains(ConnectivityResult.none);
-    });
-  }
-
-  Future<void> navigateWhenOnline(
-    Future<void> Function() navigationCallback,
-  ) async {
-    final result = await Connectivity().checkConnectivity();
-    if (result.contains(ConnectivityResult.none)) {
-      _queuedNavigation = navigationCallback;
-      _showNoInternetDialog();
-    } else {
-      await navigationCallback();
-    }
-  }
-
-  void _showNoInternetDialog() {
-    if (!_isDialogShowing && _navigatorKey?.currentContext != null) {
-      _isDialogShowing = true;
-      showDialog(
-        context: _navigatorKey!.currentContext!,
-        barrierDismissible: false,
-        builder: (BuildContext dialogContext) {
-          return PopScope(
-            canPop: false,
-            child: AlertDialog(
-              backgroundColor: AppColors.white,
-              insetPadding: EdgeInsets.symmetric(horizontal: getSize(20)),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              title: _buildAnimatedIcon(dialogContext),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  BaseText(
-                    text: StringConstant.noInternetConnection,
-                    fontSize: 22,
-                    textColor: AppColors.primary,
-                    textAlign: TextAlign.center,
-                  ),
-                  BaseText(
-                    text: StringConstant.networkError,
-                    fontSize: 16,
-                    textAlign: TextAlign.center,
-                    textColor: AppColors.black.withValues(alpha: 0.5),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ).then((_) {
-        _isDialogShowing = false;
-      });
-    }
-  }
-
-  Widget _buildAnimatedIcon(BuildContext dialogContext) {
-    return Builder(
-      builder: (BuildContext context) {
-        final AnimationController controller = AnimationController(
-          duration: const Duration(seconds: 1),
-          vsync: Navigator.of(dialogContext),
-        )..repeat(reverse: true);
-
-        return AnimatedBuilder(
-          animation: controller,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: 1.0 + (controller.value * 0.2),
-              child: Icon(
-                Icons.wifi_off,
-                color: AppColors.red,
-                size: getSize(90),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-
-  void _dismissNoInternetDialog() {
-    if (_isDialogShowing && _navigatorKey?.currentContext != null) {
-      _isDialogShowing = false;
-      Navigator.of(_navigatorKey!.currentContext!, rootNavigator: true).pop();
-    }
   }
 }

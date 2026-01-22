@@ -19,21 +19,43 @@ class AppDatabase {
     final path = join(await getDatabasesPath(), StorageConstants.mbsCrmDB);
     return openDatabase(
       path,
+
+      /// Change Version If this app is installed by users already
       version: 1,
       onCreate: (db, _) async {
         await db.execute('''
           CREATE TABLE IF NOT EXISTS ${StorageConstants.offlineForms} (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            form_id TEXT,
-            slug TEXT,
-            name TEXT,
-            data TEXT,
+            db_id INTEGER PRIMARY KEY AUTOINCREMENT,
+            local_id TEXT UNIQUE,
+            server_id INTEGER UNIQUE,
+            is_synced INTEGER DEFAULT 0,
+            sync_action TEXT,
+
+            form_type INTEGER,
+            form_slug TEXT,
+            form_name TEXT,
+            form_json TEXT,
+            
             status TEXT,
             created_at TEXT,
             updated_at TEXT
           )
         ''');
       },
+
+      /// ----- If this app is installed by users already: ----
+
+      /// ----- Changing table structure WILL NOT APPLY -----
+      /// ----- SQLite will keep old schema -----
+
+      /* onUpgrade: (db, oldVersion, newVersion) async {
+        if (oldVersion < 2) {
+          await db.execute(
+              'ALTER TABLE ${StorageConstants.offlineForms} ADD COLUMN server_id INTEGER');
+          await db.execute(
+              'ALTER TABLE ${StorageConstants.offlineForms} ADD COLUMN is_synced INTEGER DEFAULT 0');
+        }
+      }, */
     );
   }
 }

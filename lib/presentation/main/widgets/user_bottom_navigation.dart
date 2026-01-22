@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
-import 'package:mbs_crm/application/main/main_tab/main_tab_bloc.dart';
+import 'package:mbs_crm/application/main/user_main_tab/user_main_tab_bloc.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/constants/svg_image_constants.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
@@ -11,12 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CustomBottomNavigationWidget extends StatelessWidget {
-  CustomBottomNavigationWidget({super.key});
+class UserBottomNavigationWidget extends StatelessWidget {
+  UserBottomNavigationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MainTabBloc, MainTabState>(
+    return BlocBuilder<UserMainTabBloc, UserMainTabState>(
       builder: (context, state) {
         return Theme(
           data: ThemeData(splashFactory: NoSplash.splashFactory),
@@ -24,7 +24,9 @@ class CustomBottomNavigationWidget extends StatelessWidget {
             itemCount: 2,
             activeIndex: state.selectedTab,
             onTap: (index) {
-              context.read<MainTabBloc>().add(MainTabEvent.tabChange(index));
+              context.read<UserMainTabBloc>().add(
+                UserMainTabEvent.tabChange(index),
+              );
             },
             tabBuilder: (index, isActive) {
               return Column(
@@ -60,42 +62,6 @@ class CustomBottomNavigationWidget extends StatelessWidget {
             leftCornerRadius: getSize(35),
             rightCornerRadius: getSize(35),
           ),
-          /* BottomNavigationBar(
-            currentIndex: state.selectedTab,
-            backgroundColor: AppColors.white,
-            selectedItemColor: AppColors.black,
-            unselectedItemColor: AppColors.black.withValues(alpha: 0.3),
-            type: BottomNavigationBarType.fixed,
-            elevation: 0,
-            selectedLabelStyle: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: getFontSize(14),
-              height: getSize(2),
-              fontFamily: FontConstant.jost,
-            ),
-            unselectedLabelStyle: TextStyle(
-              // color: AppColors.black.withValues(alpha: 0.8),
-              fontWeight: FontWeight.w600,
-              height: getSize(2),
-              fontSize: getFontSize(14),
-              fontFamily: FontConstant.jost,
-            ),
-            onTap: (value) {
-              context.read<MainTabBloc>().add(MainTabEvent.tabChange(value));
-            },
-            items: [
-              BottomNavigationBarItem(
-                icon: icon(SvgImageConstant.home),
-                label: StringConstant.home,
-                activeIcon: icon(SvgImageConstant.home),
-              ),
-              BottomNavigationBarItem(
-                icon: icon(SvgImageConstant.person),
-                label: StringConstant.myAccount,
-                activeIcon: icon(SvgImageConstant.person),
-              ),
-            ],
-          ), */
         );
       },
     );

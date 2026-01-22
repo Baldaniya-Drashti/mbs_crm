@@ -27,6 +27,7 @@ dynamic removeNulls(dynamic value) {
       }
     });
 
+    if (result.isEmpty) return null;
     return result;
   }
 

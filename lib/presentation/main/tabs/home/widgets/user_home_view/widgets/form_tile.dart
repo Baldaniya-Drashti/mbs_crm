@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
-import 'package:mbs_crm/infrastructure/user_dto/user_dto.dart';
+import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/styles.dart';
 
-class UserDetailTile extends StatelessWidget {
-  final UserDTO user;
-  const UserDetailTile({super.key, required this.user});
+class FormTile extends StatelessWidget {
+  final HomeDTO form;
+  final int index;
+  final void Function()? onDeleteForm;
+
+  const FormTile({
+    super.key,
+    required this.index,
+    this.onDeleteForm,
+    required this.form,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +37,31 @@ class UserDetailTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              BaseText(text: "${user.id ?? 0}. "),
+              BaseText(text: "$index. "),
               Expanded(
-                child: BaseText(
-                  text: "${user.first_name ?? ""} ${user.last_name ?? ""}",
-                  maxLines: 2,
+                child: BaseText(text: "${form.server_id}" ?? "", maxLines: 2),
+              ),
+
+              InkWell(
+                onTap: onDeleteForm,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+                  child: Icon(Icons.delete_outline, color: AppColors.red),
                 ),
               ),
             ],
           ),
           Gap(getSize(10)),
+          Align(
+            alignment: Alignment.centerRight,
+            child: BaseText(
+              text: DateFormat('dd-MM-yyyy').format(
+                DateTime.parse(form.createdAt ?? DateTime.now().toString()),
+              ),
+              fontSize: 12,
+              textColor: AppColors.grey,
+            ),
+          ),
         ],
       ),
     );

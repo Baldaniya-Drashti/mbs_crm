@@ -27,6 +27,7 @@ class ApiService {
       onRequest: (options, handler) async {
         String? userToken = await getToken();
 
+        print("API Token---> $userToken");
         if (userToken.isNotEmpty) {
           options.headers.addAll({"Authorization": "Bearer $userToken"});
         }

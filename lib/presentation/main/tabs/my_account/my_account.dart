@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously
 
+import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
@@ -40,6 +41,16 @@ class MyAccountView extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: getSize(10)),
+                    child: BaseText(
+                      text: StringConstant.preferences,
+                      textColor: AppColors.black,
+                      fontFamily: FontConstant.jost,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                   customTile(
                     icon: Icons.logout_rounded,
                     title: StringConstant.logout,

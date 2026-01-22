@@ -49,6 +49,21 @@ class StringConstant {
   static const String changePassword = 'Change Password';
   static const String users = 'Users';
   static const String addUser = 'Add User';
+  static const String add = 'Add';
+  static const String updateUser = 'Update User';
+  static const String firstName = 'First Name';
+  static const String lastName = 'Last Name';
+  static const String confirmPassword = 'Confirm Password';
+  static const String deleteUser = 'Delete User';
+  static const String addNewuser = 'Add New User';
+  static const String delete = 'Delete';
+  static const String general = 'General';
+  static const String preferences = 'Preferences';
+  static const String formDetails = 'Form Details';
+  static const String deleteForm = 'Delete Form';
+
+  static const String deleteUserDesc = 'Are you sure want to delete this User?';
+  static const String deleteFormDesc = 'Are you sure want to delete this Form?';
 
   /// ------------- Validator ------------- ///
   static const String pleaseEnterEmail = 'Please enter email';
@@ -58,4 +73,14 @@ class StringConstant {
       'Password should be minimum 3 digit';
   static const String someDetailsAreMissingOrInvalidPleaseCheck =
       'Some details are missing or invalid! Please check';
+  static const String pleaseEnterFirstName = 'Please enter first name';
+  static const String pleaseEnterLastName = 'Please enter last name';
+  static const String pleaseEnterConfirmPassword =
+      'Please enter confirm password';
+
+  static const String bothPasswordsAreDoesNotMatch =
+      "Confirm Password does not match.";
+
+  static const String someDetailAreInvalidPleaseCheck =
+      'Some Details are invalid! Please check.';
 }

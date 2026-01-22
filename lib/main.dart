@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:mbs_crm/core/environment/environment.dart';
+import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
+import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/core/app_widget.dart';
@@ -28,23 +30,6 @@ Future<void> main() async {
     ]);
     getIt.registerSingleton<AppRouter>(AppRouter());
 
-    /* await Firebase.initializeApp(
-          options:
-              Platform.isIOS
-                  ? null
-                  : const FirebaseOptions(
-                    apiKey: '',
-                    appId: '',
-                    messagingSenderId: '',
-                    projectId: '',
-                  ),
-        )
-        .catchError((e) {
-          return e;
-        })
-        .then((v) async {
-          await _initializeCrashlytics(); */
-
     await dotenv.load(fileName: ".env");
     configureInjection(Environment.dev);
     String environment = const String.fromEnvironment(
@@ -53,16 +38,8 @@ Future<void> main() async {
     );
     EnvironmentConfig().initConfig(environment);
 
-    // NetworkListener().initialize();
+    NetworkListener().initialize();
 
     runApp(const RestartWidget(child: AppWidget()));
-    //});
   }, (error, stack) {});
 }
-
-/* Future<void> _initializeCrashlytics() async {
-  if (!kIsWeb) {
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
-  }
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-} */

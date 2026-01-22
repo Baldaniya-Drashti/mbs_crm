@@ -4,13 +4,6 @@ import 'package:dartz/dartz.dart';
 abstract class IAuthFacade {
   Future<bool> checkAuthenticated();
 
-  Future<Either<AuthFailure, String>> register({
-    required String firstName,
-    required String lastName,
-    required String email,
-    required String password,
-    required String confirmPassword,
-  });
   Future<Either<AuthFailure, String>> login({
     required String email,
     required String password,

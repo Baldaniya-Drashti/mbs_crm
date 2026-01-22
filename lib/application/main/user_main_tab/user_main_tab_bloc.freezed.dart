@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'main_tab_bloc.dart';
+part of 'user_main_tab_bloc.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,29 +16,27 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$MainTabState {
-  int get currentUserType => throw _privateConstructorUsedError;
+mixin _$UserMainTabState {
   int get selectedTab => throw _privateConstructorUsedError;
   int get pageIndex => throw _privateConstructorUsedError;
   String get homePage => throw _privateConstructorUsedError;
   String get myAccountPage => throw _privateConstructorUsedError;
 
-  /// Create a copy of MainTabState
+  /// Create a copy of UserMainTabState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MainTabStateCopyWith<MainTabState> get copyWith =>
+  $UserMainTabStateCopyWith<UserMainTabState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MainTabStateCopyWith<$Res> {
-  factory $MainTabStateCopyWith(
-    MainTabState value,
-    $Res Function(MainTabState) then,
-  ) = _$MainTabStateCopyWithImpl<$Res, MainTabState>;
+abstract class $UserMainTabStateCopyWith<$Res> {
+  factory $UserMainTabStateCopyWith(
+    UserMainTabState value,
+    $Res Function(UserMainTabState) then,
+  ) = _$UserMainTabStateCopyWithImpl<$Res, UserMainTabState>;
   @useResult
   $Res call({
-    int currentUserType,
     int selectedTab,
     int pageIndex,
     String homePage,
@@ -47,21 +45,20 @@ abstract class $MainTabStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MainTabStateCopyWithImpl<$Res, $Val extends MainTabState>
-    implements $MainTabStateCopyWith<$Res> {
-  _$MainTabStateCopyWithImpl(this._value, this._then);
+class _$UserMainTabStateCopyWithImpl<$Res, $Val extends UserMainTabState>
+    implements $UserMainTabStateCopyWith<$Res> {
+  _$UserMainTabStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MainTabState
+  /// Create a copy of UserMainTabState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentUserType = null,
     Object? selectedTab = null,
     Object? pageIndex = null,
     Object? homePage = null,
@@ -69,10 +66,6 @@ class _$MainTabStateCopyWithImpl<$Res, $Val extends MainTabState>
   }) {
     return _then(
       _value.copyWith(
-            currentUserType: null == currentUserType
-                ? _value.currentUserType
-                : currentUserType // ignore: cast_nullable_to_non_nullable
-                      as int,
             selectedTab: null == selectedTab
                 ? _value.selectedTab
                 : selectedTab // ignore: cast_nullable_to_non_nullable
@@ -96,16 +89,15 @@ class _$MainTabStateCopyWithImpl<$Res, $Val extends MainTabState>
 }
 
 /// @nodoc
-abstract class _$$MainTabStateImplCopyWith<$Res>
-    implements $MainTabStateCopyWith<$Res> {
-  factory _$$MainTabStateImplCopyWith(
-    _$MainTabStateImpl value,
-    $Res Function(_$MainTabStateImpl) then,
-  ) = __$$MainTabStateImplCopyWithImpl<$Res>;
+abstract class _$$UserMainTabStateImplCopyWith<$Res>
+    implements $UserMainTabStateCopyWith<$Res> {
+  factory _$$UserMainTabStateImplCopyWith(
+    _$UserMainTabStateImpl value,
+    $Res Function(_$UserMainTabStateImpl) then,
+  ) = __$$UserMainTabStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
-    int currentUserType,
     int selectedTab,
     int pageIndex,
     String homePage,
@@ -114,31 +106,26 @@ abstract class _$$MainTabStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MainTabStateImplCopyWithImpl<$Res>
-    extends _$MainTabStateCopyWithImpl<$Res, _$MainTabStateImpl>
-    implements _$$MainTabStateImplCopyWith<$Res> {
-  __$$MainTabStateImplCopyWithImpl(
-    _$MainTabStateImpl _value,
-    $Res Function(_$MainTabStateImpl) _then,
+class __$$UserMainTabStateImplCopyWithImpl<$Res>
+    extends _$UserMainTabStateCopyWithImpl<$Res, _$UserMainTabStateImpl>
+    implements _$$UserMainTabStateImplCopyWith<$Res> {
+  __$$UserMainTabStateImplCopyWithImpl(
+    _$UserMainTabStateImpl _value,
+    $Res Function(_$UserMainTabStateImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MainTabState
+  /// Create a copy of UserMainTabState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentUserType = null,
     Object? selectedTab = null,
     Object? pageIndex = null,
     Object? homePage = null,
     Object? myAccountPage = null,
   }) {
     return _then(
-      _$MainTabStateImpl(
-        currentUserType: null == currentUserType
-            ? _value.currentUserType
-            : currentUserType // ignore: cast_nullable_to_non_nullable
-                  as int,
+      _$UserMainTabStateImpl(
         selectedTab: null == selectedTab
             ? _value.selectedTab
             : selectedTab // ignore: cast_nullable_to_non_nullable
@@ -162,17 +149,14 @@ class __$$MainTabStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MainTabStateImpl implements _MainTabState {
-  _$MainTabStateImpl({
-    required this.currentUserType,
+class _$UserMainTabStateImpl implements _UserMainTabState {
+  _$UserMainTabStateImpl({
     required this.selectedTab,
     required this.pageIndex,
     required this.homePage,
     required this.myAccountPage,
   });
 
-  @override
-  final int currentUserType;
   @override
   final int selectedTab;
   @override
@@ -184,16 +168,14 @@ class _$MainTabStateImpl implements _MainTabState {
 
   @override
   String toString() {
-    return 'MainTabState(currentUserType: $currentUserType, selectedTab: $selectedTab, pageIndex: $pageIndex, homePage: $homePage, myAccountPage: $myAccountPage)';
+    return 'UserMainTabState(selectedTab: $selectedTab, pageIndex: $pageIndex, homePage: $homePage, myAccountPage: $myAccountPage)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MainTabStateImpl &&
-            (identical(other.currentUserType, currentUserType) ||
-                other.currentUserType == currentUserType) &&
+            other is _$UserMainTabStateImpl &&
             (identical(other.selectedTab, selectedTab) ||
                 other.selectedTab == selectedTab) &&
             (identical(other.pageIndex, pageIndex) ||
@@ -205,35 +187,29 @@ class _$MainTabStateImpl implements _MainTabState {
   }
 
   @override
-  int get hashCode => Object.hash(
-    runtimeType,
-    currentUserType,
-    selectedTab,
-    pageIndex,
-    homePage,
-    myAccountPage,
-  );
+  int get hashCode =>
+      Object.hash(runtimeType, selectedTab, pageIndex, homePage, myAccountPage);
 
-  /// Create a copy of MainTabState
+  /// Create a copy of UserMainTabState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MainTabStateImplCopyWith<_$MainTabStateImpl> get copyWith =>
-      __$$MainTabStateImplCopyWithImpl<_$MainTabStateImpl>(this, _$identity);
+  _$$UserMainTabStateImplCopyWith<_$UserMainTabStateImpl> get copyWith =>
+      __$$UserMainTabStateImplCopyWithImpl<_$UserMainTabStateImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _MainTabState implements MainTabState {
-  factory _MainTabState({
-    required final int currentUserType,
+abstract class _UserMainTabState implements UserMainTabState {
+  factory _UserMainTabState({
     required final int selectedTab,
     required final int pageIndex,
     required final String homePage,
     required final String myAccountPage,
-  }) = _$MainTabStateImpl;
+  }) = _$UserMainTabStateImpl;
 
-  @override
-  int get currentUserType;
   @override
   int get selectedTab;
   @override
@@ -243,92 +219,110 @@ abstract class _MainTabState implements MainTabState {
   @override
   String get myAccountPage;
 
-  /// Create a copy of MainTabState
+  /// Create a copy of UserMainTabState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MainTabStateImplCopyWith<_$MainTabStateImpl> get copyWith =>
+  _$$UserMainTabStateImplCopyWith<_$UserMainTabStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-mixin _$MainTabEvent {
+mixin _$UserMainTabEvent {
+  int get tabIndex => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int tabIndex) tabChange,
-    required TResult Function() setUserType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int tabIndex)? tabChange,
-    TResult? Function()? setUserType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int tabIndex)? tabChange,
-    TResult Function()? setUserType,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TabChange value) tabChange,
-    required TResult Function(SetUserType value) setUserType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TabChange value)? tabChange,
-    TResult? Function(SetUserType value)? setUserType,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TabChange value)? tabChange,
-    TResult Function(SetUserType value)? setUserType,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
+
+  /// Create a copy of UserMainTabEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $UserMainTabEventCopyWith<UserMainTabEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MainTabEventCopyWith<$Res> {
-  factory $MainTabEventCopyWith(
-    MainTabEvent value,
-    $Res Function(MainTabEvent) then,
-  ) = _$MainTabEventCopyWithImpl<$Res, MainTabEvent>;
+abstract class $UserMainTabEventCopyWith<$Res> {
+  factory $UserMainTabEventCopyWith(
+    UserMainTabEvent value,
+    $Res Function(UserMainTabEvent) then,
+  ) = _$UserMainTabEventCopyWithImpl<$Res, UserMainTabEvent>;
+  @useResult
+  $Res call({int tabIndex});
 }
 
 /// @nodoc
-class _$MainTabEventCopyWithImpl<$Res, $Val extends MainTabEvent>
-    implements $MainTabEventCopyWith<$Res> {
-  _$MainTabEventCopyWithImpl(this._value, this._then);
+class _$UserMainTabEventCopyWithImpl<$Res, $Val extends UserMainTabEvent>
+    implements $UserMainTabEventCopyWith<$Res> {
+  _$UserMainTabEventCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MainTabEvent
+  /// Create a copy of UserMainTabEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? tabIndex = null}) {
+    return _then(
+      _value.copyWith(
+            tabIndex: null == tabIndex
+                ? _value.tabIndex
+                : tabIndex // ignore: cast_nullable_to_non_nullable
+                      as int,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$TabChangeImplCopyWith<$Res> {
+abstract class _$$TabChangeImplCopyWith<$Res>
+    implements $UserMainTabEventCopyWith<$Res> {
   factory _$$TabChangeImplCopyWith(
     _$TabChangeImpl value,
     $Res Function(_$TabChangeImpl) then,
   ) = __$$TabChangeImplCopyWithImpl<$Res>;
+  @override
   @useResult
   $Res call({int tabIndex});
 }
 
 /// @nodoc
 class __$$TabChangeImplCopyWithImpl<$Res>
-    extends _$MainTabEventCopyWithImpl<$Res, _$TabChangeImpl>
+    extends _$UserMainTabEventCopyWithImpl<$Res, _$TabChangeImpl>
     implements _$$TabChangeImplCopyWith<$Res> {
   __$$TabChangeImplCopyWithImpl(
     _$TabChangeImpl _value,
     $Res Function(_$TabChangeImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of MainTabEvent
+  /// Create a copy of UserMainTabEvent
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -354,7 +348,7 @@ class _$TabChangeImpl implements TabChange {
 
   @override
   String toString() {
-    return 'MainTabEvent.tabChange(tabIndex: $tabIndex)';
+    return 'UserMainTabEvent.tabChange(tabIndex: $tabIndex)';
   }
 
   @override
@@ -369,7 +363,7 @@ class _$TabChangeImpl implements TabChange {
   @override
   int get hashCode => Object.hash(runtimeType, tabIndex);
 
-  /// Create a copy of MainTabEvent
+  /// Create a copy of UserMainTabEvent
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -381,7 +375,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(int tabIndex) tabChange,
-    required TResult Function() setUserType,
   }) {
     return tabChange(tabIndex);
   }
@@ -390,7 +383,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(int tabIndex)? tabChange,
-    TResult? Function()? setUserType,
   }) {
     return tabChange?.call(tabIndex);
   }
@@ -399,7 +391,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(int tabIndex)? tabChange,
-    TResult Function()? setUserType,
     required TResult orElse(),
   }) {
     if (tabChange != null) {
@@ -412,7 +403,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(TabChange value) tabChange,
-    required TResult Function(SetUserType value) setUserType,
   }) {
     return tabChange(this);
   }
@@ -421,7 +411,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(TabChange value)? tabChange,
-    TResult? Function(SetUserType value)? setUserType,
   }) {
     return tabChange?.call(this);
   }
@@ -430,7 +419,6 @@ class _$TabChangeImpl implements TabChange {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(TabChange value)? tabChange,
-    TResult Function(SetUserType value)? setUserType,
     required TResult orElse(),
   }) {
     if (tabChange != null) {
@@ -440,121 +428,16 @@ class _$TabChangeImpl implements TabChange {
   }
 }
 
-abstract class TabChange implements MainTabEvent {
+abstract class TabChange implements UserMainTabEvent {
   factory TabChange(final int tabIndex) = _$TabChangeImpl;
 
+  @override
   int get tabIndex;
 
-  /// Create a copy of MainTabEvent
+  /// Create a copy of UserMainTabEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TabChangeImplCopyWith<_$TabChangeImpl> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class _$$SetUserTypeImplCopyWith<$Res> {
-  factory _$$SetUserTypeImplCopyWith(
-    _$SetUserTypeImpl value,
-    $Res Function(_$SetUserTypeImpl) then,
-  ) = __$$SetUserTypeImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$SetUserTypeImplCopyWithImpl<$Res>
-    extends _$MainTabEventCopyWithImpl<$Res, _$SetUserTypeImpl>
-    implements _$$SetUserTypeImplCopyWith<$Res> {
-  __$$SetUserTypeImplCopyWithImpl(
-    _$SetUserTypeImpl _value,
-    $Res Function(_$SetUserTypeImpl) _then,
-  ) : super(_value, _then);
-
-  /// Create a copy of MainTabEvent
-  /// with the given fields replaced by the non-null parameter values.
-}
-
-/// @nodoc
-
-class _$SetUserTypeImpl implements SetUserType {
-  _$SetUserTypeImpl();
-
-  @override
-  String toString() {
-    return 'MainTabEvent.setUserType()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$SetUserTypeImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(int tabIndex) tabChange,
-    required TResult Function() setUserType,
-  }) {
-    return setUserType();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int tabIndex)? tabChange,
-    TResult? Function()? setUserType,
-  }) {
-    return setUserType?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int tabIndex)? tabChange,
-    TResult Function()? setUserType,
-    required TResult orElse(),
-  }) {
-    if (setUserType != null) {
-      return setUserType();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(TabChange value) tabChange,
-    required TResult Function(SetUserType value) setUserType,
-  }) {
-    return setUserType(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(TabChange value)? tabChange,
-    TResult? Function(SetUserType value)? setUserType,
-  }) {
-    return setUserType?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(TabChange value)? tabChange,
-    TResult Function(SetUserType value)? setUserType,
-    required TResult orElse(),
-  }) {
-    if (setUserType != null) {
-      return setUserType(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class SetUserType implements MainTabEvent {
-  factory SetUserType() = _$SetUserTypeImpl;
 }

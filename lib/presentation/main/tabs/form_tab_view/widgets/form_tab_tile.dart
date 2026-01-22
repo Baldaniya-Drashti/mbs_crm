@@ -6,9 +6,11 @@ import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/styles.dart';
 
-class FormTile extends StatelessWidget {
+class FormTabTile extends StatelessWidget {
   final HomeDTO form;
-  const FormTile({super.key, required this.form});
+  final void Function()? onDeleteForm;
+
+  const FormTabTile({super.key, required this.form, this.onDeleteForm});
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +31,15 @@ class FormTile extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              BaseText(text: "${form.id ?? 0}. "),
+              BaseText(text: "${form.server_id ?? 0}. "),
               Expanded(child: BaseText(text: form.formName ?? "", maxLines: 2)),
+              InkWell(
+                onTap: onDeleteForm,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+                  child: Icon(Icons.delete_outline, color: AppColors.red),
+                ),
+              ),
             ],
           ),
           Gap(getSize(10)),
