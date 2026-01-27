@@ -7,6 +7,7 @@ import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart';
 import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
+import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/injection.dart';
@@ -28,19 +29,36 @@ class DynamicForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final isEdit = formId?.isEdit == true;
 
-    print("isEdit---> ${formId?.serverId}");
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: isEdit ? StringConstant.editForm : StringConstant.newForm,
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            getIt<DynamicFormBloc>()
-              ..add(DynamicFormEvent.loadForm(formSlug, formId: formId)),
-        child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
-          builder: (context, state) {
-            final schema = state.schema ?? DynamicFormDTO();
-            return FormBuilder(
+    return BlocProvider(
+      create: (context) =>
+          getIt<DynamicFormBloc>()
+            ..add(DynamicFormEvent.loadForm(formSlug, formId: formId)),
+      child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
+        builder: (context, state) {
+          final schema = state.schema ?? DynamicFormDTO();
+          return Scaffold(
+            appBar: CustomAppBar(
+              title: isEdit ? StringConstant.editForm : StringConstant.newForm,
+              actions: [
+                if (isEdit && !(state.isLoading))
+                  InkWell(
+                    onTap: () {
+                      final form = state.existingForm;
+                      if (form?.data != null) {
+                        generateAndOpenPdf(
+                          json: form?.data ?? {},
+                          schema: state.schema!,
+                        );
+                      }
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+                      child: Icon(Icons.download, color: AppColors.white),
+                    ),
+                  ),
+              ],
+            ),
+            body: FormBuilder(
               key: context.read<DynamicFormBloc>().formKey,
               child: (state.isLoading)
                   ? Center(child: CenterLoadingIndicator())
@@ -101,14 +119,36 @@ class DynamicForm extends StatelessWidget {
                         ),
                       ),
                     ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 
   Widget _buildSection(BuildContext context, {required FormSection section}) {
+    final bloc = context.watch<DynamicFormBloc>();
+    final selectedGrade = bloc.state.selectedInspectionGrade;
+
+    final filteredFields = section.fields?.where((field) {
+      // Always show fields without grade
+      if (field.grade == null || field.grade!.isEmpty) {
+        return true;
+      }
+
+      // If no grade selected yet → hide graded questions
+      if (selectedGrade == null) return true;
+
+      // Check if grade matches
+      return field.grade!
+          .split(',')
+          .map((e) => e.trim())
+          .contains(selectedGrade);
+    }).toList();
+
+    if (filteredFields == null || filteredFields.isEmpty) {
+      return const SizedBox.shrink();
+    }
     return Card(
       elevation: 3,
       color: AppColors.white,
@@ -128,15 +168,8 @@ class DynamicForm extends StatelessWidget {
         backgroundColor: AppColors.white,
         childrenPadding: EdgeInsets.all(getSize(10)),
         children: [
-          if (section.fields != null)
-            for (int i = 0; i < section.fields!.length; i++)
-              BuildFields.buildField(context, section.fields![i], i),
-          /* DynamicTextField(
-              label: field.label,
-              validator: field.required == true
-                  ? FormBuilderValidators.required()
-                  : null,
-            ), */
+          for (int i = 0; i < filteredFields.length; i++)
+            BuildFields.buildField(context, filteredFields[i], i),
         ],
       ),
     );

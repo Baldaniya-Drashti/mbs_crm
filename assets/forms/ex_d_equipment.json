@@ -261,7 +261,7 @@
                     ]
                 },
                 {
-                    "label": "Dimensions of flanged joint gaps are within the limits in accordance with manufacturer’s documentation or within maximum values permitted",
+                    "label": "Dimensions of flanged joint gaps are within the limits in accordance with manufacturer's documentation or within maximum values permitted",
                     "grade": "D",
                     "key": "eq_flanged_joint_gap_ok",
                     "type": "dropdown",
@@ -523,7 +523,7 @@
             "title": "Installation - Heating Systems",
             "fields": [
                 {
-                    "label": "Temperature sensors function according to manufacturer’s documentation",
+                    "label": "Temperature sensors function according to manufacturer's documentation",
                     "grade": "D",
                     "key": "heat_temp_sensors_ok",
                     "type": "dropdown",
@@ -534,7 +534,7 @@
                     ]
                 },
                 {
-                    "label": "Safety cut off devices function according to manufacturer’s documentation",
+                    "label": "Safety cut off devices function according to manufacturer's documentation",
                     "grade": "D",
                     "key": "heat_safety_cutoff_ok",
                     "type": "dropdown",

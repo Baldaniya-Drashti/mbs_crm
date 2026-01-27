@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mbs_crm/presentation/core/widgets/dialogs/sync_dialog/sync_listener.dart';
 
 Future<void> main() async {
   runZonedGuarded<Future<void>>(() async {
@@ -39,6 +40,7 @@ Future<void> main() async {
     EnvironmentConfig().initConfig(environment);
 
     NetworkListener().initialize();
+    SyncListener().initialize();
 
     runApp(const RestartWidget(child: AppWidget()));
   }, (error, stack) {});

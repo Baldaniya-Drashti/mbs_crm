@@ -40,7 +40,7 @@ class FormTabBloc extends Bloc<FormTabEvent, FormTabState> {
               ).show(currentContext);
             },
             (r) {
-              add(FormTabEvent.getFormsList(true));
+              add(FormTabEvent.getFormsList(true, userId: e.userId));
             },
           );
           emit(state.copyWith(isLoading: false));
@@ -59,7 +59,10 @@ class FormTabBloc extends Bloc<FormTabEvent, FormTabState> {
                   return;
                 }
               }
-              var res = await mainFacade.formListAPI(page: page);
+              var res = await mainFacade.formListAPI(
+                page: page,
+                userId: e.userId,
+              );
               page++;
               res.fold(
                 (l) {

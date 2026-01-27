@@ -87,7 +87,7 @@ getAppbar(AdminMainTabState state, BuildContext context) {
       return CustomAppBar(title: StringConstant.users, showBackBtn: false);
     case 1:
       return CustomAppBar(
-        title: StringConstant.formDetails,
+        title: StringConstant.allFormDetails,
         showBackBtn: false,
       );
     case 2:

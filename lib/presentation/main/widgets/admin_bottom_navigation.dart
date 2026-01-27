@@ -75,7 +75,7 @@ class AdminBottomNavigationWidget extends StatelessWidget {
 
   List<String> tabLabelList = [
     StringConstant.home,
-    StringConstant.forms,
+    StringConstant.allForms,
     StringConstant.myAccount,
   ];
 

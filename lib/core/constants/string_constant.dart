@@ -45,7 +45,7 @@ class StringConstant {
   static const String addFiles = 'Add Files';
   static const String reason = 'Reason';
   static const String noDataFound = 'No Data Found';
-  static const String syncing = 'Syncing...';
+  static const String syncingData = 'Syncing Data...';
   static const String changePassword = 'Change Password';
   static const String users = 'Users';
   static const String addUser = 'Add User';
@@ -59,7 +59,9 @@ class StringConstant {
   static const String delete = 'Delete';
   static const String general = 'General';
   static const String preferences = 'Preferences';
-  static const String formDetails = 'Form Details';
+  static const String allFormDetails = 'All Form Details';
+  static const String allForms = 'All Forms';
+  static const String createdBy = 'Created By';
   static const String deleteForm = 'Delete Form';
 
   static const String deleteUserDesc = 'Are you sure want to delete this User?';

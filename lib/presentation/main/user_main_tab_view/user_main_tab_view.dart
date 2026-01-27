@@ -9,7 +9,7 @@ import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:mbs_crm/presentation/core/widgets/dialogs/new_form_list_dialog.dart';
-import 'package:mbs_crm/presentation/core/widgets/dialogs/sync_banner.dart';
+import 'package:mbs_crm/presentation/core/widgets/dialogs/sync_dialog/sync_banner.dart';
 import 'package:mbs_crm/presentation/main/tabs/home/widgets/user_home_view/user_home_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/my_account/my_account.dart';
 import 'package:mbs_crm/injection.dart';
@@ -122,17 +122,9 @@ class _UserMainTabViewState extends State<UserMainTabView> {
 getAppbar(UserMainTabState state, BuildContext context) {
   switch (state.selectedTab) {
     case 0:
-      return CustomAppBar(
-        title: StringConstant.forms,
-        showBackBtn: false,
-        actions: [SyncBanner()],
-      );
+      return CustomAppBar(title: StringConstant.forms, showBackBtn: false);
     case 1:
-      return CustomAppBar(
-        title: StringConstant.myAccount,
-        showBackBtn: false,
-        actions: [SyncBanner()],
-      );
+      return CustomAppBar(title: StringConstant.myAccount, showBackBtn: false);
     default:
   }
 }

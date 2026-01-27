@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,7 +20,6 @@ import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:mbs_crm/presentation/core/widgets/utility/normalization_utilities.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
 import 'package:uuid/uuid.dart';
-
 part 'dynamic_form_event.dart';
 part 'dynamic_form_state.dart';
 part 'dynamic_form_bloc.freezed.dart';
@@ -37,6 +35,19 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
   DynamicFormBloc(this.mainFacade) : super(DynamicFormState.initial()) {
     on<DynamicFormEvent>((event, emit) async {
       await event.map(
+        inspectionGradeChanged: (e) {
+          String? grade;
+          if (e.grade.contains('Detailed')) grade = 'D';
+          if (e.grade.contains('Close')) grade = 'C';
+          if (e.grade.contains('Visual')) grade = 'V';
+
+          emit(
+            state.copyWith(
+              selectedInspectionGrade: grade,
+              rebuildTick: state.rebuildTick + 1,
+            ),
+          );
+        },
         loadForm: (e) async {
           emit(state.copyWith(isLoading: true));
           try {
@@ -77,7 +88,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                 },
               );
             } else {
-              print("e.formId.localId---> ${e.formId.localId}");
               form = await DBRepository().getFormByLocalId(e.formId.localId!);
             }
 
@@ -201,7 +211,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             debugPrint("Error -- getFormDetails ---> $e");
           }
         },
-
         /* getFormDetails: (e) async {
           try {
             final isOnline = await NetworkListener().isOnline();

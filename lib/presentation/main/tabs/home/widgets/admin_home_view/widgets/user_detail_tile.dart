@@ -29,38 +29,31 @@ class UserDetailTile extends StatelessWidget {
         border: Border.all(color: AppColors.primary),
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BaseText(text: "${index + 1}. "),
-              Expanded(
-                child: BaseText(
-                  text: "${user.first_name ?? ""} ${user.last_name ?? ""}",
-                  maxLines: 2,
-                ),
-              ),
-              InkWell(
-                onTap: onEditUser,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-                  child: Icon(Icons.edit_outlined, color: AppColors.primary),
-                ),
-              ),
-              InkWell(
-                onTap: onDeleteUser,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-                  child: Icon(Icons.delete_outline, color: AppColors.red),
-                ),
-              ),
-            ],
+          BaseText(text: "${index + 1}. "),
+          Expanded(
+            child: BaseText(
+              text: "${user.first_name ?? ""} ${user.last_name ?? ""}",
+              maxLines: 2,
+            ),
           ),
-          Gap(getSize(10)),
+          InkWell(
+            onTap: onEditUser,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+              child: Icon(Icons.edit_outlined, color: AppColors.primary),
+            ),
+          ),
+          InkWell(
+            onTap: onDeleteUser,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: getSize(10)),
+              child: Icon(Icons.delete_outline, color: AppColors.red),
+            ),
+          ),
         ],
       ),
     );

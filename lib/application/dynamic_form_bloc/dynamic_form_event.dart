@@ -19,6 +19,8 @@ class DynamicFormEvent with _$DynamicFormEvent {
   const factory DynamicFormEvent.attachFileEvent(FormFieldSchema field) =
       AttachFileEvent;
 
+  const factory DynamicFormEvent.inspectionGradeChanged(String grade) =
+      InspectionGradeChanged;
   const factory DynamicFormEvent.onDropDownChanged({
     required String fieldKey,
     required dynamic value,

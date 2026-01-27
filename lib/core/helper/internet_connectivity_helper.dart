@@ -20,9 +20,20 @@ class NetworkListener {
     _listenToNetworkChanges();
   }
 
+  Stream<bool> onStatusChange() async* {
+    // emit current state first
+    yield await isOnline();
+
+    yield* Connectivity().onConnectivityChanged.asyncMap((result) async {
+      if (result.contains(ConnectivityResult.none)) {
+        return false;
+      }
+      return await isOnline();
+    });
+  }
+
   Future<bool> isOnline() async {
     final result = await Connectivity().checkConnectivity();
-
     return !result.contains(ConnectivityResult.none);
   }
 

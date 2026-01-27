@@ -1,36 +1,38 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
+import 'package:mbs_crm/application/form_tab_bloc/form_tab_bloc.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
-import 'package:mbs_crm/core/pdf_format/dynamic_pdf_generator.dart';
-import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/widgets/center_loading_indicator.dart';
 import 'package:mbs_crm/presentation/common/widgets/paginated_list_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/form_tab_view/widgets/form_delete_dialog.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/user_home_view/widgets/form_tile.dart';
+import 'package:mbs_crm/presentation/main/tabs/form_tab_view/widgets/form_tab_tile.dart';
 
-@RoutePage(name: 'UserHomeView')
-class UserHomeView extends StatelessWidget {
-  const UserHomeView({super.key});
+class FormListView extends StatelessWidget {
+  final int? userId;
+  const FormListView({super.key, this.userId});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
+    return BlocBuilder<FormTabBloc, FormTabState>(
       builder: (context, state) {
         return (state.isLoading)
             ? CenterLoadingIndicator()
             : PaginatedListView(
                 onLoading: () {
-                  context.read<HomeBloc>().add(HomeEvent.getFormsList(false));
+                  context.read<FormTabBloc>().add(
+                    FormTabEvent.getFormsList(false, userId: userId),
+                  );
                 },
                 onRefresh: () {
-                  context.read<HomeBloc>().add(HomeEvent.getFormsList(true));
+                  context.read<FormTabBloc>().add(
+                    FormTabEvent.getFormsList(true, userId: userId),
+                  );
                 },
-                refreshController: getIt<HomeBloc>().refreshController,
+                refreshController: getIt<FormTabBloc>().refreshController,
                 isNoDataFound: state.formsList.isEmpty,
                 child: ListView.builder(
                   itemCount: state.formsList.length,
@@ -40,8 +42,11 @@ class UserHomeView extends StatelessWidget {
                   ),
                   itemBuilder: (_, index) {
                     final form = state.formsList[index];
-                    return GestureDetector(
-                      onTap: () async {
+                    return FormTabTile(
+                      index: index + 1,
+                      form: form,
+                      userId: userId,
+                      onUpdateForm: () {
                         context.router
                             .push(
                               PageRouteInfo(
@@ -57,36 +62,32 @@ class UserHomeView extends StatelessWidget {
                             )
                             .then((value) {
                               if (value == true) {
-                                context.read<HomeBloc>().add(
-                                  HomeEvent.getFormsList(true),
+                                context.read<FormTabBloc>().add(
+                                  FormTabEvent.getFormsList(
+                                    true,
+                                    userId: userId,
+                                  ),
                                 );
                               }
                             });
                       },
-                      child: FormTile(
-                        form: form,
-                        index: (index + 1),
-
-                        onDeleteForm: () {
-                          FormDeleteDialog().deleteDialog(
-                            context,
-                            onPressedDelete: () {
-                              currentContext.router.maybePop();
-                              context.read<HomeBloc>().add(
-                                HomeEvent.deleteForm(
-                                  FormIdentifier(
-                                    serverId: form.server_id,
-                                    localId: form.localId,
-                                  ),
-                                ),
-                              );
-                            },
-                            onPressedCancel: () {
-                              context.router.maybePop();
-                            },
-                          );
-                        },
-                      ),
+                      onDeleteForm: () {
+                        FormDeleteDialog().deleteDialog(
+                          context,
+                          onPressedDelete: () {
+                            currentContext.router.maybePop();
+                            context.read<FormTabBloc>().add(
+                              FormTabEvent.deleteFormEvent(
+                                form.server_id ?? -1,
+                                userId: userId,
+                              ),
+                            );
+                          },
+                          onPressedCancel: () {
+                            context.router.maybePop();
+                          },
+                        );
+                      },
                     );
                   },
                 ),

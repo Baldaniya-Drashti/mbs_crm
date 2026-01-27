@@ -17,20 +17,21 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$FormTabEvent {
+  int? get userId => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isRefresh) getFormsList,
-    required TResult Function(int id) deleteFormEvent,
+    required TResult Function(bool isRefresh, int? userId) getFormsList,
+    required TResult Function(int id, int? userId) deleteFormEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isRefresh)? getFormsList,
-    TResult? Function(int id)? deleteFormEvent,
+    TResult? Function(bool isRefresh, int? userId)? getFormsList,
+    TResult? Function(int id, int? userId)? deleteFormEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getFormsList,
-    TResult Function(int id)? deleteFormEvent,
+    TResult Function(bool isRefresh, int? userId)? getFormsList,
+    TResult Function(int id, int? userId)? deleteFormEvent,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -49,6 +50,12 @@ mixin _$FormTabEvent {
     TResult Function(DeleteFormEvent value)? deleteFormEvent,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
+
+  /// Create a copy of FormTabEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $FormTabEventCopyWith<FormTabEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -57,6 +64,8 @@ abstract class $FormTabEventCopyWith<$Res> {
     FormTabEvent value,
     $Res Function(FormTabEvent) then,
   ) = _$FormTabEventCopyWithImpl<$Res, FormTabEvent>;
+  @useResult
+  $Res call({int? userId});
 }
 
 /// @nodoc
@@ -71,16 +80,31 @@ class _$FormTabEventCopyWithImpl<$Res, $Val extends FormTabEvent>
 
   /// Create a copy of FormTabEvent
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? userId = freezed}) {
+    return _then(
+      _value.copyWith(
+            userId: freezed == userId
+                ? _value.userId
+                : userId // ignore: cast_nullable_to_non_nullable
+                      as int?,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$GetFormsListImplCopyWith<$Res> {
+abstract class _$$GetFormsListImplCopyWith<$Res>
+    implements $FormTabEventCopyWith<$Res> {
   factory _$$GetFormsListImplCopyWith(
     _$GetFormsListImpl value,
     $Res Function(_$GetFormsListImpl) then,
   ) = __$$GetFormsListImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({bool isRefresh});
+  $Res call({bool isRefresh, int? userId});
 }
 
 /// @nodoc
@@ -96,13 +120,17 @@ class __$$GetFormsListImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? isRefresh = null}) {
+  $Res call({Object? isRefresh = null, Object? userId = freezed}) {
     return _then(
       _$GetFormsListImpl(
         null == isRefresh
             ? _value.isRefresh
             : isRefresh // ignore: cast_nullable_to_non_nullable
                   as bool,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }
@@ -111,14 +139,16 @@ class __$$GetFormsListImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$GetFormsListImpl implements GetFormsList {
-  const _$GetFormsListImpl(this.isRefresh);
+  const _$GetFormsListImpl(this.isRefresh, {this.userId});
 
   @override
   final bool isRefresh;
+  @override
+  final int? userId;
 
   @override
   String toString() {
-    return 'FormTabEvent.getFormsList(isRefresh: $isRefresh)';
+    return 'FormTabEvent.getFormsList(isRefresh: $isRefresh, userId: $userId)';
   }
 
   @override
@@ -127,11 +157,12 @@ class _$GetFormsListImpl implements GetFormsList {
         (other.runtimeType == runtimeType &&
             other is _$GetFormsListImpl &&
             (identical(other.isRefresh, isRefresh) ||
-                other.isRefresh == isRefresh));
+                other.isRefresh == isRefresh) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isRefresh);
+  int get hashCode => Object.hash(runtimeType, isRefresh, userId);
 
   /// Create a copy of FormTabEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -144,30 +175,30 @@ class _$GetFormsListImpl implements GetFormsList {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isRefresh) getFormsList,
-    required TResult Function(int id) deleteFormEvent,
+    required TResult Function(bool isRefresh, int? userId) getFormsList,
+    required TResult Function(int id, int? userId) deleteFormEvent,
   }) {
-    return getFormsList(isRefresh);
+    return getFormsList(isRefresh, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isRefresh)? getFormsList,
-    TResult? Function(int id)? deleteFormEvent,
+    TResult? Function(bool isRefresh, int? userId)? getFormsList,
+    TResult? Function(int id, int? userId)? deleteFormEvent,
   }) {
-    return getFormsList?.call(isRefresh);
+    return getFormsList?.call(isRefresh, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getFormsList,
-    TResult Function(int id)? deleteFormEvent,
+    TResult Function(bool isRefresh, int? userId)? getFormsList,
+    TResult Function(int id, int? userId)? deleteFormEvent,
     required TResult orElse(),
   }) {
     if (getFormsList != null) {
-      return getFormsList(isRefresh);
+      return getFormsList(isRefresh, userId);
     }
     return orElse();
   }
@@ -205,25 +236,31 @@ class _$GetFormsListImpl implements GetFormsList {
 }
 
 abstract class GetFormsList implements FormTabEvent {
-  const factory GetFormsList(final bool isRefresh) = _$GetFormsListImpl;
+  const factory GetFormsList(final bool isRefresh, {final int? userId}) =
+      _$GetFormsListImpl;
 
   bool get isRefresh;
+  @override
+  int? get userId;
 
   /// Create a copy of FormTabEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$GetFormsListImplCopyWith<_$GetFormsListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DeleteFormEventImplCopyWith<$Res> {
+abstract class _$$DeleteFormEventImplCopyWith<$Res>
+    implements $FormTabEventCopyWith<$Res> {
   factory _$$DeleteFormEventImplCopyWith(
     _$DeleteFormEventImpl value,
     $Res Function(_$DeleteFormEventImpl) then,
   ) = __$$DeleteFormEventImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({int id});
+  $Res call({int id, int? userId});
 }
 
 /// @nodoc
@@ -239,13 +276,17 @@ class __$$DeleteFormEventImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? id = null}) {
+  $Res call({Object? id = null, Object? userId = freezed}) {
     return _then(
       _$DeleteFormEventImpl(
         null == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
                   as int,
+        userId: freezed == userId
+            ? _value.userId
+            : userId // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }
@@ -254,14 +295,16 @@ class __$$DeleteFormEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DeleteFormEventImpl implements DeleteFormEvent {
-  const _$DeleteFormEventImpl(this.id);
+  const _$DeleteFormEventImpl(this.id, {this.userId});
 
   @override
   final int id;
+  @override
+  final int? userId;
 
   @override
   String toString() {
-    return 'FormTabEvent.deleteFormEvent(id: $id)';
+    return 'FormTabEvent.deleteFormEvent(id: $id, userId: $userId)';
   }
 
   @override
@@ -269,11 +312,12 @@ class _$DeleteFormEventImpl implements DeleteFormEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeleteFormEventImpl &&
-            (identical(other.id, id) || other.id == id));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id);
+  int get hashCode => Object.hash(runtimeType, id, userId);
 
   /// Create a copy of FormTabEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -289,30 +333,30 @@ class _$DeleteFormEventImpl implements DeleteFormEvent {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(bool isRefresh) getFormsList,
-    required TResult Function(int id) deleteFormEvent,
+    required TResult Function(bool isRefresh, int? userId) getFormsList,
+    required TResult Function(int id, int? userId) deleteFormEvent,
   }) {
-    return deleteFormEvent(id);
+    return deleteFormEvent(id, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(bool isRefresh)? getFormsList,
-    TResult? Function(int id)? deleteFormEvent,
+    TResult? Function(bool isRefresh, int? userId)? getFormsList,
+    TResult? Function(int id, int? userId)? deleteFormEvent,
   }) {
-    return deleteFormEvent?.call(id);
+    return deleteFormEvent?.call(id, userId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(bool isRefresh)? getFormsList,
-    TResult Function(int id)? deleteFormEvent,
+    TResult Function(bool isRefresh, int? userId)? getFormsList,
+    TResult Function(int id, int? userId)? deleteFormEvent,
     required TResult orElse(),
   }) {
     if (deleteFormEvent != null) {
-      return deleteFormEvent(id);
+      return deleteFormEvent(id, userId);
     }
     return orElse();
   }
@@ -350,12 +394,16 @@ class _$DeleteFormEventImpl implements DeleteFormEvent {
 }
 
 abstract class DeleteFormEvent implements FormTabEvent {
-  const factory DeleteFormEvent(final int id) = _$DeleteFormEventImpl;
+  const factory DeleteFormEvent(final int id, {final int? userId}) =
+      _$DeleteFormEventImpl;
 
   int get id;
+  @override
+  int? get userId;
 
   /// Create a copy of FormTabEvent
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$DeleteFormEventImplCopyWith<_$DeleteFormEventImpl> get copyWith =>
       throw _privateConstructorUsedError;

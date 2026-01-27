@@ -1,3 +1,11 @@
+
+iOS:
+<key>UISupportsDocumentBrowser</key>
+<true/>
+
+Android:
+open_filex works without storage permission because temp directory is internal 👍
+
 # mbs_crm
 
 A new Flutter project.

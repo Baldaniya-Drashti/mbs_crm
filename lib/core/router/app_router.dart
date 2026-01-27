@@ -40,6 +40,8 @@ class AppRouter extends RootStackRouter {
     _custom(page: FormDetailView.page),
     _custom(page: MyAccountView.page),
     _custom(page: AddUser.page),
+    _custom(page: AdminFormList.page),
+    _custom(page: PdfPreviewScreen.page),
     /* CustomRoute(
       page: RootScaffold.page,
       initial: true,

@@ -74,39 +74,49 @@ class AdminHomeView extends StatelessWidget {
                         ).copyWith(bottom: getSize(10)),
                         itemBuilder: (_, index) {
                           final user = state.usersList[index];
-                          return UserDetailTile(
-                            user: user,
-                            index: index,
-                            onEditUser: () {
-                              context.router
-                                  .push(
-                                    PageRouteInfo(
-                                      AddUser.name,
-                                      args: AddUserArgs(id: user.id),
-                                    ),
-                                  )
-                                  .then((value) {
-                                    if (value == true) {
-                                      context.read<HomeBloc>().add(
-                                        HomeEvent.getUsersList(true),
-                                      );
-                                    }
-                                  });
-                            },
-                            onDeleteUser: () {
-                              UserDeleteDialog().deleteDialog(
-                                context,
-                                onPressedDelete: () {
-                                  currentContext.router.maybePop();
-                                  context.read<HomeBloc>().add(
-                                    HomeEvent.deleteUser(user.id ?? -1),
-                                  );
-                                },
-                                onPressedCancel: () {
-                                  context.router.maybePop();
-                                },
+                          return GestureDetector(
+                            onTap: () {
+                              context.router.push(
+                                PageRouteInfo(
+                                  AdminFormList.name,
+                                  args: AdminFormListArgs(user: user),
+                                ),
                               );
                             },
+                            child: UserDetailTile(
+                              user: user,
+                              index: index,
+                              onEditUser: () {
+                                context.router
+                                    .push(
+                                      PageRouteInfo(
+                                        AddUser.name,
+                                        args: AddUserArgs(id: user.id),
+                                      ),
+                                    )
+                                    .then((value) {
+                                      if (value == true) {
+                                        context.read<HomeBloc>().add(
+                                          HomeEvent.getUsersList(true),
+                                        );
+                                      }
+                                    });
+                              },
+                              onDeleteUser: () {
+                                UserDeleteDialog().deleteDialog(
+                                  context,
+                                  onPressedDelete: () {
+                                    currentContext.router.maybePop();
+                                    context.read<HomeBloc>().add(
+                                      HomeEvent.deleteUser(user.id ?? -1),
+                                    );
+                                  },
+                                  onPressedCancel: () {
+                                    context.router.maybePop();
+                                  },
+                                );
+                              },
+                            ),
                           );
                         },
                       ),

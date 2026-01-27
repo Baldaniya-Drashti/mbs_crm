@@ -6,10 +6,24 @@ import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 
 abstract class IMainFacade {
-  Future<Either<MainFailure, CommonResponse>> formListAPI({required int page});
+  Future<Either<MainFailure, CommonResponse>> formListAPI({
+    required int page,
+    int? userId,
+  });
   Future<Either<MainFailure, CommonResponse>> userListAPI({required int page});
-  Future<Either<MainFailure, HomeDTO?>> addFormAPI({required HomeDTO form});
-  Future<Either<MainFailure, HomeDTO?>> updateFormAPI({required HomeDTO form});
+  Future<Either<MainFailure, HomeDTO?>> addFormAPI({
+    required HomeDTO form,
+    bool showSucessToast = true,
+  });
+  Future<Either<MainFailure, HomeDTO?>> updateFormAPI({
+    required HomeDTO form,
+    bool showSucessToast = true,
+  });
+  Future<Either<MainFailure, String>> deleteFormAPI({
+    required int id,
+    bool showSucessToast = true,
+  });
+
   Future<DynamicFormDTO> loadSchema(String formId);
 
   Future<Either<MainFailure, String>> addUserAPI({
@@ -29,7 +43,6 @@ abstract class IMainFacade {
     required String email,
   });
 
-  Future<Either<MainFailure, String>> deleteFormAPI({required int id});
   Future<Either<MainFailure, HomeDTO>> getFormDetailAPI({required int id});
   Future<Either<MainFailure, List<HomeDTO>>> getAllFormForDB();
 }

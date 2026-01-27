@@ -28,6 +28,7 @@ mixin _$DynamicFormEvent {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -38,6 +39,7 @@ mixin _$DynamicFormEvent {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -48,6 +50,7 @@ mixin _$DynamicFormEvent {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -58,6 +61,8 @@ mixin _$DynamicFormEvent {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -67,6 +72,7 @@ mixin _$DynamicFormEvent {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -76,6 +82,7 @@ mixin _$DynamicFormEvent {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
@@ -190,6 +197,7 @@ class _$LoadFormImpl implements LoadForm {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return loadForm(formSlug, formId);
@@ -204,6 +212,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return loadForm?.call(formSlug, formId);
@@ -218,6 +227,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -235,6 +245,8 @@ class _$LoadFormImpl implements LoadForm {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return loadForm(this);
@@ -248,6 +260,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return loadForm?.call(this);
@@ -261,6 +274,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -369,6 +383,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return getFormDetails(formId);
@@ -383,6 +398,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return getFormDetails?.call(formId);
@@ -397,6 +413,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -414,6 +431,8 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return getFormDetails(this);
@@ -427,6 +446,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return getFormDetails?.call(this);
@@ -440,6 +460,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -548,6 +569,7 @@ class _$CreateFormImpl implements CreateForm {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return createForm(values);
@@ -562,6 +584,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return createForm?.call(values);
@@ -576,6 +599,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -593,6 +617,8 @@ class _$CreateFormImpl implements CreateForm {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return createForm(this);
@@ -606,6 +632,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return createForm?.call(this);
@@ -619,6 +646,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -740,6 +768,7 @@ class _$UpdateFormImpl implements UpdateForm {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return updateForm(formId, values);
@@ -754,6 +783,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return updateForm?.call(formId, values);
@@ -768,6 +798,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -785,6 +816,8 @@ class _$UpdateFormImpl implements UpdateForm {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return updateForm(this);
@@ -798,6 +831,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return updateForm?.call(this);
@@ -811,6 +845,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -931,6 +966,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return attachFileEvent(field);
@@ -945,6 +981,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return attachFileEvent?.call(field);
@@ -959,6 +996,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -976,6 +1014,8 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return attachFileEvent(this);
@@ -989,6 +1029,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return attachFileEvent?.call(this);
@@ -1002,6 +1043,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -1023,6 +1065,190 @@ abstract class AttachFileEvent implements DynamicFormEvent {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$AttachFileEventImplCopyWith<_$AttachFileEventImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$InspectionGradeChangedImplCopyWith<$Res> {
+  factory _$$InspectionGradeChangedImplCopyWith(
+    _$InspectionGradeChangedImpl value,
+    $Res Function(_$InspectionGradeChangedImpl) then,
+  ) = __$$InspectionGradeChangedImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String grade});
+}
+
+/// @nodoc
+class __$$InspectionGradeChangedImplCopyWithImpl<$Res>
+    extends _$DynamicFormEventCopyWithImpl<$Res, _$InspectionGradeChangedImpl>
+    implements _$$InspectionGradeChangedImplCopyWith<$Res> {
+  __$$InspectionGradeChangedImplCopyWithImpl(
+    _$InspectionGradeChangedImpl _value,
+    $Res Function(_$InspectionGradeChangedImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? grade = null}) {
+    return _then(
+      _$InspectionGradeChangedImpl(
+        null == grade
+            ? _value.grade
+            : grade // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
+  const _$InspectionGradeChangedImpl(this.grade);
+
+  @override
+  final String grade;
+
+  @override
+  String toString() {
+    return 'DynamicFormEvent.inspectionGradeChanged(grade: $grade)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$InspectionGradeChangedImpl &&
+            (identical(other.grade, grade) || other.grade == grade));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, grade);
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$InspectionGradeChangedImplCopyWith<_$InspectionGradeChangedImpl>
+  get copyWith =>
+      __$$InspectionGradeChangedImplCopyWithImpl<_$InspectionGradeChangedImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
+    required TResult Function(FormIdentifier formId) getFormDetails,
+    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )
+    updateForm,
+    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+  }) {
+    return inspectionGradeChanged(grade);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
+    TResult? Function(FormIdentifier formId)? getFormDetails,
+    TResult? Function(Map<String, dynamic> values)? createForm,
+    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    updateForm,
+    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+  }) {
+    return inspectionGradeChanged?.call(grade);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
+    TResult Function(FormIdentifier formId)? getFormDetails,
+    TResult Function(Map<String, dynamic> values)? createForm,
+    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    updateForm,
+    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    required TResult orElse(),
+  }) {
+    if (inspectionGradeChanged != null) {
+      return inspectionGradeChanged(grade);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadForm value) loadForm,
+    required TResult Function(GetFormDetails value) getFormDetails,
+    required TResult Function(CreateForm value) createForm,
+    required TResult Function(UpdateForm value) updateForm,
+    required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
+  }) {
+    return inspectionGradeChanged(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadForm value)? loadForm,
+    TResult? Function(GetFormDetails value)? getFormDetails,
+    TResult? Function(CreateForm value)? createForm,
+    TResult? Function(UpdateForm value)? updateForm,
+    TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+  }) {
+    return inspectionGradeChanged?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadForm value)? loadForm,
+    TResult Function(GetFormDetails value)? getFormDetails,
+    TResult Function(CreateForm value)? createForm,
+    TResult Function(UpdateForm value)? updateForm,
+    TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    required TResult orElse(),
+  }) {
+    if (inspectionGradeChanged != null) {
+      return inspectionGradeChanged(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InspectionGradeChanged implements DynamicFormEvent {
+  const factory InspectionGradeChanged(final String grade) =
+      _$InspectionGradeChangedImpl;
+
+  String get grade;
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$InspectionGradeChangedImplCopyWith<_$InspectionGradeChangedImpl>
+  get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -1119,6 +1345,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     )
     updateForm,
     required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
   }) {
     return onDropDownChanged(fieldKey, value);
@@ -1133,6 +1360,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
   }) {
     return onDropDownChanged?.call(fieldKey, value);
@@ -1147,6 +1375,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -1164,6 +1393,8 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     required TResult Function(CreateForm value) createForm,
     required TResult Function(UpdateForm value) updateForm,
     required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
   }) {
     return onDropDownChanged(this);
@@ -1177,6 +1408,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult? Function(CreateForm value)? createForm,
     TResult? Function(UpdateForm value)? updateForm,
     TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
   }) {
     return onDropDownChanged?.call(this);
@@ -1190,6 +1422,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult Function(CreateForm value)? createForm,
     TResult Function(UpdateForm value)? updateForm,
     TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
     required TResult orElse(),
   }) {
@@ -1227,6 +1460,7 @@ mixin _$DynamicFormState {
   String? get errorMessage => throw _privateConstructorUsedError;
   Map<String, List<AttachmentFileDTO>> get attachmentCache =>
       throw _privateConstructorUsedError;
+  String? get selectedInspectionGrade => throw _privateConstructorUsedError;
 
   /// Create a copy of DynamicFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -1251,6 +1485,7 @@ abstract class $DynamicFormStateCopyWith<$Res> {
     int rebuildTick,
     String? errorMessage,
     Map<String, List<AttachmentFileDTO>> attachmentCache,
+    String? selectedInspectionGrade,
   });
 
   $DynamicFormDTOCopyWith<$Res>? get schema;
@@ -1280,6 +1515,7 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
     Object? rebuildTick = null,
     Object? errorMessage = freezed,
     Object? attachmentCache = null,
+    Object? selectedInspectionGrade = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -1315,6 +1551,10 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
                 ? _value.attachmentCache
                 : attachmentCache // ignore: cast_nullable_to_non_nullable
                       as Map<String, List<AttachmentFileDTO>>,
+            selectedInspectionGrade: freezed == selectedInspectionGrade
+                ? _value.selectedInspectionGrade
+                : selectedInspectionGrade // ignore: cast_nullable_to_non_nullable
+                      as String?,
           )
           as $Val,
     );
@@ -1367,6 +1607,7 @@ abstract class _$$DynamicFormStateImplCopyWith<$Res>
     int rebuildTick,
     String? errorMessage,
     Map<String, List<AttachmentFileDTO>> attachmentCache,
+    String? selectedInspectionGrade,
   });
 
   @override
@@ -1397,6 +1638,7 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
     Object? rebuildTick = null,
     Object? errorMessage = freezed,
     Object? attachmentCache = null,
+    Object? selectedInspectionGrade = freezed,
   }) {
     return _then(
       _$DynamicFormStateImpl(
@@ -1432,6 +1674,10 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
             ? _value._attachmentCache
             : attachmentCache // ignore: cast_nullable_to_non_nullable
                   as Map<String, List<AttachmentFileDTO>>,
+        selectedInspectionGrade: freezed == selectedInspectionGrade
+            ? _value.selectedInspectionGrade
+            : selectedInspectionGrade // ignore: cast_nullable_to_non_nullable
+                  as String?,
       ),
     );
   }
@@ -1449,6 +1695,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     this.rebuildTick = 0,
     this.errorMessage,
     final Map<String, List<AttachmentFileDTO>> attachmentCache = const {},
+    this.selectedInspectionGrade,
   }) : _attachmentCache = attachmentCache;
 
   @override
@@ -1479,8 +1726,11 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
   }
 
   @override
+  final String? selectedInspectionGrade;
+
+  @override
   String toString() {
-    return 'DynamicFormState(schema: $schema, existingForm: $existingForm, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache)';
+    return 'DynamicFormState(schema: $schema, existingForm: $existingForm, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache, selectedInspectionGrade: $selectedInspectionGrade)';
   }
 
   @override
@@ -1503,7 +1753,12 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
             const DeepCollectionEquality().equals(
               other._attachmentCache,
               _attachmentCache,
-            ));
+            ) &&
+            (identical(
+                  other.selectedInspectionGrade,
+                  selectedInspectionGrade,
+                ) ||
+                other.selectedInspectionGrade == selectedInspectionGrade));
   }
 
   @override
@@ -1517,6 +1772,7 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     rebuildTick,
     errorMessage,
     const DeepCollectionEquality().hash(_attachmentCache),
+    selectedInspectionGrade,
   );
 
   /// Create a copy of DynamicFormState
@@ -1541,6 +1797,7 @@ abstract class _DynamicFormState implements DynamicFormState {
     final int rebuildTick,
     final String? errorMessage,
     final Map<String, List<AttachmentFileDTO>> attachmentCache,
+    final String? selectedInspectionGrade,
   }) = _$DynamicFormStateImpl;
 
   @override
@@ -1559,6 +1816,8 @@ abstract class _DynamicFormState implements DynamicFormState {
   String? get errorMessage;
   @override
   Map<String, List<AttachmentFileDTO>> get attachmentCache;
+  @override
+  String? get selectedInspectionGrade;
 
   /// Create a copy of DynamicFormState
   /// with the given fields replaced by the non-null parameter values.

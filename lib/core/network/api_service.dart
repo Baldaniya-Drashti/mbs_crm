@@ -77,6 +77,7 @@ class ApiService {
   Future<CommonResponse> getMethod(
     String path, {
     Map<String, dynamic>? queryParameters,
+    bool showSucessToast = true,
   }) async {
     BuildContext context = getIt<AppRouter>().navigatorKey.currentContext!;
     dio = initAPIService(context: context);
@@ -96,9 +97,11 @@ class ApiService {
         commonResponse = CommonResponse.fromJson(response.data);
         if (commonResponse.dioMessage != null &&
             commonResponse.status == true) {
-          await showSuccess(
-            message: commonResponse.dioMessage ?? '',
-          ).show(context);
+          if (showSucessToast) {
+            await showSuccess(
+              message: commonResponse.dioMessage ?? '',
+            ).show(context);
+          }
         }
         return CommonResponse.fromJson(response.data);
       } else {
@@ -157,6 +160,7 @@ class ApiService {
     bool isMultipart = false,
     FormData? formData,
     Map<String, dynamic>? queryParameters,
+    bool showSucessToast = true,
   }) async {
     BuildContext currentContext =
         getIt<AppRouter>().navigatorKey.currentContext!;
@@ -174,9 +178,11 @@ class ApiService {
       if (commonRes.dioMessage != null &&
           commonRes.dioMessage != 'FCM register successfully' &&
           commonRes.dioMessage != 'Success') {
-        await showSuccess(
-          message: commonRes.dioMessage ?? '',
-        ).show(currentContext);
+        if (showSucessToast) {
+          await showSuccess(
+            message: commonRes.dioMessage ?? '',
+          ).show(currentContext);
+        }
       }
     } else {
       showError(

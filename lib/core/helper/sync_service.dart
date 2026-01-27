@@ -87,7 +87,7 @@ class SyncService {
       try {
         // Always CREATE When server_id is null
         if (form.server_id == null) {
-          final res = await _api.addFormAPI(form: form);
+          final res = await _api.addFormAPI(form: form, showSucessToast: false);
 
           res.fold(
             (_) => null,
@@ -100,7 +100,10 @@ class SyncService {
         }
         switch (form.syncAction) {
           case 'update':
-            final res = await _api.updateFormAPI(form: form);
+            final res = await _api.updateFormAPI(
+              form: form,
+              showSucessToast: false,
+            );
             res.fold(
               (_) => null,
               (r) => DBRepository().markAsSynced(
@@ -116,7 +119,10 @@ class SyncService {
               break;
             }
 
-            final res = await _api.deleteFormAPI(id: form.server_id!);
+            final res = await _api.deleteFormAPI(
+              id: form.server_id!,
+              showSucessToast: false,
+            );
             await res.fold((_) => null, (r) async {
               await _db.deleteLocalFormByServerId(form.server_id!);
             });

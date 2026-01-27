@@ -23,9 +23,14 @@ class MainFacade implements IMainFacade {
   @override
   Future<Either<MainFailure, CommonResponse>> formListAPI({
     required int page,
+    int? userId,
   }) async {
     try {
-      Map<String, dynamic> mapData = {'page': page, 'limit': _perPage};
+      Map<String, dynamic> mapData = {
+        'page': page,
+        'limit': _perPage,
+        if (userId != null) 'user_id': userId,
+      };
       final response = await apiService.postMethod(
         ApiConstants.formList,
         mapData,
@@ -52,6 +57,7 @@ class MainFacade implements IMainFacade {
   @override
   Future<Either<MainFailure, HomeDTO?>> addFormAPI({
     required HomeDTO form,
+    bool showSucessToast = true,
     /* required String formType,
     required String formName,
     required dynamic formJson, */
@@ -68,6 +74,7 @@ class MainFacade implements IMainFacade {
 
       final response = await apiService.postMethod(
         ApiConstants.addForm,
+        showSucessToast: showSucessToast,
         mapData,
       );
 
@@ -94,6 +101,7 @@ class MainFacade implements IMainFacade {
   @override
   Future<Either<MainFailure, HomeDTO?>> updateFormAPI({
     required HomeDTO form,
+    bool showSucessToast = true,
   }) async {
     try {
       Map<String, dynamic> mapData = {
@@ -108,6 +116,7 @@ class MainFacade implements IMainFacade {
       final response = await apiService.postMethod(
         "${ApiConstants.addForm}/${form.server_id}",
         mapData,
+        showSucessToast: showSucessToast,
       );
 
       final account = HomeDTO.fromJson(response.data);
@@ -297,7 +306,10 @@ class MainFacade implements IMainFacade {
   }
 
   @override
-  Future<Either<MainFailure, String>> deleteFormAPI({required int id}) async {
+  Future<Either<MainFailure, String>> deleteFormAPI({
+    required int id,
+    bool showSucessToast = true,
+  }) async {
     try {
       final response = await apiService.getMethod(
         "${ApiConstants.deleteForm}/$id",

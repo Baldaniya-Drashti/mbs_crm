@@ -112,89 +112,87 @@ class AddUser extends StatelessWidget {
                                   ),
                             ),
 
-                            if (id == null) ...[
-                              Gap(getSize(20)),
-                              CustomTextField(
-                                labelText: StringConstant.password,
-                                obscureText: state.isObscure,
-                                suffixIcon: InkWell(
-                                  onTap: () {
-                                    context.read<AddUserBloc>().add(
-                                      const AddUserEvent.obscureChanged(),
-                                    );
-                                  },
-                                  child: Container(
-                                    color: AppColors.transparent,
-                                    padding: EdgeInsets.all(getSize(9)),
-                                    child: Icon(
-                                      (state.isObscure)
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
-                                    ),
+                            Gap(getSize(20)),
+                            CustomTextField(
+                              labelText: StringConstant.password,
+                              obscureText: state.isObscure,
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  context.read<AddUserBloc>().add(
+                                    const AddUserEvent.obscureChanged(),
+                                  );
+                                },
+                                child: Container(
+                                  color: AppColors.transparent,
+                                  padding: EdgeInsets.all(getSize(9)),
+                                  child: Icon(
+                                    (state.isObscure)
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
                                   ),
                                 ),
-                                onChanged: (value) => context
-                                    .read<AddUserBloc>()
-                                    .add(AddUserEvent.passwordChanged(value)),
-                                validator: (p0, p1) => context
-                                    .read<AddUserBloc>()
-                                    .state
-                                    .password
-                                    .value
-                                    .fold(
-                                      (f) => f.maybeMap(
-                                        empty: (value) =>
-                                            StringConstant.pleaseEnterPassword,
-                                        shortPassword: (_) => StringConstant
-                                            .passwordShouldBeMinimum3Digit,
-                                        orElse: () => null,
-                                      ),
-                                      (_) => null,
-                                    ),
                               ),
-                              Gap(getSize(20)),
-                              CustomTextField(
-                                labelText: StringConstant.confirmPassword,
-                                obscureText: state.isObscure,
-                                suffixIcon: InkWell(
-                                  onTap: () {
-                                    context.read<AddUserBloc>().add(
-                                      const AddUserEvent.obscureChanged(),
-                                    );
-                                  },
-                                  child: Container(
-                                    color: AppColors.transparent,
-                                    padding: EdgeInsets.all(getSize(9)),
-                                    child: Icon(
-                                      (state.isObscure)
-                                          ? Icons.visibility_outlined
-                                          : Icons.visibility_off_outlined,
+                              onChanged: (value) => context
+                                  .read<AddUserBloc>()
+                                  .add(AddUserEvent.passwordChanged(value)),
+                              validator: (p0, p1) => context
+                                  .read<AddUserBloc>()
+                                  .state
+                                  .password
+                                  .value
+                                  .fold(
+                                    (f) => f.maybeMap(
+                                      empty: (value) =>
+                                          StringConstant.pleaseEnterPassword,
+                                      shortPassword: (_) => StringConstant
+                                          .passwordShouldBeMinimum3Digit,
+                                      orElse: () => null,
                                     ),
+                                    (_) => null,
+                                  ),
+                            ),
+                            Gap(getSize(20)),
+                            CustomTextField(
+                              labelText: StringConstant.confirmPassword,
+                              obscureText: state.isObscure,
+                              suffixIcon: InkWell(
+                                onTap: () {
+                                  context.read<AddUserBloc>().add(
+                                    const AddUserEvent.obscureChanged(),
+                                  );
+                                },
+                                child: Container(
+                                  color: AppColors.transparent,
+                                  padding: EdgeInsets.all(getSize(9)),
+                                  child: Icon(
+                                    (state.isObscure)
+                                        ? Icons.visibility_outlined
+                                        : Icons.visibility_off_outlined,
                                   ),
                                 ),
-                                onChanged: (value) =>
-                                    context.read<AddUserBloc>().add(
-                                      AddUserEvent.confirmPasswordChanged(
-                                        value,
-                                        state.password.getValue(),
-                                      ),
-                                    ),
-                                validator: (_, context) => context
-                                    .read<AddUserBloc>()
-                                    .state
-                                    .confirmPassword
-                                    .value
-                                    .fold(
-                                      (f) => f.maybeMap(
-                                        passwordsDontMatch: (_) =>
-                                            StringConstant
-                                                .bothPasswordsAreDoesNotMatch,
-                                        orElse: () => null,
-                                      ),
-                                      (_) => null,
-                                    ),
                               ),
-                            ],
+                              onChanged: (value) =>
+                                  context.read<AddUserBloc>().add(
+                                    AddUserEvent.confirmPasswordChanged(
+                                      value,
+                                      state.password.getValue(),
+                                    ),
+                                  ),
+                              validator: (_, context) => context
+                                  .read<AddUserBloc>()
+                                  .state
+                                  .confirmPassword
+                                  .value
+                                  .fold(
+                                    (f) => f.maybeMap(
+                                      passwordsDontMatch: (_) => StringConstant
+                                          .bothPasswordsAreDoesNotMatch,
+                                      orElse: () => null,
+                                    ),
+                                    (_) => null,
+                                  ),
+                            ),
+
                             Gap(getSize(40)),
                             CommonButton(
                               isSubmitting: state.isSubmitting,
