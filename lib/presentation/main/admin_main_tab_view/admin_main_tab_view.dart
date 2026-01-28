@@ -7,7 +7,7 @@ import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
 import 'package:mbs_crm/application/main/admin_main_tab_bloc/admin_main_tab_bloc.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/presentation/main/tabs/form_tab_view/form_tab_view.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/admin_home_view/admin_home_view.dart';
+import 'package:mbs_crm/presentation/main/tabs/home/admin_home_view/admin_home_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/my_account/my_account.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/app_focus.dart';

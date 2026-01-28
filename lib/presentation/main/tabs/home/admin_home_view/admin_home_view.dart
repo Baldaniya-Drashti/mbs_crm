@@ -11,8 +11,8 @@ import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/widgets/center_loading_indicator.dart';
 import 'package:mbs_crm/presentation/common/widgets/paginated_list_view.dart';
 import 'package:mbs_crm/presentation/core/widgets/buttons/common_button.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/admin_home_view/widgets/user_delete_dialog.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/admin_home_view/widgets/user_detail_tile.dart';
+import 'package:mbs_crm/presentation/main/tabs/home/admin_home_view/widgets/user_delete_dialog.dart';
+import 'package:mbs_crm/presentation/main/tabs/home/admin_home_view/widgets/user_detail_tile.dart';
 
 @RoutePage(name: 'AdminHomeView')
 class AdminHomeView extends StatelessWidget {

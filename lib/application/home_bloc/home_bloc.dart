@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:dartz/dartz.dart';
 import 'package:mbs_crm/core/database/db_repository.dart';
 import 'package:mbs_crm/core/database/local_preference.dart';

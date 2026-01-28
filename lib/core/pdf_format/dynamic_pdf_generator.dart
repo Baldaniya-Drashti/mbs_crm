@@ -12,10 +12,6 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:pdf/widgets.dart' as pw;
 
 class DynamicPdfGenerator {
-  // -----------------------------------------------------------
-  // PUBLIC METHOD
-  // -----------------------------------------------------------
-
   static Future<Uint8List> buildPdf(
     Map<String, dynamic> json,
     DynamicFormDTO schema,
@@ -40,7 +36,6 @@ class DynamicPdfGenerator {
 
           widgets.add(pw.SizedBox(height: 10));
 
-          /// Project info
           final projectInfo =
               json['project_information'] as Map<String, dynamic>? ?? {};
           if (hasData(projectInfo)) {
@@ -109,7 +104,7 @@ class DynamicPdfGenerator {
     return pdf.save();
   }
 
-  // ---------- SIGNATURe ----------
+  // ---------- SIGNATURE ----------
   static pw.Widget signatureWidget(String base64) {
     try {
       final bytes = base64Decode(base64);
@@ -122,9 +117,7 @@ class DynamicPdfGenerator {
     }
   }
 
-  // -----------------------------------------------------------
-  // SECTION CONTROLLER (IMPORTANT)
-  // -----------------------------------------------------------
+  // ----------------------------- SECTION CONTROLLER -----------------------------
   static void addSection({
     required List<pw.Widget> widgets,
     required String? title,
@@ -142,9 +135,8 @@ class DynamicPdfGenerator {
     widgets.add(content());
   }
 
-  // -----------------------------------------------------------
-  // HEADER
-  // -----------------------------------------------------------
+  // ----------------------------- HEADER -----------------------------
+
   static pw.Widget _header({
     required pw.ImageProvider logo,
     required String title,
@@ -177,9 +169,7 @@ class DynamicPdfGenerator {
     );
   }
 
-  // -----------------------------------------------------------
-  // PROJECT INFO
-  // -----------------------------------------------------------
+  // ----------------------------- PROJECT INFO -----------------------------
   static pw.Widget _projectInfo(Map<String, dynamic> data) {
     return pw.Table(
       border: pw.TableBorder.all(),
@@ -228,9 +218,8 @@ class DynamicPdfGenerator {
     );
   }
 
-  // -----------------------------------------------------------
-  // EQUIPMENT TABLE
-  // -----------------------------------------------------------
+  // ----------------------------- EQUIPMENT TABLE -----------------------------
+
   static List<Map<String, dynamic>> normalizeTable(
     Map<String, dynamic>? table,
   ) {
@@ -239,9 +228,8 @@ class DynamicPdfGenerator {
     return table.values.whereType<Map<String, dynamic>>().toList();
   }
 
-  // -----------------------------------------------------------
-  // SMALL HELPERS
-  // -----------------------------------------------------------
+  // ----------------------------- SMALL HELPERS -----------------------------
+
   static pw.Widget _sectionTitle(String text) {
     return pw.Text(
       text,
@@ -269,31 +257,11 @@ class DynamicPdfGenerator {
     );
   }
 
-  static pw.Widget _headerCell(String text) {
-    return pw.Padding(
-      padding: const pw.EdgeInsets.all(4),
-      child: pw.Text(
-        text,
-        textAlign: pw.TextAlign.center,
-        style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold),
-      ),
-    );
-  }
-
-  static pw.Widget _data(dynamic value) {
-    final text = value?.toString() ?? '';
-    return pw.Padding(
-      padding: const pw.EdgeInsets.all(4),
-      child: pw.Text(text, style: const pw.TextStyle(fontSize: 8)),
-    );
-  }
-
   static pw.Widget _keyValueSection(
     String title,
     Map<String, dynamic> data,
     Map<String, String> questionMap,
   ) {
-    // Reset numbering per section
     int index = 1;
 
     return pw.Column(
@@ -322,7 +290,7 @@ class DynamicPdfGenerator {
                   ),
                 pw.SizedBox(height: 4),
 
-                /// ANSWER STRUCTURE { answer, reason }
+                /// ----------------------------- ANSWER STRUCTURE { answer, reason } -----------------------------
                 if (rawValue is Map && rawValue.containsKey('answer')) ...[
                   pw.Text(
                     'Ans: ${DynamicFormHelper.answerToValue(rawValue['answer'])}',
@@ -336,14 +304,13 @@ class DynamicPdfGenerator {
                     ),
                   ],
                 ]
-                /// SIMPLE VALUE
+                /// ----------------------------- SIMPLE VALUE -----------------------------
                 else if (e.key.toLowerCase() != 'signature')
                   pw.Text(
                     '${questionText.isNotEmpty ? "Ans: " : ""}${rawValue.toString()}',
                     style: const pw.TextStyle(fontSize: 9),
                   ),
 
-                /// SIGNATURE
                 if (e.key.toLowerCase() == 'signature' && rawValue is String)
                   signatureWidget(rawValue),
               ],

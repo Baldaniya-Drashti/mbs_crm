@@ -41,26 +41,5 @@ class AppRouter extends RootStackRouter {
     _custom(page: MyAccountView.page),
     _custom(page: AddUser.page),
     _custom(page: AdminFormList.page),
-    _custom(page: PdfPreviewScreen.page),
-    /* CustomRoute(
-      page: RootScaffold.page,
-      initial: true,
-
-      children: [
-        _custom(page: SplashPage.page, initial: true),
-        _custom(page: SignIn.page),
-        _custom(
-          page: OnBoarding.page,
-          transition: TransitionsBuilders.slideBottom,
-          duration: 300,
-        ),
-        _custom(page: DynamicForm.page),
-        _custom(page: UserMainTabView.page),
-        _custom(page: AdminMainTabView.page),
-        _custom(page: FormDetailView.page),
-        _custom(page: MyAccountView.page),
-        _custom(page: AddUser.page),
-      ],
-    ), */
   ];
 }

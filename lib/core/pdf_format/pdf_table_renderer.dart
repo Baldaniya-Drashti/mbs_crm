@@ -1,69 +1,6 @@
 import 'package:mbs_crm/core/pdf_format/pdf_table_model.dart';
 import 'package:pdf/pdf.dart';
-
 import 'package:pdf/widgets.dart' as pw;
-/* 
-pw.Widget renderPdfTable(NormalizedTable table) {
-  final flatCols = table.flatColumns;
-  final centerRow = table.rows ~/ 2;
-
-  return pw.Table(
-    border: pw.TableBorder.all(),
-    columnWidths: {
-      for (int i = 0; i < flatCols.length; i++) i: const pw.FlexColumnWidth(),
-    },
-    children: [
-      /// -------- STACKED HEADER --------
-      pw.TableRow(
-        children: table.columns.map((c) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(4),
-            child: pw.Text(
-              c.label ?? '',
-              textAlign: pw.TextAlign.center,
-              style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold),
-            ),
-          );
-        }).toList(),
-      ),
-
-      /// -------- CHILD HEADER --------
-      pw.TableRow(
-        children: flatCols.map((c) {
-          return pw.Padding(
-            padding: const pw.EdgeInsets.all(4),
-            child: pw.Text(
-              c.label ?? '',
-              textAlign: pw.TextAlign.center,
-              style: pw.TextStyle(fontSize: 8, fontWeight: pw.FontWeight.bold),
-            ),
-          );
-        }).toList(),
-      ),
-
-      /// -------- ROWS --------
-      for (int r = 0; r < table.rows; r++)
-        pw.TableRow(
-          children: flatCols.map((col) {
-            // display: single logic (same as UI)
-            if (col.display == 'single' && r != centerRow) {
-              return pw.Container(height: 26);
-            }
-
-            return pw.Container(
-              height: 26,
-              padding: const pw.EdgeInsets.all(4),
-              child: pw.Text(
-                table.cellValue(r, col.key!),
-                style: const pw.TextStyle(fontSize: 8),
-              ),
-            );
-          }).toList(),
-        ),
-    ],
-  );
-}
- */
 
 pw.Widget renderPdfTable(NormalizedTable table) {
   final flatCols = table.flatColumns;

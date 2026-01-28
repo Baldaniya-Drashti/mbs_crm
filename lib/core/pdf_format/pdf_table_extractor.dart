@@ -7,7 +7,7 @@ List<NormalizedTable> extractTablesFromJson({
 }) {
   final tables = <NormalizedTable>[];
 
-  for (final section in schema.sections ?? []) {
+  for (FormSection section in schema.sections ?? []) {
     final sectionKey = (section.title ?? '').toLowerCase().replaceAll(' ', '_');
 
     final sectionData = json[sectionKey];
@@ -16,7 +16,7 @@ List<NormalizedTable> extractTablesFromJson({
     final tablesJson = sectionData['tables'];
     if (tablesJson is! Map) continue;
 
-    for (final field in section.fields ?? []) {
+    for (FormFieldSchema field in section.fields ?? []) {
       if (field.type != 'table') continue;
 
       final tableKey = field.key!;

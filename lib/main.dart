@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:mbs_crm/core/environment/environment.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
-import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/core/app_widget.dart';

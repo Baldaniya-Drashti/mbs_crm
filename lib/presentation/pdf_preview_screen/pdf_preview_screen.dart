@@ -1,7 +1,5 @@
-import 'package:auto_route/auto_route.dart';
+/* import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:mbs_crm/core/pdf_format/dynamic_pdf_generator.dart';
-import 'package:printing/printing.dart';
 
 @RoutePage(name: 'PdfPreviewScreen')
 class PdfPreviewScreen extends StatelessWidget {
@@ -23,3 +21,4 @@ class PdfPreviewScreen extends StatelessWidget {
     );
   }
 }
+ */

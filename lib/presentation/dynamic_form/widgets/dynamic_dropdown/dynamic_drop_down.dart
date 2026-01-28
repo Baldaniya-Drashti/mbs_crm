@@ -105,48 +105,6 @@ class DynamicDropdown extends StatelessWidget {
               );
             },
           ),
-          /* BlocBuilder<DynamicFormBloc, DynamicFormState>(
-            buildWhen: (p, c) => p.rebuildTick != c.rebuildTick,
-            builder: (context, state) {
-              final formState = context
-                  .read<DynamicFormBloc>()
-                  .formKey
-                  .currentState;
-              final dropdownValue = formState?.fields[keyName]?.value;
-              final reasonValue = formState?.fields['${keyName}_reason']?.value;
-
-              // Show extra fields if dropdown is "No" OR reason field already has value (edit mode)
-              final showExtra =
-                  dropdownValue == "No" ||
-                  (reasonValue != null && reasonValue.toString().isNotEmpty);
-
-              if (!showExtra) return const SizedBox.shrink();
-
-              return Column(
-                children: [
-                  Gap(getSize(10)),
-
-                  // REASON FIELD
-                  DynamicTextField(
-                    field: FormFieldSchema(
-                      key: '${keyName}_reason',
-                      label: StringConstant.reason,
-                      maxLines: 3,
-                    ),
-                  ),
-                  Gap(getSize(10)),
-
-                  // ATTACHMENTS
-                  DynamicAttachmentField(
-                    field: FormFieldSchema(
-                      key: '${keyName}_attachments',
-                      multipleImages: true,
-                    ),
-                  ),
-                ],
-              );
-            },
-          ),*/
         ],
       ),
     );

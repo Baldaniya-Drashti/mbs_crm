@@ -1,17 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
-import 'package:mbs_crm/core/pdf_format/dynamic_pdf_generator.dart';
-import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/widgets/center_loading_indicator.dart';
 import 'package:mbs_crm/presentation/common/widgets/paginated_list_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/form_tab_view/widgets/form_delete_dialog.dart';
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/user_home_view/widgets/form_tile.dart';
+import 'package:mbs_crm/presentation/main/tabs/home/user_home_view/widgets/form_tile.dart';
 
 @RoutePage(name: 'UserHomeView')
 class UserHomeView extends StatelessWidget {

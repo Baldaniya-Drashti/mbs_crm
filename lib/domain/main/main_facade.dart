@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -58,9 +60,6 @@ class MainFacade implements IMainFacade {
   Future<Either<MainFailure, HomeDTO?>> addFormAPI({
     required HomeDTO form,
     bool showSucessToast = true,
-    /* required String formType,
-    required String formName,
-    required dynamic formJson, */
   }) async {
     try {
       Map<String, dynamic> mapData = {

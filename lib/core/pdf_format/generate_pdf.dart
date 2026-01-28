@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:intl/intl.dart';
@@ -22,7 +24,6 @@ Future<void> generateAndOpenPdf({
     if (Platform.isAndroid) {
       baseDir = Directory('/storage/emulated/0/Download');
       if (!await baseDir.exists()) {
-        // fallback if folder doesn't exist
         baseDir = await getExternalStorageDirectory();
       }
     } else if (Platform.isIOS) {
@@ -42,21 +43,10 @@ Future<void> generateAndOpenPdf({
 
     print("PDF saved at: ${file.path}");
 
-    // Open the PDF
     final result = await OpenFilex.open(file.path);
     if (result.type != ResultType.done) {
-      print('⚠️ OpenFile result: ${result.message}');
+      print('OpenFile result: ${result.message}');
     }
-
-    /* final dir = await getTemporaryDirectory();
-    final file = File('${dir.path}/$fileName');
-    print("PDF File--> $file");
-
-    await file.writeAsBytes(bytes);
-    final result = await OpenFilex.open(file.path);
-    if (result.type != ResultType.done) {
-      print('⚠️ OpenFile result: ${result.message}');
-    } */
   } catch (err) {
     print("Download PDF Error----> $err");
   }

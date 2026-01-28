@@ -39,7 +39,7 @@ class FormTile extends StatelessWidget {
             children: [
               BaseText(text: "$index. "),
               Expanded(
-                child: BaseText(text: "${form.server_id}" ?? "", maxLines: 2),
+                child: BaseText(text: "${form.server_id ?? ""}", maxLines: 2),
               ),
 
               InkWell(

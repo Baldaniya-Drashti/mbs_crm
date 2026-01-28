@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'dart:convert';
 import 'package:file_picker/file_picker.dart';
@@ -211,155 +211,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             debugPrint("Error -- getFormDetails ---> $e");
           }
         },
-        /* getFormDetails: (e) async {
-          try {
-            final isOnline = await NetworkListener().isOnline();
-            HomeDTO? form;
-            if (isOnline && e.formId.serverId != null) {
-              final res = await mainFacade.getFormDetailAPI(
-                id: e.formId.serverId!,
-              );
-              res.fold(
-                (l) {
-                  showError(
-                    message: l.maybeMap(
-                      showAPIResponseMessage: (value) => value.message,
-                      networkError: (value) =>
-                          'Please check your internet connectivity',
-                      orElse: () => "Server Error. Try again later.",
-                    ),
-                  ).show(currentContext);
-                },
-                (r) {
-                  form = r;
-                },
-              );
-            } else {
-              print("e.formId.localId---> ${e.formId.localId}");
-              form = await DBRepository().getFormByLocalId(e.formId.localId!);
-            }
-
-            final rawData = Map<String, dynamic>.from(form?.data ?? {});
-            debugPrint(
-              'Edit restored OK---> ${jsonEncode(form)}',
-              wrapWidth: 5000,
-            );
-
-            final Map<String, dynamic> flatData = {};
-            final Map<String, List<AttachmentFileDTO>> restoredAttachments = {};
-
-            /// ---------- LOOP SECTIONS ----------
-            rawData.forEach((sectionKey, sectionValue) {
-              if (sectionValue is! Map<String, dynamic>) return;
-
-              /// ---------- TABLES ----------
-              if (sectionValue.containsKey('tables')) {
-                final tables = Map<String, dynamic>.from(
-                  sectionValue['tables'],
-                );
-
-                tables.forEach((tableName, rows) {
-                  final rowMap = rows as Map<String, dynamic>;
-
-                  rowMap.forEach((rowIndex, columns) {
-                    final colMap = columns as Map<String, dynamic>;
-
-                    colMap.forEach((colKey, value) {
-                      final fieldKey =
-                          'table_${tableName}_row_${rowIndex.replaceFirst('row_', '')}_$colKey';
-
-                      flatData[fieldKey] = value;
-                      tableCache[fieldKey] = value?.toString() ?? '';
-                    });
-                  });
-                });
-              }
-
-              /// ---------- NORMAL / DROPDOWN ----------
-              sectionValue.forEach((fieldKey, fieldValue) {
-                if (fieldKey == 'tables') return;
-
-                /// ---- DROPDOWN OBJECT ----
-                if (fieldValue is Map<String, dynamic> &&
-                    fieldValue.containsKey('answer')) {
-                  final answer = fieldValue['answer'];
-
-                  final fieldSchema = state.schema?.sections
-                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
-                      .firstWhere(
-                        (f) => f.key == fieldKey,
-                        orElse: () => FormFieldSchema(key: fieldKey),
-                      );
-
-                  flatData[fieldKey] = normalizeFromJson(
-                    DynamicFormHelper.answerToValue(answer),
-                    fieldSchema,
-                  );
-
-                  /// ---- REASON ----
-                  if (fieldValue['reason'] != null) {
-                    flatData['${fieldKey}_reason'] = fieldValue['reason'];
-                  }
-
-                  /// ---- DROPDOWN ATTACHMENTS ----
-                  if (fieldValue['attachments'] is List) {
-                    restoredAttachments['${fieldKey}_attachments'] =
-                        (fieldValue['attachments'] as List)
-                            .map((e) => AttachmentFileDTO.fromJson(e))
-                            .toList();
-                  }
-                }
-                /// ---- NORMAL FIELD ----
-                else {
-                  final fieldSchema = state.schema?.sections
-                      ?.expand((s) => s.fields ?? <FormFieldSchema>[])
-                      .firstWhere(
-                        (f) => f.key == fieldKey,
-                        orElse: () => FormFieldSchema(key: fieldKey),
-                      );
-
-                  flatData[fieldKey] = normalizeFromJson(
-                    fieldValue,
-                    fieldSchema,
-                  );
-                }
-              });
-            });
-
-            /// ---------- GLOBAL ATTACHMENTS ----------
-            final attachments = rawData['attachments'];
-
-            if (attachments is List) {
-              restoredAttachments['attachments'] = attachments
-                  .map((e) => AttachmentFileDTO.fromJson(e))
-                  .toList();
-            } else if (attachments is Map<String, dynamic>) {
-              attachments.forEach((key, list) {
-                if (list is List) {
-                  restoredAttachments[key] = list
-                      .map((e) => AttachmentFileDTO.fromJson(e))
-                      .toList();
-                }
-              });
-            }
-
-            /// ---------- PATCH FORM ----------
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              formKey.currentState?.patchValue(flatData);
-            });
-
-            emit(
-              state.copyWith(
-                isLoading: false,
-                existingForm: form,
-                attachmentCache: restoredAttachments,
-              ),
-            );
-          } catch (e) {
-            debugPrint("Error -- getFormDetails ---> $e");
-          }
-        },
-         */
         onDropDownChanged: (e) {
           final formState = formKey.currentState;
           if (formState == null) return;
@@ -387,6 +238,8 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
         attachFileEvent: (e) async {
           final result = await FilePicker.platform.pickFiles(
             allowMultiple: e.field.multipleImages,
+            type: FileType.custom,
+            allowedExtensions: ['jpg', 'jpeg', 'png'],
             withData: false,
           );
 

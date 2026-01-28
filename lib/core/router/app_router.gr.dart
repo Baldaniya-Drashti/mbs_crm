@@ -9,10 +9,10 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i14;
-import 'package:flutter/material.dart' as _i15;
-import 'package:mbs_crm/core/helper/form_identifier.dart' as _i17;
-import 'package:mbs_crm/infrastructure/user_dto/user_dto.dart' as _i16;
+import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:flutter/material.dart' as _i14;
+import 'package:mbs_crm/core/helper/form_identifier.dart' as _i16;
+import 'package:mbs_crm/infrastructure/user_dto/user_dto.dart' as _i15;
 import 'package:mbs_crm/presentation/add_user/add_user.dart' as _i1;
 import 'package:mbs_crm/presentation/admin_form_list_view/admin_form_list_view.dart'
     as _i2;
@@ -21,24 +21,22 @@ import 'package:mbs_crm/presentation/main/admin_main_tab_view/admin_main_tab_vie
     as _i4;
 import 'package:mbs_crm/presentation/main/tabs/form_tab_view/form_tab_view.dart'
     as _i6;
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/admin_home_view/admin_home_view.dart'
+import 'package:mbs_crm/presentation/main/tabs/home/admin_home_view/admin_home_view.dart'
     as _i3;
-import 'package:mbs_crm/presentation/main/tabs/home/widgets/user_home_view/user_home_view.dart'
-    as _i12;
+import 'package:mbs_crm/presentation/main/tabs/home/user_home_view/user_home_view.dart'
+    as _i11;
 import 'package:mbs_crm/presentation/main/tabs/my_account/my_account.dart'
     as _i7;
 import 'package:mbs_crm/presentation/main/user_main_tab_view/user_main_tab_view.dart'
-    as _i13;
+    as _i12;
 import 'package:mbs_crm/presentation/onboarding/onboarding.dart' as _i8;
-import 'package:mbs_crm/presentation/pdf_preview_screen/pdf_preview_screen.dart'
-    as _i9;
-import 'package:mbs_crm/presentation/sign_in/sign_in.dart' as _i10;
-import 'package:mbs_crm/presentation/splash/splash_page.dart' as _i11;
+import 'package:mbs_crm/presentation/sign_in/sign_in.dart' as _i9;
+import 'package:mbs_crm/presentation/splash/splash_page.dart' as _i10;
 
 /// generated route for
 /// [_i1.AddUser]
-class AddUser extends _i14.PageRouteInfo<AddUserArgs> {
-  AddUser({_i15.Key? key, int? id, List<_i14.PageRouteInfo>? children})
+class AddUser extends _i13.PageRouteInfo<AddUserArgs> {
+  AddUser({_i14.Key? key, int? id, List<_i13.PageRouteInfo>? children})
     : super(
         AddUser.name,
         args: AddUserArgs(key: key, id: id),
@@ -47,7 +45,7 @@ class AddUser extends _i14.PageRouteInfo<AddUserArgs> {
 
   static const String name = 'AddUser';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AddUserArgs>(orElse: () => const AddUserArgs());
@@ -59,7 +57,7 @@ class AddUser extends _i14.PageRouteInfo<AddUserArgs> {
 class AddUserArgs {
   const AddUserArgs({this.key, this.id});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final int? id;
 
@@ -71,11 +69,11 @@ class AddUserArgs {
 
 /// generated route for
 /// [_i2.AdminFormList]
-class AdminFormList extends _i14.PageRouteInfo<AdminFormListArgs> {
+class AdminFormList extends _i13.PageRouteInfo<AdminFormListArgs> {
   AdminFormList({
-    _i15.Key? key,
-    _i16.UserDTO? user,
-    List<_i14.PageRouteInfo>? children,
+    _i14.Key? key,
+    _i15.UserDTO? user,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
          AdminFormList.name,
          args: AdminFormListArgs(key: key, user: user),
@@ -84,7 +82,7 @@ class AdminFormList extends _i14.PageRouteInfo<AdminFormListArgs> {
 
   static const String name = 'AdminFormList';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AdminFormListArgs>(
@@ -98,9 +96,9 @@ class AdminFormList extends _i14.PageRouteInfo<AdminFormListArgs> {
 class AdminFormListArgs {
   const AdminFormListArgs({this.key, this.user});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
-  final _i16.UserDTO? user;
+  final _i15.UserDTO? user;
 
   @override
   String toString() {
@@ -110,13 +108,13 @@ class AdminFormListArgs {
 
 /// generated route for
 /// [_i3.AdminHomeView]
-class AdminHomeView extends _i14.PageRouteInfo<void> {
-  const AdminHomeView({List<_i14.PageRouteInfo>? children})
+class AdminHomeView extends _i13.PageRouteInfo<void> {
+  const AdminHomeView({List<_i13.PageRouteInfo>? children})
     : super(AdminHomeView.name, initialChildren: children);
 
   static const String name = 'AdminHomeView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       return const _i3.AdminHomeView();
@@ -126,11 +124,11 @@ class AdminHomeView extends _i14.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.AdminMainTabView]
-class AdminMainTabView extends _i14.PageRouteInfo<AdminMainTabViewArgs> {
+class AdminMainTabView extends _i13.PageRouteInfo<AdminMainTabViewArgs> {
   AdminMainTabView({
-    _i15.Key? key,
+    _i14.Key? key,
     bool isFromLogin = false,
-    List<_i14.PageRouteInfo>? children,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
          AdminMainTabView.name,
          args: AdminMainTabViewArgs(key: key, isFromLogin: isFromLogin),
@@ -139,7 +137,7 @@ class AdminMainTabView extends _i14.PageRouteInfo<AdminMainTabViewArgs> {
 
   static const String name = 'AdminMainTabView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<AdminMainTabViewArgs>(
@@ -153,7 +151,7 @@ class AdminMainTabView extends _i14.PageRouteInfo<AdminMainTabViewArgs> {
 class AdminMainTabViewArgs {
   const AdminMainTabViewArgs({this.key, this.isFromLogin = false});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final bool isFromLogin;
 
@@ -165,12 +163,12 @@ class AdminMainTabViewArgs {
 
 /// generated route for
 /// [_i5.DynamicForm]
-class DynamicForm extends _i14.PageRouteInfo<DynamicFormArgs> {
+class DynamicForm extends _i13.PageRouteInfo<DynamicFormArgs> {
   DynamicForm({
-    _i17.FormIdentifier? formId,
-    _i15.Key? key,
+    _i16.FormIdentifier? formId,
+    _i14.Key? key,
     required String formSlug,
-    List<_i14.PageRouteInfo>? children,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
          DynamicForm.name,
          args: DynamicFormArgs(formId: formId, key: key, formSlug: formSlug),
@@ -179,7 +177,7 @@ class DynamicForm extends _i14.PageRouteInfo<DynamicFormArgs> {
 
   static const String name = 'DynamicForm';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<DynamicFormArgs>();
@@ -195,9 +193,9 @@ class DynamicForm extends _i14.PageRouteInfo<DynamicFormArgs> {
 class DynamicFormArgs {
   const DynamicFormArgs({this.formId, this.key, required this.formSlug});
 
-  final _i17.FormIdentifier? formId;
+  final _i16.FormIdentifier? formId;
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final String formSlug;
 
@@ -209,13 +207,13 @@ class DynamicFormArgs {
 
 /// generated route for
 /// [_i6.FormDetailView]
-class FormDetailView extends _i14.PageRouteInfo<void> {
-  const FormDetailView({List<_i14.PageRouteInfo>? children})
+class FormDetailView extends _i13.PageRouteInfo<void> {
+  const FormDetailView({List<_i13.PageRouteInfo>? children})
     : super(FormDetailView.name, initialChildren: children);
 
   static const String name = 'FormDetailView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       return const _i6.FormDetailView();
@@ -225,13 +223,13 @@ class FormDetailView extends _i14.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.MyAccountView]
-class MyAccountView extends _i14.PageRouteInfo<void> {
-  const MyAccountView({List<_i14.PageRouteInfo>? children})
+class MyAccountView extends _i13.PageRouteInfo<void> {
+  const MyAccountView({List<_i13.PageRouteInfo>? children})
     : super(MyAccountView.name, initialChildren: children);
 
   static const String name = 'MyAccountView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       return const _i7.MyAccountView();
@@ -241,13 +239,13 @@ class MyAccountView extends _i14.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.OnBoarding]
-class OnBoarding extends _i14.PageRouteInfo<void> {
-  const OnBoarding({List<_i14.PageRouteInfo>? children})
+class OnBoarding extends _i13.PageRouteInfo<void> {
+  const OnBoarding({List<_i13.PageRouteInfo>? children})
     : super(OnBoarding.name, initialChildren: children);
 
   static const String name = 'OnBoarding';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       return const _i8.OnBoarding();
@@ -256,97 +254,60 @@ class OnBoarding extends _i14.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.PdfPreviewScreen]
-class PdfPreviewScreen extends _i14.PageRouteInfo<PdfPreviewScreenArgs> {
-  PdfPreviewScreen({
-    _i15.Key? key,
-    required Map<String, dynamic> json,
-    List<_i14.PageRouteInfo>? children,
-  }) : super(
-         PdfPreviewScreen.name,
-         args: PdfPreviewScreenArgs(key: key, json: json),
-         initialChildren: children,
-       );
-
-  static const String name = 'PdfPreviewScreen';
-
-  static _i14.PageInfo page = _i14.PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<PdfPreviewScreenArgs>();
-      return _i9.PdfPreviewScreen(key: args.key, json: args.json);
-    },
-  );
-}
-
-class PdfPreviewScreenArgs {
-  const PdfPreviewScreenArgs({this.key, required this.json});
-
-  final _i15.Key? key;
-
-  final Map<String, dynamic> json;
-
-  @override
-  String toString() {
-    return 'PdfPreviewScreenArgs{key: $key, json: $json}';
-  }
-}
-
-/// generated route for
-/// [_i10.SignIn]
-class SignIn extends _i14.PageRouteInfo<void> {
-  const SignIn({List<_i14.PageRouteInfo>? children})
+/// [_i9.SignIn]
+class SignIn extends _i13.PageRouteInfo<void> {
+  const SignIn({List<_i13.PageRouteInfo>? children})
     : super(SignIn.name, initialChildren: children);
 
   static const String name = 'SignIn';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      return const _i10.SignIn();
+      return const _i9.SignIn();
     },
   );
 }
 
 /// generated route for
-/// [_i11.SplashPage]
-class SplashPage extends _i14.PageRouteInfo<void> {
-  const SplashPage({List<_i14.PageRouteInfo>? children})
+/// [_i10.SplashPage]
+class SplashPage extends _i13.PageRouteInfo<void> {
+  const SplashPage({List<_i13.PageRouteInfo>? children})
     : super(SplashPage.name, initialChildren: children);
 
   static const String name = 'SplashPage';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      return const _i11.SplashPage();
+      return const _i10.SplashPage();
     },
   );
 }
 
 /// generated route for
-/// [_i12.UserHomeView]
-class UserHomeView extends _i14.PageRouteInfo<void> {
-  const UserHomeView({List<_i14.PageRouteInfo>? children})
+/// [_i11.UserHomeView]
+class UserHomeView extends _i13.PageRouteInfo<void> {
+  const UserHomeView({List<_i13.PageRouteInfo>? children})
     : super(UserHomeView.name, initialChildren: children);
 
   static const String name = 'UserHomeView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      return const _i12.UserHomeView();
+      return const _i11.UserHomeView();
     },
   );
 }
 
 /// generated route for
-/// [_i13.UserMainTabView]
-class UserMainTabView extends _i14.PageRouteInfo<UserMainTabViewArgs> {
+/// [_i12.UserMainTabView]
+class UserMainTabView extends _i13.PageRouteInfo<UserMainTabViewArgs> {
   UserMainTabView({
-    _i15.Key? key,
+    _i14.Key? key,
     bool isFromLogin = false,
-    List<_i14.PageRouteInfo>? children,
+    List<_i13.PageRouteInfo>? children,
   }) : super(
          UserMainTabView.name,
          args: UserMainTabViewArgs(key: key, isFromLogin: isFromLogin),
@@ -355,13 +316,13 @@ class UserMainTabView extends _i14.PageRouteInfo<UserMainTabViewArgs> {
 
   static const String name = 'UserMainTabView';
 
-  static _i14.PageInfo page = _i14.PageInfo(
+  static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<UserMainTabViewArgs>(
         orElse: () => const UserMainTabViewArgs(),
       );
-      return _i13.UserMainTabView(key: args.key, isFromLogin: args.isFromLogin);
+      return _i12.UserMainTabView(key: args.key, isFromLogin: args.isFromLogin);
     },
   );
 }
@@ -369,7 +330,7 @@ class UserMainTabView extends _i14.PageRouteInfo<UserMainTabViewArgs> {
 class UserMainTabViewArgs {
   const UserMainTabViewArgs({this.key, this.isFromLogin = false});
 
-  final _i15.Key? key;
+  final _i14.Key? key;
 
   final bool isFromLogin;
 

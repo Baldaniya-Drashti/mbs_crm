@@ -131,15 +131,12 @@ class DynamicForm extends StatelessWidget {
     final selectedGrade = bloc.state.selectedInspectionGrade;
 
     final filteredFields = section.fields?.where((field) {
-      // Always show fields without grade
       if (field.grade == null || field.grade!.isEmpty) {
         return true;
       }
 
-      // If no grade selected yet → hide graded questions
       if (selectedGrade == null) return true;
 
-      // Check if grade matches
       return field.grade!
           .split(',')
           .map((e) => e.trim())

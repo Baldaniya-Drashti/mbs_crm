@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
