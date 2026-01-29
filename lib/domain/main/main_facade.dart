@@ -2,11 +2,14 @@
 
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart';
 import 'package:mbs_crm/core/constants/api_constants.dart';
 import 'package:mbs_crm/core/network/api_service.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/domain/main/main_failure.dart';
+import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
 import 'package:mbs_crm/infrastructure/common_response/common_response.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
@@ -62,19 +65,57 @@ class MainFacade implements IMainFacade {
     bool showSucessToast = true,
   }) async {
     try {
-      Map<String, dynamic> mapData = {
+      final formFiles = form.formFiles ?? [];
+
+      final formData = FormData.fromMap({
         'form_type': form.formType,
         'form_name': form.formName,
         'form_slug': form.slug,
         'form_json': jsonEncode(form.data),
-      };
+      });
 
-      print("Sending Data---> ${jsonEncode(mapData)}");
+      // -------------------- ATTACHMENT FILES -------------------- //
+      for (int i = 0; i < formFiles.length; i++) {
+        final item = formFiles[i];
 
+        formData.fields.add(
+          MapEntry('form_files[$i][section_slug]', item.sectionSlug ?? ''),
+        );
+
+        if (item.optionSlug != null) {
+          formData.fields.add(
+            MapEntry('form_files[$i][option_slug]', item.optionSlug ?? ''),
+          );
+        }
+
+        formData.fields.add(
+          MapEntry('form_files[$i][option_type]', item.optionType ?? ''),
+        );
+
+        final List<AttachmentFileDTO> files = item.files ?? [];
+
+        for (int j = 0; j < files.length; j++) {
+          final file = files[j];
+          if (file.uploaded || file.url!.startsWith('http')) continue;
+
+          formData.files.add(
+            MapEntry(
+              'form_files[$i][files][$j]',
+              await MultipartFile.fromFile(file.url!, filename: file.name),
+            ),
+          );
+        }
+      }
+
+      print("Sending Data---> $formData");
+      _logFormData(formData);
       final response = await apiService.postMethod(
         ApiConstants.addForm,
+
         showSucessToast: showSucessToast,
-        mapData,
+        {},
+        formData: formData,
+        isMultipart: true,
       );
 
       final account = HomeDTO.fromJson(response.data);
@@ -103,13 +144,121 @@ class MainFacade implements IMainFacade {
     bool showSucessToast = true,
   }) async {
     try {
+      final formFiles = form.formFiles ?? [];
+
+      final filteredFormFiles = formFiles.where((group) {
+        final files = group.files ?? [];
+        // Keep group only if at least one file is not uploaded / local
+        return files.any(
+          (f) => !f.uploaded && !(f.url?.startsWith('http') ?? false),
+        );
+      }).toList();
+      print("deletedFileId Length---> ${form.deletedFileIds}");
+      print("FormFiles length---> ${formFiles.length}");
+      print("filteredFormFiles length---> ${filteredFormFiles.length}");
+      // Prepare multipart form data
+      final formData = FormData.fromMap({
+        'form_type': form.formType,
+        'form_name': form.formName,
+        'form_slug': form.slug,
+        'form_json': jsonEncode(form.data),
+        if (form.deletedFileIds?.isNotEmpty == true)
+          'deleted_file_ids': form.deletedFileIds!.join(','),
+      });
+
+      // -------------------- ATTACHMENT FILES -------------------- //
+      for (int i = 0; i < filteredFormFiles.length; i++) {
+        final item = filteredFormFiles[i];
+
+        formData.fields.add(
+          MapEntry('form_files[$i][section_slug]', item.sectionSlug ?? ''),
+        );
+
+        if (item.optionSlug != null) {
+          formData.fields.add(
+            MapEntry('form_files[$i][option_slug]', item.optionSlug ?? ''),
+          );
+        }
+
+        formData.fields.add(
+          MapEntry('form_files[$i][option_type]', item.optionType ?? ''),
+        );
+
+        final List<AttachmentFileDTO> files = item.files ?? [];
+
+        for (int j = 0; j < files.length; j++) {
+          final file = files[j];
+
+          // Only upload new files (not already uploaded / existing URLs)
+          if (file.uploaded || file.url!.startsWith('http')) continue;
+
+          formData.files.add(
+            MapEntry(
+              'form_files[$i][files][$j]',
+              await MultipartFile.fromFile(file.url!, filename: file.name),
+            ),
+          );
+        }
+      }
+
+      print("Sending Data---> ${formData}");
+      _logFormData(formData);
+      final response = await apiService.postMethod(
+        "${ApiConstants.addForm}/${form.server_id}",
+        {},
+        showSucessToast: showSucessToast,
+        formData: formData,
+        isMultipart: true,
+      );
+
+      final account = HomeDTO.fromJson(response.data);
+      return right(account);
+    } on DioException catch (err) {
+      if (err.response != null) {
+        var commonRespose = CommonResponse.fromJson(err.response?.data);
+        if (commonRespose.dioMessage != null) {
+          return left(
+            MainFailure.showAPIResponseMessage(commonRespose.dioMessage!),
+          );
+        }
+        return left(MainFailure.showAPIResponseMessage(err.message ?? ''));
+      } else if (err.type == DioExceptionType.connectionError) {
+        return left(const MainFailure.networkError());
+      }
+
+      return left(const MainFailure.serverError());
+    }
+  }
+
+  void _logFormData(FormData formData) {
+    debugPrint('--- FORM DATA FIELDS ---');
+    for (var field in formData.fields) {
+      debugPrint('${field.key}: ${field.value}');
+    }
+
+    debugPrint('--- FORM DATA FILES ------ ${formData.files.length}');
+    for (var file in formData.files) {
+      debugPrint('${file.key}: ${(file.value).filename}');
+      debugPrint('${file.key}: ${(file.value)}');
+    }
+  }
+
+  /*  @override
+  Future<Either<MainFailure, HomeDTO?>> updateFormAPI({
+    required HomeDTO form,
+    bool showSucessToast = true,
+  }) async {
+    try {
       Map<String, dynamic> mapData = {
         'form_type': form.formType,
         'form_name': form.formName,
         'form_slug': form.slug,
         'form_json': jsonEncode(form.data),
+        if (form.deletedFileIds?.isNotEmpty == true)
+          'deleted_file_ids': jsonEncode(form.deletedFileIds),
       };
 
+      print("form.deletedFileId---> ${jsonEncode(mapData)}");
       print("Sending Data---> ${jsonEncode(mapData)}");
 
       final response = await apiService.postMethod(
@@ -137,7 +286,7 @@ class MainFacade implements IMainFacade {
       return left(const MainFailure.serverError());
     }
   }
-
+ */
   @override
   Future<Either<MainFailure, CommonResponse>> userListAPI({
     required int page,

@@ -35,6 +35,8 @@ class AppDatabase {
             form_slug TEXT,
             form_name TEXT,
             form_json TEXT,
+            form_files TEXT,
+            deleted_file_ids TEXT,
             
             status TEXT,
             created_at TEXT,

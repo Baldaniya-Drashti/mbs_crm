@@ -6,6 +6,7 @@ import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:mbs_crm/presentation/core/widgets/buttons/common_button.dart';
@@ -20,10 +21,22 @@ class DynamicAttachmentField extends StatelessWidget {
     return BlocBuilder<DynamicFormBloc, DynamicFormState>(
       builder: (context, state) {
         final fieldKey = field.key;
-        final files = fieldKey == null
-            ? const <AttachmentFileDTO>[]
-            : state.attachmentCache[fieldKey] ?? const <AttachmentFileDTO>[];
 
+        final FormFileGroupDTO? group = fieldKey == null
+            ? null
+            : state.formFiles.firstWhere(
+                (g) =>
+                    g.optionSlug == fieldKey &&
+                    (g.optionType == 'dropdown' || g.optionType == 'global'),
+                orElse: () => FormFileGroupDTO(
+                  sectionSlug: null,
+                  optionSlug: fieldKey,
+                  optionType: 'global',
+                  files: [],
+                ),
+              );
+
+        final files = group?.files ?? const <AttachmentFileDTO>[];
         return Container(
           alignment: Alignment.centerLeft,
           child: Column(
@@ -59,6 +72,20 @@ class DynamicAttachmentField extends StatelessWidget {
                   (file) => ListTile(
                     leading: Icon(Icons.insert_drive_file),
                     title: BaseText(text: file.name ?? ""),
+                    trailing: InkWell(
+                      onTap: () {
+                        context.read<DynamicFormBloc>().add(
+                          DynamicFormEvent.deleteAttachmentEvent(
+                            group: group!,
+                            file: file,
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.all(getSize(5)),
+                        child: Icon(Icons.close),
+                      ),
+                    ),
                   ),
                 ),
             ],

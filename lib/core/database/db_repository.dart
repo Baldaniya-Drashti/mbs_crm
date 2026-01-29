@@ -24,6 +24,11 @@ class DBRepository {
       'server_id': null,
       'is_synced': 0,
       'sync_action': 'create',
+      // 'form_files': jsonEncode(form.formFiles?.map((e) => e.toJson()).toList()),
+      'form_files': jsonEncode(
+        (form.formFiles ?? []).map((e) => e.toJson()).toList(),
+      ),
+      'deleted_file_ids': jsonEncode(form.deletedFileIds ?? []),
     };
 
     await db.insert(StorageConstants.offlineForms, map);
@@ -41,6 +46,11 @@ class DBRepository {
       'updated_at': form.updatedAt,
       'is_synced': 0,
       'sync_action': (form.server_id == null) ? 'create' : 'update',
+      // 'form_files': jsonEncode(form.formFiles?.map((e) => e.toJson()).toList()),
+      'form_files': jsonEncode(
+        (form.formFiles ?? []).map((e) => e.toJson()).toList(),
+      ),
+      'deleted_file_ids': jsonEncode(form.deletedFileIds ?? []),
     };
 
     await db.update(
@@ -184,6 +194,7 @@ class DBRepository {
         'sync_action': null,
         'server_id': serverId,
         'updated_at': DateTime.now().toIso8601String(),
+        'deleted_file_ids': jsonEncode([]),
       },
       where: 'local_id = ?',
       whereArgs: [localId],

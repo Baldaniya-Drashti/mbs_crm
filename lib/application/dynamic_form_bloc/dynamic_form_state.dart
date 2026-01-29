@@ -10,8 +10,10 @@ class DynamicFormState with _$DynamicFormState {
     @Default(false) bool success,
     @Default(0) int rebuildTick,
     String? errorMessage,
-    @Default({}) Map<String, List<AttachmentFileDTO>> attachmentCache,
     String? selectedInspectionGrade,
+
+    @Default([]) List<FormFileGroupDTO> formFiles,
+    @Default([]) List<int> deletedFileIds,
 
     /// For non-FormBuilder values (signature, table)
     // @Default({}) Map<String, dynamic> dynamicValues,

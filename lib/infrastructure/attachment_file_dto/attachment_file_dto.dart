@@ -5,10 +5,9 @@ part 'attachment_file_dto.g.dart';
 @freezed
 class AttachmentFileDTO with _$AttachmentFileDTO {
   const factory AttachmentFileDTO({
-    String? id,
+    int? id,
     String? name,
-    String? localPath,
-    String? remoteUrl,
+    String? url,
     @Default(false) bool uploaded,
   }) = _AttachmentFileDTO;
   factory AttachmentFileDTO.fromJson(Map<String, dynamic> json) =>

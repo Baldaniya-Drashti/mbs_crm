@@ -43,7 +43,7 @@ double getSize(double px) {
 }
  */
 
-final currentContext = getIt<AppRouter>().navigatorKey.currentContext!;
+final _currentContext = getIt<AppRouter>().navigatorKey.currentContext!;
 
 ///This method is used to set padding/margin (for the left and Right side) & width of the screen or widget according to the Viewport width.
 double getHorizontalSize(double px) {
@@ -77,7 +77,7 @@ bool isFullScreenDevice(BuildContext context) {
 
 ///This method is used to set text font size according to Viewport
 double getFontSize(double px) {
-  final context = currentContext;
+  final context = _currentContext;
   final textScale = MediaQuery.textScaleFactorOf(context);
   return px * textScale;
 

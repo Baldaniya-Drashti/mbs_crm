@@ -30,6 +30,8 @@ mixin _$DynamicFormEvent {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
@@ -41,6 +43,8 @@ mixin _$DynamicFormEvent {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
@@ -52,6 +56,8 @@ mixin _$DynamicFormEvent {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -64,6 +70,8 @@ mixin _$DynamicFormEvent {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
@@ -74,6 +82,7 @@ mixin _$DynamicFormEvent {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
@@ -84,6 +93,7 @@ mixin _$DynamicFormEvent {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
 }
@@ -199,6 +209,8 @@ class _$LoadFormImpl implements LoadForm {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return loadForm(formSlug, formId);
   }
@@ -214,6 +226,8 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return loadForm?.call(formSlug, formId);
   }
@@ -229,6 +243,8 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (loadForm != null) {
@@ -248,6 +264,8 @@ class _$LoadFormImpl implements LoadForm {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return loadForm(this);
   }
@@ -262,6 +280,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return loadForm?.call(this);
   }
@@ -276,6 +295,7 @@ class _$LoadFormImpl implements LoadForm {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (loadForm != null) {
@@ -385,6 +405,8 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return getFormDetails(formId);
   }
@@ -400,6 +422,8 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return getFormDetails?.call(formId);
   }
@@ -415,6 +439,8 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (getFormDetails != null) {
@@ -434,6 +460,8 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return getFormDetails(this);
   }
@@ -448,6 +476,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return getFormDetails?.call(this);
   }
@@ -462,6 +491,7 @@ class _$GetFormDetailsImpl implements GetFormDetails {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (getFormDetails != null) {
@@ -571,6 +601,8 @@ class _$CreateFormImpl implements CreateForm {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return createForm(values);
   }
@@ -586,6 +618,8 @@ class _$CreateFormImpl implements CreateForm {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return createForm?.call(values);
   }
@@ -601,6 +635,8 @@ class _$CreateFormImpl implements CreateForm {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (createForm != null) {
@@ -620,6 +656,8 @@ class _$CreateFormImpl implements CreateForm {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return createForm(this);
   }
@@ -634,6 +672,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return createForm?.call(this);
   }
@@ -648,6 +687,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (createForm != null) {
@@ -770,6 +810,8 @@ class _$UpdateFormImpl implements UpdateForm {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return updateForm(formId, values);
   }
@@ -785,6 +827,8 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return updateForm?.call(formId, values);
   }
@@ -800,6 +844,8 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (updateForm != null) {
@@ -819,6 +865,8 @@ class _$UpdateFormImpl implements UpdateForm {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return updateForm(this);
   }
@@ -833,6 +881,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return updateForm?.call(this);
   }
@@ -847,6 +896,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (updateForm != null) {
@@ -968,6 +1018,8 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return attachFileEvent(field);
   }
@@ -983,6 +1035,8 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return attachFileEvent?.call(field);
   }
@@ -998,6 +1052,8 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (attachFileEvent != null) {
@@ -1017,6 +1073,8 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return attachFileEvent(this);
   }
@@ -1031,6 +1089,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return attachFileEvent?.call(this);
   }
@@ -1045,6 +1104,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (attachFileEvent != null) {
@@ -1152,6 +1212,8 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return inspectionGradeChanged(grade);
   }
@@ -1167,6 +1229,8 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return inspectionGradeChanged?.call(grade);
   }
@@ -1182,6 +1246,8 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (inspectionGradeChanged != null) {
@@ -1201,6 +1267,8 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return inspectionGradeChanged(this);
   }
@@ -1215,6 +1283,7 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return inspectionGradeChanged?.call(this);
   }
@@ -1229,6 +1298,7 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (inspectionGradeChanged != null) {
@@ -1347,6 +1417,8 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     required TResult Function(FormFieldSchema field) attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
   }) {
     return onDropDownChanged(fieldKey, value);
   }
@@ -1362,6 +1434,8 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
   }) {
     return onDropDownChanged?.call(fieldKey, value);
   }
@@ -1377,6 +1451,8 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (onDropDownChanged != null) {
@@ -1396,6 +1472,8 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     required TResult Function(InspectionGradeChanged value)
     inspectionGradeChanged,
     required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
   }) {
     return onDropDownChanged(this);
   }
@@ -1410,6 +1488,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult? Function(AttachFileEvent value)? attachFileEvent,
     TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
   }) {
     return onDropDownChanged?.call(this);
   }
@@ -1424,6 +1503,7 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
     TResult Function(AttachFileEvent value)? attachFileEvent,
     TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
     TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
     required TResult orElse(),
   }) {
     if (onDropDownChanged != null) {
@@ -1450,6 +1530,233 @@ abstract class OnDropDownChanged implements DynamicFormEvent {
 }
 
 /// @nodoc
+abstract class _$$DeleteAttachmentEventImplCopyWith<$Res> {
+  factory _$$DeleteAttachmentEventImplCopyWith(
+    _$DeleteAttachmentEventImpl value,
+    $Res Function(_$DeleteAttachmentEventImpl) then,
+  ) = __$$DeleteAttachmentEventImplCopyWithImpl<$Res>;
+  @useResult
+  $Res call({FormFileGroupDTO group, AttachmentFileDTO file});
+
+  $FormFileGroupDTOCopyWith<$Res> get group;
+  $AttachmentFileDTOCopyWith<$Res> get file;
+}
+
+/// @nodoc
+class __$$DeleteAttachmentEventImplCopyWithImpl<$Res>
+    extends _$DynamicFormEventCopyWithImpl<$Res, _$DeleteAttachmentEventImpl>
+    implements _$$DeleteAttachmentEventImplCopyWith<$Res> {
+  __$$DeleteAttachmentEventImplCopyWithImpl(
+    _$DeleteAttachmentEventImpl _value,
+    $Res Function(_$DeleteAttachmentEventImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? group = null, Object? file = null}) {
+    return _then(
+      _$DeleteAttachmentEventImpl(
+        group: null == group
+            ? _value.group
+            : group // ignore: cast_nullable_to_non_nullable
+                  as FormFileGroupDTO,
+        file: null == file
+            ? _value.file
+            : file // ignore: cast_nullable_to_non_nullable
+                  as AttachmentFileDTO,
+      ),
+    );
+  }
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FormFileGroupDTOCopyWith<$Res> get group {
+    return $FormFileGroupDTOCopyWith<$Res>(_value.group, (value) {
+      return _then(_value.copyWith(group: value));
+    });
+  }
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $AttachmentFileDTOCopyWith<$Res> get file {
+    return $AttachmentFileDTOCopyWith<$Res>(_value.file, (value) {
+      return _then(_value.copyWith(file: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
+  const _$DeleteAttachmentEventImpl({required this.group, required this.file});
+
+  @override
+  final FormFileGroupDTO group;
+  @override
+  final AttachmentFileDTO file;
+
+  @override
+  String toString() {
+    return 'DynamicFormEvent.deleteAttachmentEvent(group: $group, file: $file)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$DeleteAttachmentEventImpl &&
+            (identical(other.group, group) || other.group == group) &&
+            (identical(other.file, file) || other.file == file));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, group, file);
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$DeleteAttachmentEventImplCopyWith<_$DeleteAttachmentEventImpl>
+  get copyWith =>
+      __$$DeleteAttachmentEventImplCopyWithImpl<_$DeleteAttachmentEventImpl>(
+        this,
+        _$identity,
+      );
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
+    required TResult Function(FormIdentifier formId) getFormDetails,
+    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )
+    updateForm,
+    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(String grade) inspectionGradeChanged,
+    required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
+    required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
+    deleteAttachmentEvent,
+  }) {
+    return deleteAttachmentEvent(group, file);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
+    TResult? Function(FormIdentifier formId)? getFormDetails,
+    TResult? Function(Map<String, dynamic> values)? createForm,
+    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    updateForm,
+    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(String grade)? inspectionGradeChanged,
+    TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
+  }) {
+    return deleteAttachmentEvent?.call(group, file);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
+    TResult Function(FormIdentifier formId)? getFormDetails,
+    TResult Function(Map<String, dynamic> values)? createForm,
+    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    updateForm,
+    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(String grade)? inspectionGradeChanged,
+    TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
+    TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
+    deleteAttachmentEvent,
+    required TResult orElse(),
+  }) {
+    if (deleteAttachmentEvent != null) {
+      return deleteAttachmentEvent(group, file);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(LoadForm value) loadForm,
+    required TResult Function(GetFormDetails value) getFormDetails,
+    required TResult Function(CreateForm value) createForm,
+    required TResult Function(UpdateForm value) updateForm,
+    required TResult Function(AttachFileEvent value) attachFileEvent,
+    required TResult Function(InspectionGradeChanged value)
+    inspectionGradeChanged,
+    required TResult Function(OnDropDownChanged value) onDropDownChanged,
+    required TResult Function(DeleteAttachmentEvent value)
+    deleteAttachmentEvent,
+  }) {
+    return deleteAttachmentEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(LoadForm value)? loadForm,
+    TResult? Function(GetFormDetails value)? getFormDetails,
+    TResult? Function(CreateForm value)? createForm,
+    TResult? Function(UpdateForm value)? updateForm,
+    TResult? Function(AttachFileEvent value)? attachFileEvent,
+    TResult? Function(InspectionGradeChanged value)? inspectionGradeChanged,
+    TResult? Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult? Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
+  }) {
+    return deleteAttachmentEvent?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(LoadForm value)? loadForm,
+    TResult Function(GetFormDetails value)? getFormDetails,
+    TResult Function(CreateForm value)? createForm,
+    TResult Function(UpdateForm value)? updateForm,
+    TResult Function(AttachFileEvent value)? attachFileEvent,
+    TResult Function(InspectionGradeChanged value)? inspectionGradeChanged,
+    TResult Function(OnDropDownChanged value)? onDropDownChanged,
+    TResult Function(DeleteAttachmentEvent value)? deleteAttachmentEvent,
+    required TResult orElse(),
+  }) {
+    if (deleteAttachmentEvent != null) {
+      return deleteAttachmentEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class DeleteAttachmentEvent implements DynamicFormEvent {
+  const factory DeleteAttachmentEvent({
+    required final FormFileGroupDTO group,
+    required final AttachmentFileDTO file,
+  }) = _$DeleteAttachmentEventImpl;
+
+  FormFileGroupDTO get group;
+  AttachmentFileDTO get file;
+
+  /// Create a copy of DynamicFormEvent
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$DeleteAttachmentEventImplCopyWith<_$DeleteAttachmentEventImpl>
+  get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$DynamicFormState {
   DynamicFormDTO? get schema => throw _privateConstructorUsedError;
   HomeDTO? get existingForm => throw _privateConstructorUsedError;
@@ -1458,9 +1765,9 @@ mixin _$DynamicFormState {
   bool get success => throw _privateConstructorUsedError;
   int get rebuildTick => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
-  Map<String, List<AttachmentFileDTO>> get attachmentCache =>
-      throw _privateConstructorUsedError;
   String? get selectedInspectionGrade => throw _privateConstructorUsedError;
+  List<FormFileGroupDTO> get formFiles => throw _privateConstructorUsedError;
+  List<int> get deletedFileIds => throw _privateConstructorUsedError;
 
   /// Create a copy of DynamicFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -1484,8 +1791,9 @@ abstract class $DynamicFormStateCopyWith<$Res> {
     bool success,
     int rebuildTick,
     String? errorMessage,
-    Map<String, List<AttachmentFileDTO>> attachmentCache,
     String? selectedInspectionGrade,
+    List<FormFileGroupDTO> formFiles,
+    List<int> deletedFileIds,
   });
 
   $DynamicFormDTOCopyWith<$Res>? get schema;
@@ -1514,8 +1822,9 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
     Object? success = null,
     Object? rebuildTick = null,
     Object? errorMessage = freezed,
-    Object? attachmentCache = null,
     Object? selectedInspectionGrade = freezed,
+    Object? formFiles = null,
+    Object? deletedFileIds = null,
   }) {
     return _then(
       _value.copyWith(
@@ -1547,14 +1856,18 @@ class _$DynamicFormStateCopyWithImpl<$Res, $Val extends DynamicFormState>
                 ? _value.errorMessage
                 : errorMessage // ignore: cast_nullable_to_non_nullable
                       as String?,
-            attachmentCache: null == attachmentCache
-                ? _value.attachmentCache
-                : attachmentCache // ignore: cast_nullable_to_non_nullable
-                      as Map<String, List<AttachmentFileDTO>>,
             selectedInspectionGrade: freezed == selectedInspectionGrade
                 ? _value.selectedInspectionGrade
                 : selectedInspectionGrade // ignore: cast_nullable_to_non_nullable
                       as String?,
+            formFiles: null == formFiles
+                ? _value.formFiles
+                : formFiles // ignore: cast_nullable_to_non_nullable
+                      as List<FormFileGroupDTO>,
+            deletedFileIds: null == deletedFileIds
+                ? _value.deletedFileIds
+                : deletedFileIds // ignore: cast_nullable_to_non_nullable
+                      as List<int>,
           )
           as $Val,
     );
@@ -1606,8 +1919,9 @@ abstract class _$$DynamicFormStateImplCopyWith<$Res>
     bool success,
     int rebuildTick,
     String? errorMessage,
-    Map<String, List<AttachmentFileDTO>> attachmentCache,
     String? selectedInspectionGrade,
+    List<FormFileGroupDTO> formFiles,
+    List<int> deletedFileIds,
   });
 
   @override
@@ -1637,8 +1951,9 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
     Object? success = null,
     Object? rebuildTick = null,
     Object? errorMessage = freezed,
-    Object? attachmentCache = null,
     Object? selectedInspectionGrade = freezed,
+    Object? formFiles = null,
+    Object? deletedFileIds = null,
   }) {
     return _then(
       _$DynamicFormStateImpl(
@@ -1670,14 +1985,18 @@ class __$$DynamicFormStateImplCopyWithImpl<$Res>
             ? _value.errorMessage
             : errorMessage // ignore: cast_nullable_to_non_nullable
                   as String?,
-        attachmentCache: null == attachmentCache
-            ? _value._attachmentCache
-            : attachmentCache // ignore: cast_nullable_to_non_nullable
-                  as Map<String, List<AttachmentFileDTO>>,
         selectedInspectionGrade: freezed == selectedInspectionGrade
             ? _value.selectedInspectionGrade
             : selectedInspectionGrade // ignore: cast_nullable_to_non_nullable
                   as String?,
+        formFiles: null == formFiles
+            ? _value._formFiles
+            : formFiles // ignore: cast_nullable_to_non_nullable
+                  as List<FormFileGroupDTO>,
+        deletedFileIds: null == deletedFileIds
+            ? _value._deletedFileIds
+            : deletedFileIds // ignore: cast_nullable_to_non_nullable
+                  as List<int>,
       ),
     );
   }
@@ -1694,9 +2013,11 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     this.success = false,
     this.rebuildTick = 0,
     this.errorMessage,
-    final Map<String, List<AttachmentFileDTO>> attachmentCache = const {},
     this.selectedInspectionGrade,
-  }) : _attachmentCache = attachmentCache;
+    final List<FormFileGroupDTO> formFiles = const [],
+    final List<int> deletedFileIds = const [],
+  }) : _formFiles = formFiles,
+       _deletedFileIds = deletedFileIds;
 
   @override
   final DynamicFormDTO? schema;
@@ -1716,21 +2037,29 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
   final int rebuildTick;
   @override
   final String? errorMessage;
-  final Map<String, List<AttachmentFileDTO>> _attachmentCache;
+  @override
+  final String? selectedInspectionGrade;
+  final List<FormFileGroupDTO> _formFiles;
   @override
   @JsonKey()
-  Map<String, List<AttachmentFileDTO>> get attachmentCache {
-    if (_attachmentCache is EqualUnmodifiableMapView) return _attachmentCache;
+  List<FormFileGroupDTO> get formFiles {
+    if (_formFiles is EqualUnmodifiableListView) return _formFiles;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_attachmentCache);
+    return EqualUnmodifiableListView(_formFiles);
+  }
+
+  final List<int> _deletedFileIds;
+  @override
+  @JsonKey()
+  List<int> get deletedFileIds {
+    if (_deletedFileIds is EqualUnmodifiableListView) return _deletedFileIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deletedFileIds);
   }
 
   @override
-  final String? selectedInspectionGrade;
-
-  @override
   String toString() {
-    return 'DynamicFormState(schema: $schema, existingForm: $existingForm, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, attachmentCache: $attachmentCache, selectedInspectionGrade: $selectedInspectionGrade)';
+    return 'DynamicFormState(schema: $schema, existingForm: $existingForm, isLoading: $isLoading, isSubmitting: $isSubmitting, success: $success, rebuildTick: $rebuildTick, errorMessage: $errorMessage, selectedInspectionGrade: $selectedInspectionGrade, formFiles: $formFiles, deletedFileIds: $deletedFileIds)';
   }
 
   @override
@@ -1750,15 +2079,19 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
                 other.rebuildTick == rebuildTick) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            const DeepCollectionEquality().equals(
-              other._attachmentCache,
-              _attachmentCache,
-            ) &&
             (identical(
                   other.selectedInspectionGrade,
                   selectedInspectionGrade,
                 ) ||
-                other.selectedInspectionGrade == selectedInspectionGrade));
+                other.selectedInspectionGrade == selectedInspectionGrade) &&
+            const DeepCollectionEquality().equals(
+              other._formFiles,
+              _formFiles,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._deletedFileIds,
+              _deletedFileIds,
+            ));
   }
 
   @override
@@ -1771,8 +2104,9 @@ class _$DynamicFormStateImpl implements _DynamicFormState {
     success,
     rebuildTick,
     errorMessage,
-    const DeepCollectionEquality().hash(_attachmentCache),
     selectedInspectionGrade,
+    const DeepCollectionEquality().hash(_formFiles),
+    const DeepCollectionEquality().hash(_deletedFileIds),
   );
 
   /// Create a copy of DynamicFormState
@@ -1796,8 +2130,9 @@ abstract class _DynamicFormState implements DynamicFormState {
     final bool success,
     final int rebuildTick,
     final String? errorMessage,
-    final Map<String, List<AttachmentFileDTO>> attachmentCache,
     final String? selectedInspectionGrade,
+    final List<FormFileGroupDTO> formFiles,
+    final List<int> deletedFileIds,
   }) = _$DynamicFormStateImpl;
 
   @override
@@ -1815,9 +2150,11 @@ abstract class _DynamicFormState implements DynamicFormState {
   @override
   String? get errorMessage;
   @override
-  Map<String, List<AttachmentFileDTO>> get attachmentCache;
-  @override
   String? get selectedInspectionGrade;
+  @override
+  List<FormFileGroupDTO> get formFiles;
+  @override
+  List<int> get deletedFileIds;
 
   /// Create a copy of DynamicFormState
   /// with the given fields replaced by the non-null parameter values.

@@ -14,6 +14,7 @@ import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
@@ -98,7 +99,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             );
 
             final Map<String, dynamic> flatData = {};
-            final Map<String, List<AttachmentFileDTO>> restoredAttachments = {};
 
             /// ---------- LOOP SECTIONS ----------
             rawData.forEach((sectionKey, sectionValue) {
@@ -152,14 +152,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   if (fieldValue['reason'] != null) {
                     flatData['${fieldKey}_reason'] = fieldValue['reason'];
                   }
-
-                  /// ---- DROPDOWN ATTACHMENTS ----
-                  if (fieldValue['attachments'] is List) {
-                    restoredAttachments['${fieldKey}_attachments'] =
-                        (fieldValue['attachments'] as List)
-                            .map((e) => AttachmentFileDTO.fromJson(e))
-                            .toList();
-                  }
                 }
                 /// ---- NORMAL FIELD ----
                 else {
@@ -178,33 +170,18 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               });
             });
 
-            /// ---------- GLOBAL ATTACHMENTS ----------
-            final attachments = rawData['attachments'];
-
-            if (attachments is List) {
-              restoredAttachments['attachments'] = attachments
-                  .map((e) => AttachmentFileDTO.fromJson(e))
-                  .toList();
-            } else if (attachments is Map<String, dynamic>) {
-              attachments.forEach((key, list) {
-                if (list is List) {
-                  restoredAttachments[key] = list
-                      .map((e) => AttachmentFileDTO.fromJson(e))
-                      .toList();
-                }
-              });
-            }
-
             /// ---------- PATCH FORM ----------
             WidgetsBinding.instance.addPostFrameCallback((_) {
               formKey.currentState?.patchValue(flatData);
             });
 
+            /// ---------- RESTORE FORM FILES ----------
+            final restoredFormFiles = form?.formFiles ?? <FormFileGroupDTO>[];
             emit(
               state.copyWith(
                 isLoading: false,
                 existingForm: form,
-                attachmentCache: restoredAttachments,
+                formFiles: restoredFormFiles,
               ),
             );
           } catch (e) {
@@ -218,16 +195,16 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           if (e.value != "No") {
             formState.fields['${e.fieldKey}_reason']?.didChange(null);
 
-            final updatedAttachments =
+            /* final updatedAttachments =
                 Map<String, List<AttachmentFileDTO>>.from(
                   state.attachmentCache,
                 );
 
-            updatedAttachments.remove('${e.fieldKey}_attachments');
+            updatedAttachments.remove('${e.fieldKey}_attachments'); */
 
             emit(
               state.copyWith(
-                attachmentCache: updatedAttachments,
+                // attachmentCache: updatedAttachments,
                 rebuildTick: state.rebuildTick + 1,
               ),
             );
@@ -240,44 +217,102 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             allowMultiple: e.field.multipleImages,
             type: FileType.custom,
             allowedExtensions: ['jpg', 'jpeg', 'png'],
-            withData: false,
+          );
+          if (result == null) return;
+
+          final bool isDropdownAttachment =
+              e.field.key != null && e.field.key!.endsWith('_attachments');
+
+          final optionType = isDropdownAttachment ? 'dropdown' : 'global';
+
+          final fieldKeyInSchema = isDropdownAttachment
+              ? e.field.key!.replaceAll('_attachments', '')
+              : e.field.key;
+
+          final section = state.schema!.sections!.firstWhere(
+            (s) => s.fields!.any((f) => f.key == fieldKeyInSchema),
+            orElse: () => state.schema!.sections!.firstWhere(
+              (s) => s.key == 'attachments',
+            ),
           );
 
-          if (result == null || result.files.isEmpty) return;
-          final fieldKey = e.field.key;
-          if (fieldKey == null) return;
+          final sectionSlug =
+              section.key ??
+              (section.title ?? '').toLowerCase().replaceAll(' ', '_');
 
-          final currentFiles = List<AttachmentFileDTO>.from(
-            state.attachmentCache[fieldKey] ?? [],
+          // ---------------- UPDATE FORM FILE GROUP ----------------
+          final updatedGroups = List<FormFileGroupDTO>.from(state.formFiles);
+
+          final index = updatedGroups.indexWhere(
+            (g) =>
+                g.sectionSlug == sectionSlug &&
+                g.optionSlug == e.field.key &&
+                g.optionType == optionType,
           );
+
+          FormFileGroupDTO group;
+          if (index == -1) {
+            group = FormFileGroupDTO(
+              sectionSlug: sectionSlug,
+              optionSlug: e.field.key,
+              optionType: optionType,
+              files: [],
+            );
+            updatedGroups.add(group);
+          } else {
+            group = updatedGroups[index];
+          }
+
+          final newFiles = List<AttachmentFileDTO>.from(group.files ?? []);
+
           for (final file in result.files) {
             if (file.path == null) continue;
 
-            final alreadyExists = currentFiles.any(
-              (f) => f.localPath == file.path || f.name == file.name,
-            );
-
-            if (alreadyExists) {
-              debugPrint('Duplicate file ignored: ${file.name}');
-              continue;
-            }
-
-            currentFiles.add(
+            newFiles.add(
               AttachmentFileDTO(
-                id: const Uuid().v4(),
+                id: null,
                 name: file.name,
-                localPath: file.path!,
+                url: file.path!,
                 uploaded: false,
               ),
             );
           }
 
+          updatedGroups[index == -1 ? updatedGroups.length - 1 : index] = group
+              .copyWith(files: newFiles);
+
+          emit(state.copyWith(formFiles: updatedGroups));
+        },
+        deleteAttachmentEvent: (e) {
+          final updatedGroups = List<FormFileGroupDTO>.from(state.formFiles);
+
+          final groupIndex = updatedGroups.indexWhere(
+            (g) =>
+                g.sectionSlug == e.group.sectionSlug &&
+                g.optionSlug == e.group.optionSlug &&
+                g.optionType == e.group.optionType,
+          );
+
+          if (groupIndex == -1) return;
+
+          final group = updatedGroups[groupIndex];
+          final files = List<AttachmentFileDTO>.from(group.files ?? []);
+
+          files.removeWhere((f) => f.url == e.file.url);
+
+          final deletedIds = List<int>.from(state.deletedFileIds);
+          final isRemote = e.file.url != null && e.file.url!.startsWith('http');
+
+          if (isRemote && e.file.id != null) {
+            deletedIds.add(e.file.id!);
+          }
+
+          updatedGroups[groupIndex] = group.copyWith(files: files);
+
           emit(
             state.copyWith(
-              attachmentCache: {
-                ...state.attachmentCache,
-                fieldKey: currentFiles,
-              },
+              formFiles: updatedGroups,
+              deletedFileIds: deletedIds,
             ),
           );
         },
@@ -286,10 +321,12 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
           try {
             final payload = _buildPayload(e);
-            final form = _buildForm(payload).copyWith(
-              localId: const Uuid().v4(),
-              createdAt: DateTime.now().toIso8601String(),
-            );
+
+            final form = _buildForm(payload, formFiles: state.formFiles)
+                .copyWith(
+                  localId: const Uuid().v4(),
+                  createdAt: DateTime.now().toIso8601String(),
+                );
 
             await DBRepository().saveFormOffline(form: form);
 
@@ -310,16 +347,18 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   emit(state.copyWith(isSubmitting: false, success: false));
                 },
                 (r) async {
-                  print("Create Mark Sync---> ${r?.server_id}");
                   await DBRepository().markAsSynced(
                     localId: form.localId,
                     serverId: r?.server_id ?? -1,
                   );
+                  emit(state.copyWith(isSubmitting: false, success: true));
+                  Navigator.pop(currentContext, true);
                 },
               );
+            } else {
+              emit(state.copyWith(isSubmitting: false, success: true));
+              Navigator.pop(currentContext, true);
             }
-            emit(state.copyWith(isSubmitting: false, success: true));
-            Navigator.pop(currentContext, true);
           } catch (e) {
             print("Create Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
@@ -329,13 +368,15 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           emit(state.copyWith(isSubmitting: true, success: false));
 
           try {
-            final payload = _buildPayload(e);
-            final form = _buildForm(payload).copyWith(
-              localId: e.formId.localId!,
-              server_id: e.formId.serverId,
-              createdAt: state.existingForm?.createdAt,
-              updatedAt: DateTime.now().toIso8601String(),
-            );
+            final payload = {..._buildPayload(e)};
+            final form = _buildForm(payload, formFiles: state.formFiles)
+                .copyWith(
+                  localId: e.formId.localId!,
+                  server_id: e.formId.serverId,
+                  deletedFileIds: state.deletedFileIds,
+                  createdAt: state.existingForm?.createdAt,
+                  updatedAt: DateTime.now().toIso8601String(),
+                );
 
             await DBRepository().updateFormOffline(form: form);
 
@@ -359,11 +400,14 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                     localId: form.localId,
                     serverId: r?.server_id ?? -1,
                   );
+                  emit(state.copyWith(isSubmitting: false, success: true));
+                  Navigator.pop(currentContext, true);
                 },
               );
+            } else {
+              emit(state.copyWith(isSubmitting: false, success: true));
+              Navigator.pop(currentContext, true);
             }
-            emit(state.copyWith(isSubmitting: false, success: true));
-            Navigator.pop(currentContext, true);
           } catch (e) {
             print("Update Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
@@ -393,7 +437,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       }
     }
 
-    _addGlobalAttachments(payload);
+    // _addGlobalAttachments(payload);
 
     return removeNulls(prepareForJson(payload));
   }
@@ -473,35 +517,21 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       if (reason != null && reason.toString().isNotEmpty) {
         fieldObj['reason'] = reason;
       }
-
-      final files = state.attachmentCache['${field.key}_attachments'];
-      if (files != null && files.isNotEmpty) {
-        fieldObj['attachments'] = files.map((e) => e.toJson()).toList();
-      }
     }
 
     return fieldObj;
   }
 
-  void _addGlobalAttachments(Map<String, dynamic> payload) {
-    final files = <Map<String, dynamic>>[];
-
-    state.attachmentCache.forEach((key, value) {
-      if (key.endsWith('_attachments')) return;
-      files.addAll(value.map((e) => e.toJson()));
-    });
-
-    if (files.isNotEmpty) {
-      payload['attachments'] = files;
-    }
-  }
-
-  HomeDTO _buildForm(Map<String, dynamic> payload) {
+  HomeDTO _buildForm(
+    Map<String, dynamic> payload, {
+    List<FormFileGroupDTO>? formFiles,
+  }) {
     return HomeDTO(
       formType: state.schema?.id,
       formName: state.schema?.title,
       slug: state.schema?.slug,
       data: payload,
+      formFiles: formFiles,
       status: 'draft',
       createdAt: DateTime.now().toIso8601String(),
       updatedAt: DateTime.now().toIso8601String(),

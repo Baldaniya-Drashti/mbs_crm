@@ -1,11 +1,14 @@
 import 'dart:convert';
-import 'dart:typed_data';
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/constants/png_image_constants.dart';
 import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/pdf_format/pdf_table_extractor.dart';
 import 'package:mbs_crm/core/pdf_format/pdf_table_renderer.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
 import 'package:pdf/pdf.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -14,8 +17,10 @@ import 'package:pdf/widgets.dart' as pw;
 class DynamicPdfGenerator {
   static Future<Uint8List> buildPdf(
     Map<String, dynamic> json,
+    List<FormFileGroupDTO>? formFiles,
     DynamicFormDTO schema,
   ) async {
+    print("PDF FormFiles----> $formFiles");
     final pdf = pw.Document();
     final logoBytes = await rootBundle.load(PngImageConstants.mbsLogoWithTitle);
     final logoImage = pw.MemoryImage(logoBytes.buffer.asUint8List());
@@ -24,6 +29,36 @@ class DynamicPdfGenerator {
     final questionMap = buildQuestionLabelMap(schema);
 
     final tables = extractTablesFromJson(schema: schema, json: json);
+    final Map<String, pw.MemoryImage> imageCache = {};
+    for (final group in formFiles ?? []) {
+      for (final file in group.files ?? []) {
+        final url = file.url;
+        if (url != null && !imageCache.containsKey(url)) {
+          final img = await loadPdfImage(url);
+          if (img != null) imageCache[url] = img;
+        }
+      }
+    }
+
+    /// Field-level attachments
+    Future<void> extractFieldImages(Map<String, dynamic> map) async {
+      for (final value in map.values) {
+        if (value is Map && value['files'] is List) {
+          for (final f in value['files']) {
+            final url = f['url'];
+            if (url != null && !imageCache.containsKey(url)) {
+              final img = await loadPdfImage(url);
+              if (img != null) imageCache[url] = img;
+            }
+          }
+        }
+        if (value is Map<String, dynamic>) {
+          await extractFieldImages(value);
+        }
+      }
+    }
+
+    await extractFieldImages(json);
 
     /// ---------------- PORTRAIT CONTENT ----------------
     pdf.addPage(
@@ -57,7 +92,15 @@ class DynamicPdfGenerator {
           void addSection(String title, Map<String, dynamic>? data) {
             if (!hasData(data)) return;
 
-            widgets.add(_keyValueSection(title, data!, questionMap));
+            widgets.add(
+              _keyValueSection(
+                title,
+                data!,
+                questionMap,
+                imageCache,
+                formFiles,
+              ),
+            );
           }
 
           addSection(
@@ -73,10 +116,41 @@ class DynamicPdfGenerator {
             "Environment",
             json['environment'] as Map<String, dynamic>?,
           );
+          final globalFiles = formFiles
+              ?.where((g) => g.optionType == 'global')
+              .toList();
 
+          if (globalFiles != null && globalFiles.isNotEmpty) {
+            widgets.add(pw.SizedBox(height: 20));
+            widgets.add(_sectionTitle('ATTACHMENTS'));
+            widgets.add(pw.SizedBox(height: 10));
+
+            for (final group in globalFiles) {
+              final files = group.files ?? [];
+              if (files.isEmpty) continue;
+
+              widgets.add(
+                pw.Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: [
+                    for (final file in files)
+                      if (file.url != null && imageCache.containsKey(file.url))
+                        pw.Image(
+                          imageCache[file.url!]!,
+                          height: 200,
+                          width: 200,
+                          fit: pw.BoxFit.fill,
+                        ),
+                  ],
+                ),
+              );
+            }
+          }
           final inspectedBy =
               json['inspected_by'] as Map<String, dynamic>? ?? {};
           if (hasData(inspectedBy)) {
+            widgets.add(pw.SizedBox(height: 15));
             widgets.add(_inspectedBy(inspectedBy));
             widgets.add(pw.SizedBox(height: 15));
           }
@@ -261,6 +335,8 @@ class DynamicPdfGenerator {
     String title,
     Map<String, dynamic> data,
     Map<String, String> questionMap,
+    Map<String, pw.MemoryImage> imageCache,
+    List<FormFileGroupDTO>? formFiles,
   ) {
     int index = 1;
 
@@ -271,6 +347,19 @@ class DynamicPdfGenerator {
         pw.SizedBox(height: 15),
         ...data.entries.map((e) {
           final rawValue = e.value;
+          final dropdownFiles =
+              formFiles
+                  ?.where((g) {
+                    if (g.optionType != 'dropdown') return false;
+                    final slug = g.optionSlug ?? '';
+                    return slug == '${e.key}_attachments';
+                  })
+                  .expand((g) => g.files ?? [])
+                  .toList() ??
+              [];
+
+          print("Question DropDownFiles---> $dropdownFiles");
+          print("Question FormFiles---> ${jsonEncode(formFiles)}");
           if (!hasData(rawValue)) return pw.SizedBox();
 
           final questionText = questionMap[e.key] ?? e.key.replaceAll('_', ' ');
@@ -303,6 +392,31 @@ class DynamicPdfGenerator {
                       style: const pw.TextStyle(fontSize: 8),
                     ),
                   ],
+
+                  /// -------- FIELD ATTACHMENTS --------
+                  /// -------- FIELD ATTACHMENTS (QUESTION LEVEL) --------
+
+                  // 🔹 POINT 4: render dropdown attachments under the question
+                  if (dropdownFiles.isNotEmpty) ...[
+                    pw.SizedBox(height: 6),
+                    pw.Wrap(
+                      spacing: 6,
+                      runSpacing: 6,
+                      children: [
+                        for (final file in dropdownFiles.take(6))
+                          if (file.url != null &&
+                              imageCache.containsKey(file.url))
+                            pw.Container(
+                              width: 150,
+                              height: 150,
+                              child: pw.Image(
+                                imageCache[file.url!]!,
+                                fit: pw.BoxFit.fill,
+                              ),
+                            ),
+                      ],
+                    ),
+                  ],
                 ]
                 /// ----------------------------- SIMPLE VALUE -----------------------------
                 else if (e.key.toLowerCase() != 'signature')
@@ -322,5 +436,25 @@ class DynamicPdfGenerator {
         pw.SizedBox(height: 12),
       ],
     );
+  }
+
+  static Future<pw.MemoryImage?> loadPdfImage(String url) async {
+    try {
+      Uint8List bytes;
+
+      if (url.startsWith('http')) {
+        final client = HttpClient();
+        final request = await client.getUrl(Uri.parse(url));
+        final response = await request.close();
+        bytes = await consolidateHttpClientResponseBytes(response);
+      } else {
+        final file = File(url);
+        bytes = await file.readAsBytes();
+      }
+
+      return pw.MemoryImage(bytes);
+    } catch (_) {
+      return null;
+    }
   }
 }

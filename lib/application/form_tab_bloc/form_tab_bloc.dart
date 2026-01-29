@@ -6,10 +6,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/database/db_repository.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
+import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/domain/main/main_failure.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
+import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -23,6 +25,8 @@ class FormTabBloc extends Bloc<FormTabEvent, FormTabState> {
   int page = 1;
   int lastPage = 1;
   final RefreshController refreshController = RefreshController();
+  final currentContext = getIt<AppRouter>().navigatorKey.currentContext!;
+
   FormTabBloc(this.mainFacade) : super(FormTabState.initial()) {
     on<FormTabEvent>((event, emit) async {
       await event.map(

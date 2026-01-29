@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 part 'home_dto.freezed.dart';
 part 'home_dto.g.dart';
 
@@ -9,6 +10,7 @@ part 'home_dto.g.dart';
 class HomeDTO with _$HomeDTO {
   const factory HomeDTO({
     @JsonKey(name: 'id') int? server_id,
+    @JsonKey(name: 'user_name') String? userName,
     @Default("") String localId,
     @Default(false) bool isSynced,
     String? syncAction,
@@ -20,6 +22,8 @@ class HomeDTO with _$HomeDTO {
     @JsonKey(name: 'form_slug') String? slug,
     String? image_url,
     @JsonKey(name: 'form_json') Map<String, dynamic>? data,
+    @JsonKey(name: 'form_files') List<FormFileGroupDTO>? formFiles,
+    List<int>? deletedFileIds,
   }) = _HomeDTO;
 
   factory HomeDTO.fromJson(Map<String, dynamic> json) =>
@@ -39,6 +43,14 @@ class HomeDTO with _$HomeDTO {
       status: row['status'] as String?,
       updatedAt: row['updated_at'] as String?,
       data: row['form_json'] != null ? jsonDecode(row['form_json']) : null,
+      formFiles: (row['form_files'] != null && row['form_files'] != 'null')
+          ? (jsonDecode(row['form_files']) as List<dynamic>? ?? [])
+                .map((e) => FormFileGroupDTO.fromJson(e))
+                .toList()
+          : [],
+      deletedFileIds: row['deleted_file_ids'] != null
+          ? List<int>.from(jsonDecode(row['deleted_file_ids']))
+          : [],
     );
   }
 }

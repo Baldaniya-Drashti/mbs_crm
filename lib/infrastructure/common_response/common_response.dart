@@ -5,7 +5,7 @@ class CommonResponse<T> {
   String? dioMessage;
   T? data;
   List<T>? listData;
-  Errors? errors;
+  ErrorResponse? errors;
   Meta? meta;
 
   CommonResponse({
@@ -21,7 +21,9 @@ class CommonResponse<T> {
     status = json['success'];
     dioMessage = json['message'];
     data = json['data'];
-    errors = json['errors'] != null ? Errors.fromJson(json['errors']) : null;
+    errors = json['error'] != null
+        ? ErrorResponse.fromJson(json['error'])
+        : null;
     if (json.containsKey("pagination") && json["pagination"] != null) {
       meta = Meta.fromJson(json['pagination']);
     }
@@ -32,10 +34,10 @@ class CommonResponse<T> {
     data['success'] = status;
     data['message'] = dioMessage;
     data['data'] = data;
-    data['errors'] = errors;
+    data['error'] = errors;
     try {
       if (errors != null) {
-        data['errors'] = errors?.toJson();
+        data['error'] = errors?.toJson();
       }
     } catch (e) {
       if (kDebugMode) {
@@ -45,55 +47,6 @@ class CommonResponse<T> {
     if (meta != null) {
       data['pagination'] = meta?.toJson();
     }
-    return data;
-  }
-}
-
-class Errors {
-  List<String>? firstName;
-  List<String>? lastName;
-  List<String>? email;
-  List<String>? birthDate;
-  List<String>? lookingFor;
-  List<String>? gender;
-  List<String>? lookingGender;
-  List<String>? deviceToken;
-  List<String>? qrCode;
-  List<String>? referralByUser;
-
-  Errors({
-    this.firstName,
-    this.lastName,
-    this.email,
-    this.birthDate,
-    this.lookingFor,
-    this.gender,
-    this.lookingGender,
-  });
-
-  Errors.fromJson(Map<String, dynamic> json) {
-    firstName = json['first_name']?.cast<String>();
-    lastName = json['last_name']?.cast<String>();
-    email = json['email']?.cast<String>();
-    birthDate = json['birth_date']?.cast<String>();
-    lookingFor = json['looking_for']?.cast<String>();
-    gender = json['gender']?.cast<String>();
-    lookingGender = json['looking_gender']?.cast<String>();
-    qrCode = json['qr_code']?.cast<String>();
-    referralByUser = json['referral_by_user']?.cast<String>();
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['first_name'] = firstName;
-    data['last_name'] = lastName;
-    data['email'] = email;
-    data['birth_date'] = birthDate;
-    data['looking_for'] = lookingFor;
-    data['gender'] = gender;
-    data['looking_gender'] = lookingGender;
-    data['qr_code'] = qrCode;
-    data['referral_by_user'] = referralByUser;
     return data;
   }
 }

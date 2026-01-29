@@ -21,10 +21,9 @@ AttachmentFileDTO _$AttachmentFileDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AttachmentFileDTO {
-  String? get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get localPath => throw _privateConstructorUsedError;
-  String? get remoteUrl => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
   bool get uploaded => throw _privateConstructorUsedError;
 
   /// Serializes this AttachmentFileDTO to a JSON map.
@@ -44,13 +43,7 @@ abstract class $AttachmentFileDTOCopyWith<$Res> {
     $Res Function(AttachmentFileDTO) then,
   ) = _$AttachmentFileDTOCopyWithImpl<$Res, AttachmentFileDTO>;
   @useResult
-  $Res call({
-    String? id,
-    String? name,
-    String? localPath,
-    String? remoteUrl,
-    bool uploaded,
-  });
+  $Res call({int? id, String? name, String? url, bool uploaded});
 }
 
 /// @nodoc
@@ -70,8 +63,7 @@ class _$AttachmentFileDTOCopyWithImpl<$Res, $Val extends AttachmentFileDTO>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? localPath = freezed,
-    Object? remoteUrl = freezed,
+    Object? url = freezed,
     Object? uploaded = null,
   }) {
     return _then(
@@ -79,18 +71,14 @@ class _$AttachmentFileDTOCopyWithImpl<$Res, $Val extends AttachmentFileDTO>
             id: freezed == id
                 ? _value.id
                 : id // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as int?,
             name: freezed == name
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                       as String?,
-            localPath: freezed == localPath
-                ? _value.localPath
-                : localPath // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            remoteUrl: freezed == remoteUrl
-                ? _value.remoteUrl
-                : remoteUrl // ignore: cast_nullable_to_non_nullable
+            url: freezed == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
                       as String?,
             uploaded: null == uploaded
                 ? _value.uploaded
@@ -111,13 +99,7 @@ abstract class _$$AttachmentFileDTOImplCopyWith<$Res>
   ) = __$$AttachmentFileDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    String? id,
-    String? name,
-    String? localPath,
-    String? remoteUrl,
-    bool uploaded,
-  });
+  $Res call({int? id, String? name, String? url, bool uploaded});
 }
 
 /// @nodoc
@@ -136,8 +118,7 @@ class __$$AttachmentFileDTOImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? localPath = freezed,
-    Object? remoteUrl = freezed,
+    Object? url = freezed,
     Object? uploaded = null,
   }) {
     return _then(
@@ -145,18 +126,14 @@ class __$$AttachmentFileDTOImplCopyWithImpl<$Res>
         id: freezed == id
             ? _value.id
             : id // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as int?,
         name: freezed == name
             ? _value.name
             : name // ignore: cast_nullable_to_non_nullable
                   as String?,
-        localPath: freezed == localPath
-            ? _value.localPath
-            : localPath // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        remoteUrl: freezed == remoteUrl
-            ? _value.remoteUrl
-            : remoteUrl // ignore: cast_nullable_to_non_nullable
+        url: freezed == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
                   as String?,
         uploaded: null == uploaded
             ? _value.uploaded
@@ -173,8 +150,7 @@ class _$AttachmentFileDTOImpl implements _AttachmentFileDTO {
   const _$AttachmentFileDTOImpl({
     this.id,
     this.name,
-    this.localPath,
-    this.remoteUrl,
+    this.url,
     this.uploaded = false,
   });
 
@@ -182,20 +158,18 @@ class _$AttachmentFileDTOImpl implements _AttachmentFileDTO {
       _$$AttachmentFileDTOImplFromJson(json);
 
   @override
-  final String? id;
+  final int? id;
   @override
   final String? name;
   @override
-  final String? localPath;
-  @override
-  final String? remoteUrl;
+  final String? url;
   @override
   @JsonKey()
   final bool uploaded;
 
   @override
   String toString() {
-    return 'AttachmentFileDTO(id: $id, name: $name, localPath: $localPath, remoteUrl: $remoteUrl, uploaded: $uploaded)';
+    return 'AttachmentFileDTO(id: $id, name: $name, url: $url, uploaded: $uploaded)';
   }
 
   @override
@@ -205,18 +179,14 @@ class _$AttachmentFileDTOImpl implements _AttachmentFileDTO {
             other is _$AttachmentFileDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.localPath, localPath) ||
-                other.localPath == localPath) &&
-            (identical(other.remoteUrl, remoteUrl) ||
-                other.remoteUrl == remoteUrl) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.uploaded, uploaded) ||
                 other.uploaded == uploaded));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, name, localPath, remoteUrl, uploaded);
+  int get hashCode => Object.hash(runtimeType, id, name, url, uploaded);
 
   /// Create a copy of AttachmentFileDTO
   /// with the given fields replaced by the non-null parameter values.
@@ -237,10 +207,9 @@ class _$AttachmentFileDTOImpl implements _AttachmentFileDTO {
 
 abstract class _AttachmentFileDTO implements AttachmentFileDTO {
   const factory _AttachmentFileDTO({
-    final String? id,
+    final int? id,
     final String? name,
-    final String? localPath,
-    final String? remoteUrl,
+    final String? url,
     final bool uploaded,
   }) = _$AttachmentFileDTOImpl;
 
@@ -248,13 +217,11 @@ abstract class _AttachmentFileDTO implements AttachmentFileDTO {
       _$AttachmentFileDTOImpl.fromJson;
 
   @override
-  String? get id;
+  int? get id;
   @override
   String? get name;
   @override
-  String? get localPath;
-  @override
-  String? get remoteUrl;
+  String? get url;
   @override
   bool get uploaded;
 

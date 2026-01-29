@@ -7,6 +7,7 @@ import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart';
 import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
+import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
@@ -41,20 +42,34 @@ class DynamicForm extends StatelessWidget {
               title: isEdit ? StringConstant.editForm : StringConstant.newForm,
               actions: [
                 if (isEdit && !(state.isLoading))
-                  InkWell(
-                    onTap: () {
-                      final form = state.existingForm;
-                      if (form?.data != null) {
-                        generateAndOpenPdf(
-                          json: form?.data ?? {},
-                          schema: state.schema!,
-                        );
-                      }
+                  StreamBuilder(
+                    stream: NetworkListener().onStatusChange(),
+                    builder: (context, snapshot) {
+                      return (snapshot.data == true)
+                          ? InkWell(
+                              onTap: () {
+                                final form = state.existingForm;
+                                if (form?.data != null) {
+                                  generateAndOpenPdf(
+                                    context: context,
+                                    json: form?.data ?? {},
+                                    schema: state.schema!,
+                                    formFiles: form?.formFiles,
+                                  );
+                                }
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: getSize(10),
+                                ),
+                                child: Icon(
+                                  Icons.download,
+                                  color: AppColors.white,
+                                ),
+                              ),
+                            )
+                          : SizedBox.shrink();
                     },
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-                      child: Icon(Icons.download, color: AppColors.white),
-                    ),
                   ),
               ],
             ),

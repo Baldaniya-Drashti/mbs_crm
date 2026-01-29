@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:mbs_crm/application/home_bloc/home_bloc.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
+import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/injection.dart';
@@ -71,6 +72,10 @@ class UserHomeView extends StatelessWidget {
                           FormDeleteDialog().deleteDialog(
                             context,
                             onPressedDelete: () {
+                              final currentContext = getIt<AppRouter>()
+                                  .navigatorKey
+                                  .currentContext!;
+
                               currentContext.router.maybePop();
                               context.read<HomeBloc>().add(
                                 HomeEvent.deleteForm(

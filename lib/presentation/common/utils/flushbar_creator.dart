@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:gap/gap.dart';
+import 'package:mbs_crm/core/constants/string_constant.dart';
+import 'package:mbs_crm/core/utils/math_utils.dart';
+import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 
@@ -35,4 +39,30 @@ Flushbar showSuccess({
     flushbarPosition: position,
     duration: duration,
   );
+}
+
+void showPdfLoader(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => AlertDialog(
+      backgroundColor: AppColors.white,
+      content: Row(
+        children: [
+          CircularProgressIndicator(color: AppColors.primary),
+          Gap(getSize(20)),
+          Expanded(
+            child: BaseText(
+              text: StringConstant.generatingPdfPleaseWait,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+void hidePdfLoader(BuildContext context) {
+  Navigator.of(context, rootNavigator: true).pop();
 }

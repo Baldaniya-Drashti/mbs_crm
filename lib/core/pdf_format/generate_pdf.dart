@@ -1,21 +1,34 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:io';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
+import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
+import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:mbs_crm/core/pdf_format/dynamic_pdf_generator.dart';
 
 Future<void> generateAndOpenPdf({
+  required BuildContext context,
   required Map<String, dynamic> json,
   required DynamicFormDTO schema,
+  List<FormFileGroupDTO>? formFiles,
   String? fileName,
 }) async {
   try {
-    final Uint8List bytes = await DynamicPdfGenerator.buildPdf(json, schema);
+    showPdfLoader(context);
+
+    final Uint8List bytes = await DynamicPdfGenerator.buildPdf(
+      json,
+      formFiles,
+      schema,
+    );
+    hidePdfLoader(context);
+
     final String uniqueFileName =
         fileName ??
         'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
@@ -48,6 +61,8 @@ Future<void> generateAndOpenPdf({
       print('OpenFile result: ${result.message}');
     }
   } catch (err) {
+    hidePdfLoader(context);
+
     print("Download PDF Error----> $err");
   }
 }

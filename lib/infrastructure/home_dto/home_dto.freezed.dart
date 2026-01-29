@@ -23,6 +23,8 @@ HomeDTO _$HomeDTOFromJson(Map<String, dynamic> json) {
 mixin _$HomeDTO {
   @JsonKey(name: 'id')
   int? get server_id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_name')
+  String? get userName => throw _privateConstructorUsedError;
   String get localId => throw _privateConstructorUsedError;
   bool get isSynced => throw _privateConstructorUsedError;
   String? get syncAction => throw _privateConstructorUsedError;
@@ -38,6 +40,9 @@ mixin _$HomeDTO {
   String? get image_url => throw _privateConstructorUsedError;
   @JsonKey(name: 'form_json')
   Map<String, dynamic>? get data => throw _privateConstructorUsedError;
+  @JsonKey(name: 'form_files')
+  List<FormFileGroupDTO>? get formFiles => throw _privateConstructorUsedError;
+  List<int>? get deletedFileIds => throw _privateConstructorUsedError;
 
   /// Serializes this HomeDTO to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -55,6 +60,7 @@ abstract class $HomeDTOCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'id') int? server_id,
+    @JsonKey(name: 'user_name') String? userName,
     String localId,
     bool isSynced,
     String? syncAction,
@@ -66,6 +72,8 @@ abstract class $HomeDTOCopyWith<$Res> {
     @JsonKey(name: 'form_slug') String? slug,
     String? image_url,
     @JsonKey(name: 'form_json') Map<String, dynamic>? data,
+    @JsonKey(name: 'form_files') List<FormFileGroupDTO>? formFiles,
+    List<int>? deletedFileIds,
   });
 }
 
@@ -85,6 +93,7 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
   @override
   $Res call({
     Object? server_id = freezed,
+    Object? userName = freezed,
     Object? localId = null,
     Object? isSynced = null,
     Object? syncAction = freezed,
@@ -96,6 +105,8 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
     Object? slug = freezed,
     Object? image_url = freezed,
     Object? data = freezed,
+    Object? formFiles = freezed,
+    Object? deletedFileIds = freezed,
   }) {
     return _then(
       _value.copyWith(
@@ -103,6 +114,10 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
                 ? _value.server_id
                 : server_id // ignore: cast_nullable_to_non_nullable
                       as int?,
+            userName: freezed == userName
+                ? _value.userName
+                : userName // ignore: cast_nullable_to_non_nullable
+                      as String?,
             localId: null == localId
                 ? _value.localId
                 : localId // ignore: cast_nullable_to_non_nullable
@@ -147,6 +162,14 @@ class _$HomeDTOCopyWithImpl<$Res, $Val extends HomeDTO>
                 ? _value.data
                 : data // ignore: cast_nullable_to_non_nullable
                       as Map<String, dynamic>?,
+            formFiles: freezed == formFiles
+                ? _value.formFiles
+                : formFiles // ignore: cast_nullable_to_non_nullable
+                      as List<FormFileGroupDTO>?,
+            deletedFileIds: freezed == deletedFileIds
+                ? _value.deletedFileIds
+                : deletedFileIds // ignore: cast_nullable_to_non_nullable
+                      as List<int>?,
           )
           as $Val,
     );
@@ -163,6 +186,7 @@ abstract class _$$HomeDTOImplCopyWith<$Res> implements $HomeDTOCopyWith<$Res> {
   @useResult
   $Res call({
     @JsonKey(name: 'id') int? server_id,
+    @JsonKey(name: 'user_name') String? userName,
     String localId,
     bool isSynced,
     String? syncAction,
@@ -174,6 +198,8 @@ abstract class _$$HomeDTOImplCopyWith<$Res> implements $HomeDTOCopyWith<$Res> {
     @JsonKey(name: 'form_slug') String? slug,
     String? image_url,
     @JsonKey(name: 'form_json') Map<String, dynamic>? data,
+    @JsonKey(name: 'form_files') List<FormFileGroupDTO>? formFiles,
+    List<int>? deletedFileIds,
   });
 }
 
@@ -192,6 +218,7 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? server_id = freezed,
+    Object? userName = freezed,
     Object? localId = null,
     Object? isSynced = null,
     Object? syncAction = freezed,
@@ -203,6 +230,8 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
     Object? slug = freezed,
     Object? image_url = freezed,
     Object? data = freezed,
+    Object? formFiles = freezed,
+    Object? deletedFileIds = freezed,
   }) {
     return _then(
       _$HomeDTOImpl(
@@ -210,6 +239,10 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
             ? _value.server_id
             : server_id // ignore: cast_nullable_to_non_nullable
                   as int?,
+        userName: freezed == userName
+            ? _value.userName
+            : userName // ignore: cast_nullable_to_non_nullable
+                  as String?,
         localId: null == localId
             ? _value.localId
             : localId // ignore: cast_nullable_to_non_nullable
@@ -254,6 +287,14 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
             ? _value._data
             : data // ignore: cast_nullable_to_non_nullable
                   as Map<String, dynamic>?,
+        formFiles: freezed == formFiles
+            ? _value._formFiles
+            : formFiles // ignore: cast_nullable_to_non_nullable
+                  as List<FormFileGroupDTO>?,
+        deletedFileIds: freezed == deletedFileIds
+            ? _value._deletedFileIds
+            : deletedFileIds // ignore: cast_nullable_to_non_nullable
+                  as List<int>?,
       ),
     );
   }
@@ -264,6 +305,7 @@ class __$$HomeDTOImplCopyWithImpl<$Res>
 class _$HomeDTOImpl implements _HomeDTO {
   const _$HomeDTOImpl({
     @JsonKey(name: 'id') this.server_id,
+    @JsonKey(name: 'user_name') this.userName,
     this.localId = "",
     this.isSynced = false,
     this.syncAction,
@@ -275,7 +317,11 @@ class _$HomeDTOImpl implements _HomeDTO {
     @JsonKey(name: 'form_slug') this.slug,
     this.image_url,
     @JsonKey(name: 'form_json') final Map<String, dynamic>? data,
-  }) : _data = data;
+    @JsonKey(name: 'form_files') final List<FormFileGroupDTO>? formFiles,
+    final List<int>? deletedFileIds,
+  }) : _data = data,
+       _formFiles = formFiles,
+       _deletedFileIds = deletedFileIds;
 
   factory _$HomeDTOImpl.fromJson(Map<String, dynamic> json) =>
       _$$HomeDTOImplFromJson(json);
@@ -283,6 +329,9 @@ class _$HomeDTOImpl implements _HomeDTO {
   @override
   @JsonKey(name: 'id')
   final int? server_id;
+  @override
+  @JsonKey(name: 'user_name')
+  final String? userName;
   @override
   @JsonKey()
   final String localId;
@@ -319,9 +368,30 @@ class _$HomeDTOImpl implements _HomeDTO {
     return EqualUnmodifiableMapView(value);
   }
 
+  final List<FormFileGroupDTO>? _formFiles;
+  @override
+  @JsonKey(name: 'form_files')
+  List<FormFileGroupDTO>? get formFiles {
+    final value = _formFiles;
+    if (value == null) return null;
+    if (_formFiles is EqualUnmodifiableListView) return _formFiles;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<int>? _deletedFileIds;
+  @override
+  List<int>? get deletedFileIds {
+    final value = _deletedFileIds;
+    if (value == null) return null;
+    if (_deletedFileIds is EqualUnmodifiableListView) return _deletedFileIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   String toString() {
-    return 'HomeDTO(server_id: $server_id, localId: $localId, isSynced: $isSynced, syncAction: $syncAction, status: $status, updatedAt: $updatedAt, formType: $formType, formName: $formName, createdAt: $createdAt, slug: $slug, image_url: $image_url, data: $data)';
+    return 'HomeDTO(server_id: $server_id, userName: $userName, localId: $localId, isSynced: $isSynced, syncAction: $syncAction, status: $status, updatedAt: $updatedAt, formType: $formType, formName: $formName, createdAt: $createdAt, slug: $slug, image_url: $image_url, data: $data, formFiles: $formFiles, deletedFileIds: $deletedFileIds)';
   }
 
   @override
@@ -331,6 +401,8 @@ class _$HomeDTOImpl implements _HomeDTO {
             other is _$HomeDTOImpl &&
             (identical(other.server_id, server_id) ||
                 other.server_id == server_id) &&
+            (identical(other.userName, userName) ||
+                other.userName == userName) &&
             (identical(other.localId, localId) || other.localId == localId) &&
             (identical(other.isSynced, isSynced) ||
                 other.isSynced == isSynced) &&
@@ -348,7 +420,15 @@ class _$HomeDTOImpl implements _HomeDTO {
             (identical(other.slug, slug) || other.slug == slug) &&
             (identical(other.image_url, image_url) ||
                 other.image_url == image_url) &&
-            const DeepCollectionEquality().equals(other._data, _data));
+            const DeepCollectionEquality().equals(other._data, _data) &&
+            const DeepCollectionEquality().equals(
+              other._formFiles,
+              _formFiles,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._deletedFileIds,
+              _deletedFileIds,
+            ));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -356,6 +436,7 @@ class _$HomeDTOImpl implements _HomeDTO {
   int get hashCode => Object.hash(
     runtimeType,
     server_id,
+    userName,
     localId,
     isSynced,
     syncAction,
@@ -367,6 +448,8 @@ class _$HomeDTOImpl implements _HomeDTO {
     slug,
     image_url,
     const DeepCollectionEquality().hash(_data),
+    const DeepCollectionEquality().hash(_formFiles),
+    const DeepCollectionEquality().hash(_deletedFileIds),
   );
 
   /// Create a copy of HomeDTO
@@ -386,6 +469,7 @@ class _$HomeDTOImpl implements _HomeDTO {
 abstract class _HomeDTO implements HomeDTO {
   const factory _HomeDTO({
     @JsonKey(name: 'id') final int? server_id,
+    @JsonKey(name: 'user_name') final String? userName,
     final String localId,
     final bool isSynced,
     final String? syncAction,
@@ -397,6 +481,8 @@ abstract class _HomeDTO implements HomeDTO {
     @JsonKey(name: 'form_slug') final String? slug,
     final String? image_url,
     @JsonKey(name: 'form_json') final Map<String, dynamic>? data,
+    @JsonKey(name: 'form_files') final List<FormFileGroupDTO>? formFiles,
+    final List<int>? deletedFileIds,
   }) = _$HomeDTOImpl;
 
   factory _HomeDTO.fromJson(Map<String, dynamic> json) = _$HomeDTOImpl.fromJson;
@@ -404,6 +490,9 @@ abstract class _HomeDTO implements HomeDTO {
   @override
   @JsonKey(name: 'id')
   int? get server_id;
+  @override
+  @JsonKey(name: 'user_name')
+  String? get userName;
   @override
   String get localId;
   @override
@@ -430,6 +519,11 @@ abstract class _HomeDTO implements HomeDTO {
   @override
   @JsonKey(name: 'form_json')
   Map<String, dynamic>? get data;
+  @override
+  @JsonKey(name: 'form_files')
+  List<FormFileGroupDTO>? get formFiles;
+  @override
+  List<int>? get deletedFileIds;
 
   /// Create a copy of HomeDTO
   /// with the given fields replaced by the non-null parameter values.

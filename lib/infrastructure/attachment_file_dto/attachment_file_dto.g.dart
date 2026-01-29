@@ -9,10 +9,9 @@ part of 'attachment_file_dto.dart';
 _$AttachmentFileDTOImpl _$$AttachmentFileDTOImplFromJson(
   Map<String, dynamic> json,
 ) => _$AttachmentFileDTOImpl(
-  id: json['id'] as String?,
+  id: (json['id'] as num?)?.toInt(),
   name: json['name'] as String?,
-  localPath: json['localPath'] as String?,
-  remoteUrl: json['remoteUrl'] as String?,
+  url: json['url'] as String?,
   uploaded: json['uploaded'] as bool? ?? false,
 );
 
@@ -21,7 +20,6 @@ Map<String, dynamic> _$$AttachmentFileDTOImplToJson(
 ) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
-  'localPath': instance.localPath,
-  'remoteUrl': instance.remoteUrl,
+  'url': instance.url,
   'uploaded': instance.uploaded,
 };

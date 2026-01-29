@@ -63,6 +63,7 @@ class StringConstant {
   static const String allForms = 'All Forms';
   static const String createdBy = 'Created By';
   static const String deleteForm = 'Delete Form';
+  static const String generatingPdfPleaseWait = 'Generating PDF, Please wait…';
 
   static const String deleteUserDesc = 'Are you sure want to delete this User?';
   static const String deleteFormDesc = 'Are you sure want to delete this Form?';

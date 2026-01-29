@@ -5,6 +5,7 @@ import 'package:mbs_crm/core/database/db_repository.dart';
 import 'package:mbs_crm/core/database/local_preference.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
+import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/domain/main/main_failure.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/infrastructure/user_dto/user_dto.dart';
+import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 part 'home_event.dart';
@@ -25,6 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   int page = 1;
   int lastPage = 1;
   final RefreshController refreshController = RefreshController();
+  final currentContext = getIt<AppRouter>().navigatorKey.currentContext!;
+
   HomeBloc(this.mainFacade) : super(HomeState.initial()) {
     on<HomeEvent>((event, emit) async {
       await event.map(

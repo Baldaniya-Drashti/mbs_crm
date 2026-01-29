@@ -25,4 +25,8 @@ class DynamicFormEvent with _$DynamicFormEvent {
     required String fieldKey,
     required dynamic value,
   }) = OnDropDownChanged;
+  const factory DynamicFormEvent.deleteAttachmentEvent({
+    required FormFileGroupDTO group,
+    required AttachmentFileDTO file,
+  }) = DeleteAttachmentEvent;
 }
