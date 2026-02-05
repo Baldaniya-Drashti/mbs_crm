@@ -29,6 +29,7 @@ class DBRepository {
         (form.formFiles ?? []).map((e) => e.toJson()).toList(),
       ),
       'deleted_file_ids': jsonEncode(form.deletedFileIds ?? []),
+      'pdf_path': form.pdfPath,
     };
 
     await db.insert(StorageConstants.offlineForms, map);
@@ -51,6 +52,7 @@ class DBRepository {
         (form.formFiles ?? []).map((e) => e.toJson()).toList(),
       ),
       'deleted_file_ids': jsonEncode(form.deletedFileIds ?? []),
+      'pdf_path': form.pdfPath,
     };
 
     await db.update(

@@ -80,7 +80,6 @@ class FormListView extends StatelessWidget {
                           onPressedDelete: () {
                             final currentContext =
                                 getIt<AppRouter>().navigatorKey.currentContext!;
-
                             currentContext.router.maybePop();
                             context.read<FormTabBloc>().add(
                               FormTabEvent.deleteFormEvent(

@@ -30,113 +30,123 @@ class DynamicForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final isEdit = formId?.isEdit == true;
 
-    return BlocProvider(
-      create: (context) =>
-          getIt<DynamicFormBloc>()
-            ..add(DynamicFormEvent.loadForm(formSlug, formId: formId)),
-      child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
-        builder: (context, state) {
-          final schema = state.schema ?? DynamicFormDTO();
-          return Scaffold(
-            appBar: CustomAppBar(
-              title: isEdit ? StringConstant.editForm : StringConstant.newForm,
-              actions: [
-                if (isEdit && !(state.isLoading))
-                  StreamBuilder(
-                    stream: NetworkListener().onStatusChange(),
-                    builder: (context, snapshot) {
-                      return (snapshot.data == true)
-                          ? InkWell(
-                              onTap: () {
-                                final form = state.existingForm;
-                                if (form?.data != null) {
-                                  generateAndOpenPdf(
-                                    context: context,
-                                    json: form?.data ?? {},
-                                    schema: state.schema!,
-                                    formFiles: form?.formFiles,
-                                  );
-                                }
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: getSize(10),
+    return SafeArea(
+      top: false,
+
+      child: BlocProvider(
+        create: (context) =>
+            getIt<DynamicFormBloc>()
+              ..add(DynamicFormEvent.loadForm(formSlug, formId: formId)),
+        child: BlocBuilder<DynamicFormBloc, DynamicFormState>(
+          builder: (context, state) {
+            final schema = state.schema ?? DynamicFormDTO();
+            return Scaffold(
+              appBar: CustomAppBar(
+                title: isEdit
+                    ? StringConstant.editForm
+                    : StringConstant.newForm,
+                actions: [
+                  if (isEdit && !(state.isLoading))
+                    StreamBuilder(
+                      stream: NetworkListener().onStatusChange(),
+                      builder: (context, snapshot) {
+                        return (snapshot.data == true)
+                            ? InkWell(
+                                onTap: () {
+                                  final form = state.existingForm;
+                                  if (form?.data != null) {
+                                    generateAndOpenPdf(
+                                      context: context,
+                                      json: form?.data ?? {},
+                                      schema: state.schema!,
+                                      formFiles: form?.formFiles,
+                                    );
+                                  }
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: getSize(10),
+                                  ),
+                                  child: Icon(
+                                    Icons.download,
+                                    color: AppColors.white,
+                                  ),
                                 ),
-                                child: Icon(
-                                  Icons.download,
-                                  color: AppColors.white,
-                                ),
+                              )
+                            : SizedBox.shrink();
+                      },
+                    ),
+                ],
+              ),
+              body: FormBuilder(
+                key: context.read<DynamicFormBloc>().formKey,
+                child: (state.isLoading)
+                    ? Center(child: CenterLoadingIndicator())
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: getSize(20),
+                            horizontal: getSize((isLandscape()) ? 30 : 15),
+                          ),
+                          child: Column(
+                            children: [
+                              BaseText(
+                                text: state.schema?.title ?? "",
+                                fontSize: 18,
+                                fontFamily: FontConstant.jost,
+                                fontWeight: FontWeight.w500,
                               ),
-                            )
-                          : SizedBox.shrink();
-                    },
-                  ),
-              ],
-            ),
-            body: FormBuilder(
-              key: context.read<DynamicFormBloc>().formKey,
-              child: (state.isLoading)
-                  ? Center(child: CenterLoadingIndicator())
-                  : SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: getSize(20),
-                          horizontal: getSize((isLandscape()) ? 30 : 15),
-                        ),
-                        child: Column(
-                          children: [
-                            BaseText(
-                              text: state.schema?.title ?? "",
-                              fontSize: 18,
-                              fontFamily: FontConstant.jost,
-                              fontWeight: FontWeight.w500,
-                            ),
-                            Gap(getSize(20)),
-                            if (schema.sections != null)
-                              for (var section in schema.sections!)
-                                _buildSection(context, section: section),
-                            Gap(getSize(10)),
-                            CommonButton(
-                              isSubmitting: state.isSubmitting,
-                              onPressed: () async {
-                                final formKey = context
-                                    .read<DynamicFormBloc>()
-                                    .formKey;
-                                if (formKey.currentState?.saveAndValidate() ??
-                                    false) {
-                                  context.read<DynamicFormBloc>().add(
-                                    (isEdit)
-                                        ? DynamicFormEvent.updateForm(
-                                            formId: formId!,
-                                            values:
-                                                formKey.currentState?.value ??
-                                                {},
-                                          )
-                                        : DynamicFormEvent.createForm(
-                                            formKey.currentState?.value ?? {},
-                                          ),
-                                  );
-                                } else {
-                                  showError(
-                                    message: StringConstant
-                                        .someDetailsAreMissingOrInvalidPleaseCheck,
-                                  ).show(context);
-                                }
-                              },
-                              width: (isLandscape()) ? double.maxFinite : null,
-                              height: (isLandscape()) ? 80 : 40,
-                              borderRadius: 10,
-                              buttonText: (isEdit)
-                                  ? StringConstant.update
-                                  : StringConstant.submit,
-                            ),
-                          ],
+                              Gap(getSize(20)),
+                              if (schema.sections != null)
+                                for (var section in schema.sections!)
+                                  _buildSection(context, section: section),
+                              Gap(getSize(10)),
+                              CommonButton(
+                                isSubmitting: state.isSubmitting,
+                                onPressed: () async {
+                                  final formKey = context
+                                      .read<DynamicFormBloc>()
+                                      .formKey;
+                                  if (formKey.currentState?.saveAndValidate() ??
+                                      false) {
+                                    context.read<DynamicFormBloc>().add(
+                                      (isEdit)
+                                          ? DynamicFormEvent.updateForm(
+                                              context,
+                                              formId: formId!,
+                                              values:
+                                                  formKey.currentState?.value ??
+                                                  {},
+                                            )
+                                          : DynamicFormEvent.createForm(
+                                              context,
+                                              formKey.currentState?.value ?? {},
+                                            ),
+                                    );
+                                  } else {
+                                    showError(
+                                      message: StringConstant
+                                          .someDetailsAreMissingOrInvalidPleaseCheck,
+                                    ).show(context);
+                                  }
+                                },
+                                width: (isLandscape())
+                                    ? double.maxFinite
+                                    : null,
+                                height: (isLandscape()) ? 80 : 40,
+                                borderRadius: 10,
+                                buttonText: (isEdit)
+                                    ? StringConstant.update
+                                    : StringConstant.submit,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-            ),
-          );
-        },
+              ),
+            );
+          },
+        ),
       ),
     );
   }

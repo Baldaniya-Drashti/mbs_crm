@@ -6,6 +6,5 @@ class StorageConstants {
   static const String offlineForms = 'OfflineForms';
 
   //---------------- SQFLITE -----------------//
-
   static const String mbsCrmDB = 'mbs_forms.db';
 }

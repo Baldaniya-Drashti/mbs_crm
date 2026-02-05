@@ -43,6 +43,7 @@ class UserHomeView extends StatelessWidget {
                     final form = state.formsList[index];
                     return GestureDetector(
                       onTap: () async {
+                        print("form.server_id----> ${form.server_id}");
                         context.router
                             .push(
                               PageRouteInfo(
@@ -66,8 +67,7 @@ class UserHomeView extends StatelessWidget {
                       },
                       child: FormTile(
                         form: form,
-                        index: (index + 1),
-
+                        index: index,
                         onDeleteForm: () {
                           FormDeleteDialog().deleteDialog(
                             context,

@@ -10,6 +10,7 @@ import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/database/db_repository.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
+import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
@@ -17,6 +18,7 @@ import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
+import 'package:mbs_crm/presentation/common/utils/date_time_format.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:mbs_crm/presentation/core/widgets/utility/normalization_utilities.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
@@ -85,6 +87,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   ).show(currentContext);
                 },
                 (r) {
+                  print("e.formId.serverId----- $r");
                   form = r;
                 },
               );
@@ -199,7 +202,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                 Map<String, List<AttachmentFileDTO>>.from(
                   state.attachmentCache,
                 );
-
             updatedAttachments.remove('${e.fieldKey}_attachments'); */
 
             emit(
@@ -318,23 +320,29 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
         },
         createForm: (e) async {
           emit(state.copyWith(isSubmitting: true, success: false));
-
           try {
             final payload = _buildPayload(e);
 
+            final pdfFile = await generateAndSendPdfFile(
+              context: e.context,
+              json: payload,
+              schema: state.schema!,
+              formFiles: state.formFiles,
+            );
             final form = _buildForm(payload, formFiles: state.formFiles)
                 .copyWith(
                   localId: const Uuid().v4(),
-                  createdAt: DateTime.now().toIso8601String(),
+                  createdAt: CustomDateTimeFormat.dateTimeToUtcTimestamp(
+                    DateTime.now(),
+                  ),
+                  pdfPath: pdfFile.path,
                 );
 
             await DBRepository().saveFormOffline(form: form);
-
             final isOnline = await NetworkListener().isOnline();
             if (isOnline) {
               var res = await mainFacade.addFormAPI(form: form);
-
-              res.fold(
+              await res.fold(
                 (l) {
                   showError(
                     message: l.maybeMap(
@@ -343,8 +351,9 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                           'Please check your internet connectivity',
                       orElse: () => "Server Error. Try again later.",
                     ),
-                  ).show(currentContext);
+                  ).show(e.context);
                   emit(state.copyWith(isSubmitting: false, success: false));
+                  return;
                 },
                 (r) async {
                   await DBRepository().markAsSynced(
@@ -352,12 +361,18 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                     serverId: r?.server_id ?? -1,
                   );
                   emit(state.copyWith(isSubmitting: false, success: true));
-                  Navigator.pop(currentContext, true);
+
+                  if (currentContext.mounted) {
+                    Navigator.pop(currentContext, true);
+                  }
                 },
               );
             } else {
               emit(state.copyWith(isSubmitting: false, success: true));
-              Navigator.pop(currentContext, true);
+
+              if (currentContext.mounted) {
+                Navigator.pop(currentContext, true);
+              }
             }
           } catch (e) {
             print("Create Form Error: $e");
@@ -369,13 +384,25 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
           try {
             final payload = {..._buildPayload(e)};
+            final pdfFile = await generateAndSendPdfFile(
+              context: e.context,
+              json: payload,
+              schema: state.schema!,
+              formFiles: state.formFiles,
+            );
+            print(
+              "Sending Data ---> e.formId.serverId---> ${e.formId.serverId}",
+            );
             final form = _buildForm(payload, formFiles: state.formFiles)
                 .copyWith(
                   localId: e.formId.localId!,
                   server_id: e.formId.serverId,
                   deletedFileIds: state.deletedFileIds,
                   createdAt: state.existingForm?.createdAt,
-                  updatedAt: DateTime.now().toIso8601String(),
+                  updatedAt: CustomDateTimeFormat.dateTimeToUtcTimestamp(
+                    DateTime.now(),
+                  ),
+                  pdfPath: pdfFile.path,
                 );
 
             await DBRepository().updateFormOffline(form: form);
@@ -383,7 +410,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             final isOnline = await NetworkListener().isOnline();
             if (isOnline) {
               var res = await mainFacade.updateFormAPI(form: form);
-              res.fold(
+              await res.fold(
                 (l) {
                   showError(
                     message: l.maybeMap(
@@ -392,21 +419,28 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                           'Please check your internet connectivity',
                       orElse: () => "Server Error. Try again later.",
                     ),
-                  ).show(currentContext);
+                  ).show(e.context);
                   emit(state.copyWith(isSubmitting: false, success: false));
+                  return;
                 },
                 (r) async {
                   await DBRepository().markAsSynced(
                     localId: form.localId,
                     serverId: r?.server_id ?? -1,
                   );
+
                   emit(state.copyWith(isSubmitting: false, success: true));
-                  Navigator.pop(currentContext, true);
+
+                  if (currentContext.mounted) {
+                    Navigator.pop(currentContext, true);
+                  }
                 },
               );
             } else {
               emit(state.copyWith(isSubmitting: false, success: true));
-              Navigator.pop(currentContext, true);
+              if (currentContext.mounted) {
+                Navigator.pop(currentContext, true);
+              }
             }
           } catch (e) {
             print("Update Form Error: $e");
@@ -426,10 +460,9 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
     final Map<String, dynamic> payload = {};
 
     for (FormSection section in state.schema?.sections ?? []) {
-      final sectionKey = (section.title ?? '').toLowerCase().replaceAll(
-        ' ',
-        '_',
-      );
+      final sectionKey =
+          section.key ??
+          (section.title ?? '').toLowerCase().replaceAll(' ', '_');
       final sectionData = _buildSectionData(section, data, tables);
 
       if (sectionData.isNotEmpty) {
@@ -533,8 +566,8 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       data: payload,
       formFiles: formFiles,
       status: 'draft',
-      createdAt: DateTime.now().toIso8601String(),
-      updatedAt: DateTime.now().toIso8601String(),
+      createdAt: CustomDateTimeFormat.dateTimeToUtcTimestamp(DateTime.now()),
+      updatedAt: CustomDateTimeFormat.dateTimeToUtcTimestamp(DateTime.now()),
     );
   }
 

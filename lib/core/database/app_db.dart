@@ -37,10 +37,11 @@ class AppDatabase {
             form_json TEXT,
             form_files TEXT,
             deleted_file_ids TEXT,
+            pdf_path TEXT,
             
             status TEXT,
-            created_at TEXT,
-            updated_at TEXT
+            created_at INTEGER,
+            updated_at INTEGER
           )
         ''');
       },

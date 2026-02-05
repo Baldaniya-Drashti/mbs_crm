@@ -17,7 +17,6 @@ Future<void> generateAndOpenPdf({
   required Map<String, dynamic> json,
   required DynamicFormDTO schema,
   List<FormFileGroupDTO>? formFiles,
-  String? fileName,
 }) async {
   try {
     showPdfLoader(context);
@@ -29,11 +28,14 @@ Future<void> generateAndOpenPdf({
     );
     hidePdfLoader(context);
 
-    final String uniqueFileName =
-        fileName ??
-        'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
-    Directory? baseDir;
+    // final String uniqueFileName =
+    //     'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
+    final String uniqueFileName = buildPdfFileName(json: json, schema: schema);
 
+    // Clientjobnumber - site - Y-Md-d H:i - form type.pdf
+    // #12323 - London - 2026-02-06 - ...Ex'd.pdf
+
+    Directory? baseDir;
     if (Platform.isAndroid) {
       baseDir = Directory('/storage/emulated/0/Download');
       if (!await baseDir.exists()) {
@@ -67,6 +69,50 @@ Future<void> generateAndOpenPdf({
   }
 }
 
+Future<File> generateAndSendPdfFile({
+  required BuildContext context,
+  required Map<String, dynamic> json,
+  required DynamicFormDTO schema,
+  List<FormFileGroupDTO>? formFiles,
+}) async {
+  showPdfLoader(context);
+
+  final Uint8List bytes = await DynamicPdfGenerator.buildPdf(
+    json,
+    formFiles,
+    schema,
+  );
+  hidePdfLoader(context);
+
+  // final String uniqueFileName =
+  // 'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
+  final String uniqueFileName = buildPdfFileName(json: json, schema: schema);
+
+  print("uniqueFileName ----->  $uniqueFileName");
+
+  Directory baseDir;
+  if (Platform.isAndroid) {
+    baseDir = Directory('/storage/emulated/0/Download');
+    if (!await baseDir.exists()) {
+      baseDir = (await getExternalStorageDirectory())!;
+    }
+  } else {
+    baseDir = await getApplicationDocumentsDirectory();
+  }
+
+  final Directory folder = Directory(
+    '${baseDir.path}/${StringConstant.mbsCRM}',
+  );
+  if (!await folder.exists()) {
+    await folder.create(recursive: true);
+  }
+
+  final file = File('${folder.path}/$uniqueFileName');
+  await file.writeAsBytes(bytes);
+
+  return file;
+}
+
 bool hasNonEmptyValue(dynamic value) {
   if (value == null) return false;
   if (value is String) return value.trim().isNotEmpty;
@@ -81,4 +127,30 @@ bool hasData(dynamic value) {
   if (value is Map) return value.isNotEmpty;
   if (value is List) return value.isNotEmpty;
   return true;
+}
+
+String _safeValue(dynamic value, {String fallback = 'NA'}) {
+  if (value == null) return fallback;
+  if (value is String && value.trim().isNotEmpty) return value.trim();
+  return fallback;
+}
+
+String buildPdfFileName({
+  required Map<String, dynamic> json,
+  required DynamicFormDTO schema,
+}) {
+  final projectInfo = json['project_information'] ?? {};
+
+  final clientJobNumber = _safeValue(
+    projectInfo['client'],
+    fallback: 'UnknownClient',
+  );
+
+  final site = _safeValue(projectInfo['site'], fallback: 'UnknownSite');
+
+  final formTitle = _safeValue(schema.title, fallback: 'Form');
+
+  final dateTime = DateFormat('yyyy-MM-dd HH-mm').format(DateTime.now());
+
+  return '$clientJobNumber - $site - $dateTime - $formTitle.pdf';
 }

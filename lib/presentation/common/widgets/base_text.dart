@@ -9,7 +9,6 @@ class BaseText extends StatelessWidget {
   final double fontSize;
   final bool isUpperCase;
   final bool showFullDescription;
-
   final TextAlign textAlign;
   final FontWeight? fontWeight;
   final TextStyle? style;

@@ -14,15 +14,18 @@ class AdminFormList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: "${user?.first_name ?? ""} ${user?.last_name ?? ""}",
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            getIt<FormTabBloc>()
-              ..add(FormTabEvent.getFormsList(true, userId: user?.id)),
-        child: FormListView(userId: user?.id),
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: "${user?.first_name ?? ""} ${user?.last_name ?? ""}",
+        ),
+        body: BlocProvider(
+          create: (context) =>
+              getIt<FormTabBloc>()
+                ..add(FormTabEvent.getFormsList(true, userId: user?.id)),
+          child: FormListView(userId: user?.id),
+        ),
       ),
     );
   }

@@ -19,200 +19,203 @@ class AddUser extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: (id != null)
-            ? StringConstant.updateUser
-            : StringConstant.addUser,
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            getIt<AddUserBloc>()..add(AddUserEvent.getUser(id)),
-        child: BlocBuilder<AddUserBloc, AddUserState>(
-          builder: (context, state) {
-            return (state.isLoading)
-                ? CenterLoadingIndicator()
-                : Form(
-                    autovalidateMode: (state.showError)
-                        ? AutovalidateMode.always
-                        : AutovalidateMode.disabled,
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: getSize(20),
-                          vertical: getSize(10),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            CustomTextField(
-                              initialValue: state.firstName.getValue(),
-                              labelText: StringConstant.firstName,
-                              onChanged: (value) => context
-                                  .read<AddUserBloc>()
-                                  .add(AddUserEvent.firstNameChanged(value)),
-                              validator: (p0, p1) => context
-                                  .read<AddUserBloc>()
-                                  .state
-                                  .firstName
-                                  .value
-                                  .fold(
-                                    (f) => f.maybeMap(
-                                      empty: (value) =>
-                                          StringConstant.pleaseEnterFirstName,
-                                      orElse: () => null,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: (id != null)
+              ? StringConstant.updateUser
+              : StringConstant.addUser,
+        ),
+        body: BlocProvider(
+          create: (context) =>
+              getIt<AddUserBloc>()..add(AddUserEvent.getUser(id)),
+          child: BlocBuilder<AddUserBloc, AddUserState>(
+            builder: (context, state) {
+              return (state.isLoading)
+                  ? CenterLoadingIndicator()
+                  : Form(
+                      autovalidateMode: (state.showError)
+                          ? AutovalidateMode.always
+                          : AutovalidateMode.disabled,
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: getSize(20),
+                            vertical: getSize(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              CustomTextField(
+                                initialValue: state.firstName.getValue(),
+                                labelText: StringConstant.firstName,
+                                onChanged: (value) => context
+                                    .read<AddUserBloc>()
+                                    .add(AddUserEvent.firstNameChanged(value)),
+                                validator: (p0, p1) => context
+                                    .read<AddUserBloc>()
+                                    .state
+                                    .firstName
+                                    .value
+                                    .fold(
+                                      (f) => f.maybeMap(
+                                        empty: (value) =>
+                                            StringConstant.pleaseEnterFirstName,
+                                        orElse: () => null,
+                                      ),
+                                      (_) => null,
                                     ),
-                                    (_) => null,
-                                  ),
-                            ),
-                            Gap(getSize(20)),
-                            CustomTextField(
-                              initialValue: state.lastName.getValue(),
-                              labelText: StringConstant.lastName,
-                              onChanged: (value) => context
-                                  .read<AddUserBloc>()
-                                  .add(AddUserEvent.lastNameChanged(value)),
-                              validator: (p0, p1) => context
-                                  .read<AddUserBloc>()
-                                  .state
-                                  .lastName
-                                  .value
-                                  .fold(
-                                    (f) => f.maybeMap(
-                                      empty: (value) =>
-                                          StringConstant.pleaseEnterLastName,
-                                      orElse: () => null,
+                              ),
+                              Gap(getSize(20)),
+                              CustomTextField(
+                                initialValue: state.lastName.getValue(),
+                                labelText: StringConstant.lastName,
+                                onChanged: (value) => context
+                                    .read<AddUserBloc>()
+                                    .add(AddUserEvent.lastNameChanged(value)),
+                                validator: (p0, p1) => context
+                                    .read<AddUserBloc>()
+                                    .state
+                                    .lastName
+                                    .value
+                                    .fold(
+                                      (f) => f.maybeMap(
+                                        empty: (value) =>
+                                            StringConstant.pleaseEnterLastName,
+                                        orElse: () => null,
+                                      ),
+                                      (_) => null,
                                     ),
-                                    (_) => null,
-                                  ),
-                            ),
-                            Gap(getSize(20)),
-                            CustomTextField(
-                              initialValue: state.email.getValue(),
-                              labelText: StringConstant.email,
-                              keyboardType: TextInputType.emailAddress,
-                              onChanged: (value) => context
-                                  .read<AddUserBloc>()
-                                  .add(AddUserEvent.emailChanged(value)),
-                              validator: (p0, p1) => context
-                                  .read<AddUserBloc>()
-                                  .state
-                                  .email
-                                  .value
-                                  .fold(
-                                    (f) => f.maybeMap(
-                                      empty: (value) =>
-                                          StringConstant.pleaseEnterEmail,
-                                      invalidEmail: (_) =>
-                                          StringConstant.pleaseEnterValidEmail,
-                                      orElse: () => null,
+                              ),
+                              Gap(getSize(20)),
+                              CustomTextField(
+                                initialValue: state.email.getValue(),
+                                labelText: StringConstant.email,
+                                keyboardType: TextInputType.emailAddress,
+                                onChanged: (value) => context
+                                    .read<AddUserBloc>()
+                                    .add(AddUserEvent.emailChanged(value)),
+                                validator: (p0, p1) => context
+                                    .read<AddUserBloc>()
+                                    .state
+                                    .email
+                                    .value
+                                    .fold(
+                                      (f) => f.maybeMap(
+                                        empty: (value) =>
+                                            StringConstant.pleaseEnterEmail,
+                                        invalidEmail: (_) => StringConstant
+                                            .pleaseEnterValidEmail,
+                                        orElse: () => null,
+                                      ),
+                                      (_) => null,
                                     ),
-                                    (_) => null,
-                                  ),
-                            ),
-
-                            Gap(getSize(20)),
-                            CustomTextField(
-                              labelText: StringConstant.password,
-                              obscureText: state.isObscure,
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  context.read<AddUserBloc>().add(
-                                    const AddUserEvent.obscureChanged(),
-                                  );
-                                },
-                                child: Container(
-                                  color: AppColors.transparent,
-                                  padding: EdgeInsets.all(getSize(9)),
-                                  child: Icon(
-                                    (state.isObscure)
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
+                              ),
+                              Gap(getSize(20)),
+                              CustomTextField(
+                                labelText: StringConstant.password,
+                                obscureText: state.isObscure,
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    context.read<AddUserBloc>().add(
+                                      const AddUserEvent.obscureChanged(),
+                                    );
+                                  },
+                                  child: Container(
+                                    color: AppColors.transparent,
+                                    padding: EdgeInsets.all(getSize(9)),
+                                    child: Icon(
+                                      (state.isObscure)
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              onChanged: (value) => context
-                                  .read<AddUserBloc>()
-                                  .add(AddUserEvent.passwordChanged(value)),
-                              validator: (p0, p1) => context
-                                  .read<AddUserBloc>()
-                                  .state
-                                  .password
-                                  .value
-                                  .fold(
-                                    (f) => f.maybeMap(
-                                      empty: (value) =>
-                                          StringConstant.pleaseEnterPassword,
-                                      shortPassword: (_) => StringConstant
-                                          .passwordShouldBeMinimum3Digit,
-                                      orElse: () => null,
+                                onChanged: (value) => context
+                                    .read<AddUserBloc>()
+                                    .add(AddUserEvent.passwordChanged(value)),
+                                validator: (p0, p1) => context
+                                    .read<AddUserBloc>()
+                                    .state
+                                    .password
+                                    .value
+                                    .fold(
+                                      (f) => f.maybeMap(
+                                        empty: (value) =>
+                                            StringConstant.pleaseEnterPassword,
+                                        shortPassword: (_) => StringConstant
+                                            .passwordShouldBeMinimum3Digit,
+                                        orElse: () => null,
+                                      ),
+                                      (_) => null,
                                     ),
-                                    (_) => null,
-                                  ),
-                            ),
-                            Gap(getSize(20)),
-                            CustomTextField(
-                              labelText: StringConstant.confirmPassword,
-                              obscureText: state.isObscure,
-                              suffixIcon: InkWell(
-                                onTap: () {
-                                  context.read<AddUserBloc>().add(
-                                    const AddUserEvent.obscureChanged(),
-                                  );
-                                },
-                                child: Container(
-                                  color: AppColors.transparent,
-                                  padding: EdgeInsets.all(getSize(9)),
-                                  child: Icon(
-                                    (state.isObscure)
-                                        ? Icons.visibility_outlined
-                                        : Icons.visibility_off_outlined,
+                              ),
+                              Gap(getSize(20)),
+                              CustomTextField(
+                                labelText: StringConstant.confirmPassword,
+                                obscureText: state.isObscure,
+                                suffixIcon: InkWell(
+                                  onTap: () {
+                                    context.read<AddUserBloc>().add(
+                                      const AddUserEvent.obscureChanged(),
+                                    );
+                                  },
+                                  child: Container(
+                                    color: AppColors.transparent,
+                                    padding: EdgeInsets.all(getSize(9)),
+                                    child: Icon(
+                                      (state.isObscure)
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                    ),
                                   ),
                                 ),
+                                onChanged: (value) =>
+                                    context.read<AddUserBloc>().add(
+                                      AddUserEvent.confirmPasswordChanged(
+                                        value,
+                                        state.password.getValue(),
+                                      ),
+                                    ),
+                                validator: (_, context) => context
+                                    .read<AddUserBloc>()
+                                    .state
+                                    .confirmPassword
+                                    .value
+                                    .fold(
+                                      (f) => f.maybeMap(
+                                        passwordsDontMatch: (_) =>
+                                            StringConstant
+                                                .bothPasswordsAreDoesNotMatch,
+                                        orElse: () => null,
+                                      ),
+                                      (_) => null,
+                                    ),
                               ),
-                              onChanged: (value) =>
-                                  context.read<AddUserBloc>().add(
-                                    AddUserEvent.confirmPasswordChanged(
-                                      value,
-                                      state.password.getValue(),
-                                    ),
-                                  ),
-                              validator: (_, context) => context
-                                  .read<AddUserBloc>()
-                                  .state
-                                  .confirmPassword
-                                  .value
-                                  .fold(
-                                    (f) => f.maybeMap(
-                                      passwordsDontMatch: (_) => StringConstant
-                                          .bothPasswordsAreDoesNotMatch,
-                                      orElse: () => null,
-                                    ),
-                                    (_) => null,
-                                  ),
-                            ),
 
-                            Gap(getSize(40)),
-                            CommonButton(
-                              isSubmitting: state.isSubmitting,
-                              onPressed: () {
-                                context.read<AddUserBloc>().add(
-                                  (id != null)
-                                      ? AddUserEvent.updateUser(id ?? -1)
-                                      : AddUserEvent.addUser(),
-                                );
-                              },
-                              buttonText: (id != null)
-                                  ? StringConstant.update
-                                  : StringConstant.add,
-                            ),
-                          ],
+                              Gap(getSize(40)),
+                              CommonButton(
+                                isSubmitting: state.isSubmitting,
+                                onPressed: () {
+                                  context.read<AddUserBloc>().add(
+                                    (id != null)
+                                        ? AddUserEvent.updateUser(id ?? -1)
+                                        : AddUserEvent.addUser(),
+                                  );
+                                },
+                                buttonText: (id != null)
+                                    ? StringConstant.update
+                                    : StringConstant.add,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-          },
+                    );
+            },
+          ),
         ),
       ),
     );

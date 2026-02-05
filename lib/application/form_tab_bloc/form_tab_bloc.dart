@@ -7,14 +7,12 @@ import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/database/db_repository.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
-import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/domain/main/main_failure.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 part 'form_tab_event.dart';
 part 'form_tab_state.dart';
 part 'form_tab_bloc.freezed.dart';
@@ -90,7 +88,6 @@ class FormTabBloc extends Bloc<FormTabEvent, FormTabState> {
                 },
                 (r) {
                   lastPage = r.meta?.lastPage ?? 1;
-
                   if (e.isRefresh) {
                     List.from(state.formsList).clear();
                   }
@@ -100,7 +97,6 @@ class FormTabBloc extends Bloc<FormTabEvent, FormTabState> {
                           .map((e) => HomeDTO.fromJson(e))
                           .toList(),
                     );
-
                   return emit(
                     state.copyWith(
                       isLoading: false,

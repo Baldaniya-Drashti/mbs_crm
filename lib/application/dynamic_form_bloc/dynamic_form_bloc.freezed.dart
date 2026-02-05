@@ -21,8 +21,10 @@ mixin _$DynamicFormEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -37,8 +39,13 @@ mixin _$DynamicFormEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -50,8 +57,13 @@ mixin _$DynamicFormEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -200,8 +212,10 @@ class _$LoadFormImpl implements LoadForm {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -220,8 +234,13 @@ class _$LoadFormImpl implements LoadForm {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -237,8 +256,13 @@ class _$LoadFormImpl implements LoadForm {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -396,8 +420,10 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -416,8 +442,13 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -433,8 +464,13 @@ class _$GetFormDetailsImpl implements GetFormDetails {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -521,7 +557,7 @@ abstract class _$$CreateFormImplCopyWith<$Res> {
     $Res Function(_$CreateFormImpl) then,
   ) = __$$CreateFormImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({Map<String, dynamic> values});
+  $Res call({BuildContext context, Map<String, dynamic> values});
 }
 
 /// @nodoc
@@ -537,9 +573,13 @@ class __$$CreateFormImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? values = null}) {
+  $Res call({Object? context = null, Object? values = null}) {
     return _then(
       _$CreateFormImpl(
+        null == context
+            ? _value.context
+            : context // ignore: cast_nullable_to_non_nullable
+                  as BuildContext,
         null == values
             ? _value._values
             : values // ignore: cast_nullable_to_non_nullable
@@ -552,8 +592,11 @@ class __$$CreateFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$CreateFormImpl implements CreateForm {
-  const _$CreateFormImpl(final Map<String, dynamic> values) : _values = values;
+  const _$CreateFormImpl(this.context, final Map<String, dynamic> values)
+    : _values = values;
 
+  @override
+  final BuildContext context;
   final Map<String, dynamic> _values;
   @override
   Map<String, dynamic> get values {
@@ -564,7 +607,7 @@ class _$CreateFormImpl implements CreateForm {
 
   @override
   String toString() {
-    return 'DynamicFormEvent.createForm(values: $values)';
+    return 'DynamicFormEvent.createForm(context: $context, values: $values)';
   }
 
   @override
@@ -572,12 +615,16 @@ class _$CreateFormImpl implements CreateForm {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CreateFormImpl &&
+            (identical(other.context, context) || other.context == context) &&
             const DeepCollectionEquality().equals(other._values, _values));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_values));
+  int get hashCode => Object.hash(
+    runtimeType,
+    context,
+    const DeepCollectionEquality().hash(_values),
+  );
 
   /// Create a copy of DynamicFormEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -592,8 +639,10 @@ class _$CreateFormImpl implements CreateForm {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -604,7 +653,7 @@ class _$CreateFormImpl implements CreateForm {
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
     deleteAttachmentEvent,
   }) {
-    return createForm(values);
+    return createForm(context, values);
   }
 
   @override
@@ -612,8 +661,13 @@ class _$CreateFormImpl implements CreateForm {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -621,7 +675,7 @@ class _$CreateFormImpl implements CreateForm {
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
     deleteAttachmentEvent,
   }) {
-    return createForm?.call(values);
+    return createForm?.call(context, values);
   }
 
   @override
@@ -629,8 +683,13 @@ class _$CreateFormImpl implements CreateForm {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -640,7 +699,7 @@ class _$CreateFormImpl implements CreateForm {
     required TResult orElse(),
   }) {
     if (createForm != null) {
-      return createForm(values);
+      return createForm(context, values);
     }
     return orElse();
   }
@@ -698,9 +757,12 @@ class _$CreateFormImpl implements CreateForm {
 }
 
 abstract class CreateForm implements DynamicFormEvent {
-  const factory CreateForm(final Map<String, dynamic> values) =
-      _$CreateFormImpl;
+  const factory CreateForm(
+    final BuildContext context,
+    final Map<String, dynamic> values,
+  ) = _$CreateFormImpl;
 
+  BuildContext get context;
   Map<String, dynamic> get values;
 
   /// Create a copy of DynamicFormEvent
@@ -717,7 +779,11 @@ abstract class _$$UpdateFormImplCopyWith<$Res> {
     $Res Function(_$UpdateFormImpl) then,
   ) = __$$UpdateFormImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({FormIdentifier formId, Map<String, dynamic> values});
+  $Res call({
+    BuildContext context,
+    FormIdentifier formId,
+    Map<String, dynamic> values,
+  });
 }
 
 /// @nodoc
@@ -733,9 +799,17 @@ class __$$UpdateFormImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? formId = null, Object? values = null}) {
+  $Res call({
+    Object? context = null,
+    Object? formId = null,
+    Object? values = null,
+  }) {
     return _then(
       _$UpdateFormImpl(
+        null == context
+            ? _value.context
+            : context // ignore: cast_nullable_to_non_nullable
+                  as BuildContext,
         formId: null == formId
             ? _value.formId
             : formId // ignore: cast_nullable_to_non_nullable
@@ -752,11 +826,14 @@ class __$$UpdateFormImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UpdateFormImpl implements UpdateForm {
-  const _$UpdateFormImpl({
+  const _$UpdateFormImpl(
+    this.context, {
     required this.formId,
     required final Map<String, dynamic> values,
   }) : _values = values;
 
+  @override
+  final BuildContext context;
   @override
   final FormIdentifier formId;
   final Map<String, dynamic> _values;
@@ -769,7 +846,7 @@ class _$UpdateFormImpl implements UpdateForm {
 
   @override
   String toString() {
-    return 'DynamicFormEvent.updateForm(formId: $formId, values: $values)';
+    return 'DynamicFormEvent.updateForm(context: $context, formId: $formId, values: $values)';
   }
 
   @override
@@ -777,6 +854,7 @@ class _$UpdateFormImpl implements UpdateForm {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UpdateFormImpl &&
+            (identical(other.context, context) || other.context == context) &&
             (identical(other.formId, formId) || other.formId == formId) &&
             const DeepCollectionEquality().equals(other._values, _values));
   }
@@ -784,6 +862,7 @@ class _$UpdateFormImpl implements UpdateForm {
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    context,
     formId,
     const DeepCollectionEquality().hash(_values),
   );
@@ -801,8 +880,10 @@ class _$UpdateFormImpl implements UpdateForm {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -813,7 +894,7 @@ class _$UpdateFormImpl implements UpdateForm {
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
     deleteAttachmentEvent,
   }) {
-    return updateForm(formId, values);
+    return updateForm(context, formId, values);
   }
 
   @override
@@ -821,8 +902,13 @@ class _$UpdateFormImpl implements UpdateForm {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -830,7 +916,7 @@ class _$UpdateFormImpl implements UpdateForm {
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
     deleteAttachmentEvent,
   }) {
-    return updateForm?.call(formId, values);
+    return updateForm?.call(context, formId, values);
   }
 
   @override
@@ -838,8 +924,13 @@ class _$UpdateFormImpl implements UpdateForm {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -849,7 +940,7 @@ class _$UpdateFormImpl implements UpdateForm {
     required TResult orElse(),
   }) {
     if (updateForm != null) {
-      return updateForm(formId, values);
+      return updateForm(context, formId, values);
     }
     return orElse();
   }
@@ -907,11 +998,13 @@ class _$UpdateFormImpl implements UpdateForm {
 }
 
 abstract class UpdateForm implements DynamicFormEvent {
-  const factory UpdateForm({
+  const factory UpdateForm(
+    final BuildContext context, {
     required final FormIdentifier formId,
     required final Map<String, dynamic> values,
   }) = _$UpdateFormImpl;
 
+  BuildContext get context;
   FormIdentifier get formId;
   Map<String, dynamic> get values;
 
@@ -1009,8 +1102,10 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -1029,8 +1124,13 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -1046,8 +1146,13 @@ class _$AttachFileEventImpl implements AttachFileEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -1203,8 +1308,10 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -1223,8 +1330,13 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -1240,8 +1352,13 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -1408,8 +1525,10 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -1428,8 +1547,13 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -1445,8 +1569,13 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
@@ -1635,8 +1764,10 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
   TResult when<TResult extends Object?>({
     required TResult Function(String formSlug, FormIdentifier? formId) loadForm,
     required TResult Function(FormIdentifier formId) getFormDetails,
-    required TResult Function(Map<String, dynamic> values) createForm,
+    required TResult Function(BuildContext context, Map<String, dynamic> values)
+    createForm,
     required TResult Function(
+      BuildContext context,
       FormIdentifier formId,
       Map<String, dynamic> values,
     )
@@ -1655,8 +1786,13 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult? Function(FormIdentifier formId)? getFormDetails,
-    TResult? Function(Map<String, dynamic> values)? createForm,
-    TResult? Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult? Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult? Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult? Function(FormFieldSchema field)? attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
@@ -1672,8 +1808,13 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(String formSlug, FormIdentifier? formId)? loadForm,
     TResult Function(FormIdentifier formId)? getFormDetails,
-    TResult Function(Map<String, dynamic> values)? createForm,
-    TResult Function(FormIdentifier formId, Map<String, dynamic> values)?
+    TResult Function(BuildContext context, Map<String, dynamic> values)?
+    createForm,
+    TResult Function(
+      BuildContext context,
+      FormIdentifier formId,
+      Map<String, dynamic> values,
+    )?
     updateForm,
     TResult Function(FormFieldSchema field)? attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,

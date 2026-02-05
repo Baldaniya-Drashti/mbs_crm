@@ -66,7 +66,7 @@ class _DynamicSignatureState extends State<DynamicSignature> {
             BaseText(text: widget.label, fontSize: 15),
             Gap(getSize(5)),
             Container(
-              height: getSize(200),
+              height: getSize((isLandscape()) ? 300 : 200),
               decoration: BoxDecoration(
                 border: Border.all(
                   color: AppColors.black.withValues(alpha: getSize(0.3)),

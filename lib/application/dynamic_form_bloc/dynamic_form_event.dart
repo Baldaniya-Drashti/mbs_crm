@@ -10,9 +10,12 @@ class DynamicFormEvent with _$DynamicFormEvent {
       GetFormDetails;
   // const factory DynamicFormEvent.updateValue(String key, dynamic value) =
   //     _UpdateValue;
-  const factory DynamicFormEvent.createForm(Map<String, dynamic> values) =
-      CreateForm;
-  const factory DynamicFormEvent.updateForm({
+  const factory DynamicFormEvent.createForm(
+    BuildContext context,
+    Map<String, dynamic> values,
+  ) = CreateForm;
+  const factory DynamicFormEvent.updateForm(
+    BuildContext context, {
     required FormIdentifier formId,
     required Map<String, dynamic> values,
   }) = UpdateForm;

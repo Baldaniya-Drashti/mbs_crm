@@ -47,10 +47,14 @@ class NetworkListener {
       final token = await getToken();
       if (token.isEmpty) return;
 
-      getIt<SyncService>().runFullSyncIfOnline();
+      final userType = await getUserType();
 
-      final context = getIt<AppRouter>().navigatorKey.currentContext!;
-      context.read<HomeBloc>().add(HomeEvent.getFormsList(true));
+      if (userType == 2) {
+        getIt<SyncService>().runFullSyncIfOnline();
+
+        final context = getIt<AppRouter>().navigatorKey.currentContext!;
+        context.read<HomeBloc>().add(HomeEvent.getFormsList(true));
+      }
 
       print("Pending Forms Syncing");
       _queuedNavigation?.call();

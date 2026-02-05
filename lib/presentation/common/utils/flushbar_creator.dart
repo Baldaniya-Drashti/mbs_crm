@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:another_flushbar/flushbar.dart';
+import 'package:another_flushbar/flushbar_route.dart';
 import 'package:gap/gap.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
@@ -38,6 +39,24 @@ Flushbar showSuccess({
     backgroundColor: AppColors.primary,
     flushbarPosition: position,
     duration: duration,
+  );
+}
+
+Flushbar noInternetToast({
+  String? title,
+  Duration duration = const Duration(seconds: 2),
+}) {
+  return Flushbar(
+    title: title,
+    message: StringConstant.pleaseCheckYourInternetConnectivity,
+    messageColor: AppColors.red,
+    borderRadius: BorderRadius.circular(50),
+    margin: EdgeInsets.symmetric(horizontal: getSize(20)),
+    backgroundColor: AppColors.backgroundRed,
+    duration: duration,
+    flushbarPosition: FlushbarPosition.BOTTOM,
+    animationDuration: Duration(milliseconds: 800),
+    forwardAnimationCurve: Curves.easeInOut,
   );
 }
 

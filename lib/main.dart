@@ -39,7 +39,6 @@ Future<void> main() async {
     EnvironmentConfig().initConfig(environment);
 
     NetworkListener().initialize();
-    SyncListener().initialize();
 
     runApp(const RestartWidget(child: AppWidget()));
   }, (error, stack) {});

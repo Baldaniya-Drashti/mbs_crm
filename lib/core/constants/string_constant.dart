@@ -84,6 +84,9 @@ class StringConstant {
   static const String bothPasswordsAreDoesNotMatch =
       "Confirm Password does not match.";
 
+  static const String pleaseCheckYourInternetConnectivity =
+      "Please check your internet connectivity";
+
   static const String someDetailAreInvalidPleaseCheck =
       'Some Details are invalid! Please check.';
 }

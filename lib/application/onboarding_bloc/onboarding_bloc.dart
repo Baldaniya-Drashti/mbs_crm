@@ -8,6 +8,7 @@ import 'package:mbs_crm/core/database/local_preference.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
 import 'package:mbs_crm/core/router/app_router.gr.dart';
 import 'package:mbs_crm/injection.dart';
+import 'package:mbs_crm/presentation/core/widgets/dialogs/sync_dialog/sync_listener.dart';
 
 part 'onboarding_event.dart';
 part 'onboarding_state.dart';
@@ -23,6 +24,9 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
           emit(state.copyWith(selectedUser: e.selectedUser));
         },
         submitUser: (e) async {
+          if (state.selectedUser == 2) {
+            SyncListener().initialize();
+          }
           await setUserType(state.selectedUser);
           context.router.push(PageRouteInfo(SignIn.name));
         },

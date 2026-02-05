@@ -1,10 +1,9 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mbs_crm/application/dynamic_form_bloc/dynamic_form_bloc.dart';
 import 'package:mbs_crm/core/constants/api_constants.dart';
 import 'package:mbs_crm/core/network/api_service.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
@@ -66,6 +65,7 @@ class MainFacade implements IMainFacade {
   }) async {
     try {
       final formFiles = form.formFiles ?? [];
+      print("Add Form API Form Type-----> ${form.formType}");
 
       final formData = FormData.fromMap({
         'form_type': form.formType,
@@ -73,6 +73,12 @@ class MainFacade implements IMainFacade {
         'form_slug': form.slug,
         'form_json': jsonEncode(form.data),
       });
+
+      if (form.pdfPath != null && File(form.pdfPath!).existsSync()) {
+        formData.files.add(
+          MapEntry('form_pdf', await MultipartFile.fromFile(form.pdfPath!)),
+        );
+      }
 
       // -------------------- ATTACHMENT FILES -------------------- //
       for (int i = 0; i < formFiles.length; i++) {
@@ -111,7 +117,6 @@ class MainFacade implements IMainFacade {
       _logFormData(formData);
       final response = await apiService.postMethod(
         ApiConstants.addForm,
-
         showSucessToast: showSucessToast,
         {},
         formData: formData,
@@ -144,6 +149,7 @@ class MainFacade implements IMainFacade {
     bool showSucessToast = true,
   }) async {
     try {
+      print("Sending Data---> ${jsonEncode(form)}");
       final formFiles = form.formFiles ?? [];
 
       final filteredFormFiles = formFiles.where((group) {
@@ -153,9 +159,7 @@ class MainFacade implements IMainFacade {
           (f) => !f.uploaded && !(f.url?.startsWith('http') ?? false),
         );
       }).toList();
-      print("deletedFileId Length---> ${form.deletedFileIds}");
-      print("FormFiles length---> ${formFiles.length}");
-      print("filteredFormFiles length---> ${filteredFormFiles.length}");
+
       // Prepare multipart form data
       final formData = FormData.fromMap({
         'form_type': form.formType,
@@ -165,6 +169,12 @@ class MainFacade implements IMainFacade {
         if (form.deletedFileIds?.isNotEmpty == true)
           'deleted_file_ids': form.deletedFileIds!.join(','),
       });
+
+      if (form.pdfPath != null && File(form.pdfPath!).existsSync()) {
+        formData.files.add(
+          MapEntry('form_pdf', await MultipartFile.fromFile(form.pdfPath!)),
+        );
+      }
 
       // -------------------- ATTACHMENT FILES -------------------- //
       for (int i = 0; i < filteredFormFiles.length; i++) {
@@ -201,7 +211,8 @@ class MainFacade implements IMainFacade {
         }
       }
 
-      print("Sending Data---> ${formData}");
+      print("Sending Data---> ${form}");
+      print("Sending Data--->11  ${form.server_id}");
       _logFormData(formData);
       final response = await apiService.postMethod(
         "${ApiConstants.addForm}/${form.server_id}",

@@ -14,10 +14,10 @@ _$HomeDTOImpl _$$HomeDTOImplFromJson(Map<String, dynamic> json) =>
       isSynced: json['isSynced'] as bool? ?? false,
       syncAction: json['syncAction'] as String?,
       status: json['status'] as String?,
-      updatedAt: json['updatedAt'] as String?,
+      updatedAt: (json['updatedAt'] as num?)?.toInt(),
       formType: (json['form_type'] as num?)?.toInt(),
       formName: json['form_name'] as String?,
-      createdAt: json['createdAt'] as String?,
+      createdAt: (json['created_at'] as num?)?.toInt(),
       slug: json['form_slug'] as String?,
       image_url: json['image_url'] as String?,
       data: json['form_json'] as Map<String, dynamic>?,
@@ -27,6 +27,7 @@ _$HomeDTOImpl _$$HomeDTOImplFromJson(Map<String, dynamic> json) =>
       deletedFileIds: (json['deletedFileIds'] as List<dynamic>?)
           ?.map((e) => (e as num).toInt())
           .toList(),
+      pdfPath: json['pdfPath'] as String?,
     );
 
 Map<String, dynamic> _$$HomeDTOImplToJson(_$HomeDTOImpl instance) =>
@@ -40,10 +41,11 @@ Map<String, dynamic> _$$HomeDTOImplToJson(_$HomeDTOImpl instance) =>
       'updatedAt': instance.updatedAt,
       'form_type': instance.formType,
       'form_name': instance.formName,
-      'createdAt': instance.createdAt,
+      'created_at': instance.createdAt,
       'form_slug': instance.slug,
       'image_url': instance.image_url,
       'form_json': instance.data,
       'form_files': instance.formFiles,
       'deletedFileIds': instance.deletedFileIds,
+      'pdfPath': instance.pdfPath,
     };

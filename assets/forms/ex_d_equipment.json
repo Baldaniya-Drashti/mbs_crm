@@ -5,6 +5,7 @@
     "sections": [
         {
             "title": "Project Information",
+            "key": "project_information",
             "fields": [
                 {
                     "label": "Client",
@@ -23,6 +24,7 @@
         },
         {
             "title": "Instrument Details",
+            "key": "instrument_details",
             "fields": [
                 {
                     "label": "Make",
@@ -78,6 +80,7 @@
         },
         {
             "title": "Inspection Grade",
+            "key": "inspection_grade",
             "fields": [
                 {
                     "label": "IMPORTANT NOTE: REFERENCE SHOULD BE MADE TO IEC STANDARD 60079-17 BEFORE COMPLETING THIS SCHEDULE (BS EN 60079 Pt17)",
@@ -94,6 +97,7 @@
         },
         {
             "title": "Equipment",
+            "key": "equipment",
             "fields": [
                 {
                     "label": "Equipment is appropriate to the EPL / Zone requirements of the location",
@@ -297,6 +301,7 @@
         },
         {
             "title": "Equipment Specific (Lighting)",
+            "key": "equipment_specific_lighting",
             "fields": [
                 {
                     "label": "HID lamps are not indicating EOL effects",
@@ -324,6 +329,7 @@
         },
         {
             "title": "Equipment Specific (Motors)",
+            "key": "equipment_specific_motors",
             "fields": [
                 {
                     "label": "Motor fans have sufficient clearance to the enclosure and / or covers, cooling systems are undamaged, motor foundations have no indentations or cracks",
@@ -362,6 +368,7 @@
         },
         {
             "title": "Installation",
+            "key": "installation",
             "fields": [
                 {
                     "label": "Type of cable is appropriate",
@@ -521,6 +528,7 @@
         },
         {
             "title": "Installation - Heating Systems",
+            "key": "installation_heating_systems",
             "fields": [
                 {
                     "label": "Temperature sensors function according to manufacturer's documentation",
@@ -625,6 +633,7 @@
         },
         {
             "title": "Environment",
+            "key": "environment",
             "fields": [
                 {
                     "label": "Apparatus is adequately protected from corrosion, weather, vibration and other adverse conditions",
@@ -657,6 +666,7 @@
         },
         {
             "title": "Inspected By",
+            "key": "inspected_by",
             "fields": [
                 {
                     "label": "Inspector Name",
@@ -674,7 +684,7 @@
                 },
                 {
                     "label": "Inspector Signature",
-                    "key": "inspector_signature",
+                    "key": "signature",
                     "type": "signature",
                     "required": false
                 }
@@ -682,6 +692,7 @@
         },
         {
             "title": "Attachments",
+            "key": "attachments",
             "fields": [
                 {
                     "label": "Upload Inspection Photos / Documents",

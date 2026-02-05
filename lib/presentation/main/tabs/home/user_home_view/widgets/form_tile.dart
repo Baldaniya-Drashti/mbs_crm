@@ -1,10 +1,16 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:mbs_crm/core/constants/font_constants.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
+import 'package:mbs_crm/presentation/common/utils/date_time_format.dart';
 import 'package:mbs_crm/presentation/common/widgets/base_text.dart';
 import 'package:mbs_crm/presentation/core/styles/styles.dart';
+import 'package:mbs_crm/presentation/core/widgets/buttons/swipe_to_delete.dart';
+import 'package:swipeable_tile/swipeable_tile.dart';
 
 class FormTile extends StatelessWidget {
   final HomeDTO form;
@@ -20,49 +26,62 @@ class FormTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(getSize(10)),
-      margin: EdgeInsets.symmetric(vertical: getSize(10)),
-      decoration: BoxDecoration(
-        color: AppColors.white,
-        boxShadow: [BoxShadow(color: AppColors.grey, blurRadius: 10)],
-        border: Border.all(color: AppColors.primary),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              BaseText(text: "$index. "),
-              Expanded(
-                child: BaseText(text: "${form.server_id ?? ""}", maxLines: 2),
-              ),
-
-              InkWell(
-                onTap: onDeleteForm,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: getSize(10)),
-                  child: Icon(Icons.delete_outline, color: AppColors.red),
-                ),
-              ),
-            ],
-          ),
-          Gap(getSize(10)),
-          Align(
-            alignment: Alignment.centerRight,
-            child: BaseText(
-              text: DateFormat('dd-MM-yyyy').format(
-                DateTime.parse(form.createdAt ?? DateTime.now().toString()),
-              ),
-              fontSize: 12,
-              textColor: AppColors.grey,
+    return SwipeToDelete(
+      swipeKey: UniqueKey(),
+      confirmSwipe: (direction) async {
+        if (direction == SwipeDirection.endToStart) {
+          if (onDeleteForm != null) {
+            onDeleteForm!();
+          }
+          return false;
+        }
+        return false;
+      },
+      child: Container(
+        padding: EdgeInsets.all(getSize(10)),
+        decoration: BoxDecoration(color: AppColors.white),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            BaseText(
+              text: form.formName ?? "",
+              // text: "${form.server_id}" ,
+              textColor: AppColors.primary,
+              fontFamily: FontConstant.jost,
+              fontWeight: FontWeight.w500,
+              maxLines: 3,
             ),
-          ),
-        ],
+            Gap(getSize(10)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(
+                  Icons.calendar_today_outlined,
+                  color: AppColors.grey,
+                  size: getSize(15),
+                ),
+                Gap(getSize(2)),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: BaseText(
+                    text: DateFormat('dd-MM-yyyy').format(
+                      (form.createdAt != null)
+                          ? CustomDateTimeFormat.timeStampToDateTime(
+                              form.createdAt!,
+                            )
+                          : DateTime.now(),
+                    ),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                    textColor: AppColors.grey,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

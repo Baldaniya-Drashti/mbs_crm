@@ -45,8 +45,8 @@ class DynamicAttachmentField extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               CommonButton(
-                width: 120,
-                height: 40,
+                width: (isLandscape()) ? 250 : 120,
+                height: (isLandscape()) ? 80 : 40,
                 borderColor: AppColors.primary,
                 backgroundColor: AppColors.white,
                 onPressed: () {

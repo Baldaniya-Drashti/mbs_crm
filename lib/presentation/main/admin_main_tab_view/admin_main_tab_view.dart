@@ -35,47 +35,50 @@ class _AdminMainTabViewState extends State<AdminMainTabView> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<AdminMainTabBloc>()),
-        BlocProvider(
-          create: (context) => getIt<HomeBloc>()..add(HomeEvent.getAPIList()),
-        ),
-        BlocProvider(
-          create: (context) =>
-              getIt<FormTabBloc>()..add(FormTabEvent.getFormsList(true)),
-        ),
-      ],
-      child: BlocBuilder<AdminMainTabBloc, AdminMainTabState>(
-        builder: (context, state) {
-          return DefaultTabController(
-            length: 3,
-            child: Scaffold(
-              appBar: getAppbar(state, context),
-              body: GestureDetector(
-                onTap: () => AppFocus.unfocus(context),
-                child: IndexedStack(
-                  index: state.pageIndex,
-                  children: List<Widget>.generate(
-                    context.read<AdminMainTabBloc>().pageList.length,
-                    (int index) {
-                      return Navigator(
-                        onGenerateRoute: (RouteSettings settings) {
-                          return onGenerateRoute(
-                            settings,
-                            context.read<AdminMainTabBloc>().pageList[index],
-                          );
-                        },
-                      );
-                    },
+    return SafeArea(
+      top: false,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<AdminMainTabBloc>()),
+          BlocProvider(
+            create: (context) => getIt<HomeBloc>()..add(HomeEvent.getAPIList()),
+          ),
+          BlocProvider(
+            create: (context) =>
+                getIt<FormTabBloc>()..add(FormTabEvent.getFormsList(true)),
+          ),
+        ],
+        child: BlocBuilder<AdminMainTabBloc, AdminMainTabState>(
+          builder: (context, state) {
+            return DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                appBar: getAppbar(state, context),
+                body: GestureDetector(
+                  onTap: () => AppFocus.unfocus(context),
+                  child: IndexedStack(
+                    index: state.pageIndex,
+                    children: List<Widget>.generate(
+                      context.read<AdminMainTabBloc>().pageList.length,
+                      (int index) {
+                        return Navigator(
+                          onGenerateRoute: (RouteSettings settings) {
+                            return onGenerateRoute(
+                              settings,
+                              context.read<AdminMainTabBloc>().pageList[index],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
 
-              bottomNavigationBar: AdminBottomNavigationWidget(),
-            ),
-          );
-        },
+                bottomNavigationBar: AdminBottomNavigationWidget(),
+              ),
+            );
+          },
+        ),
       ),
     );
   }

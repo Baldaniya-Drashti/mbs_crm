@@ -15,15 +15,16 @@ class HomeDTO with _$HomeDTO {
     @Default(false) bool isSynced,
     String? syncAction,
     String? status,
-    String? updatedAt,
+    int? updatedAt,
     @JsonKey(name: 'form_type') int? formType,
     @JsonKey(name: 'form_name') String? formName,
-    String? createdAt,
+    @JsonKey(name: 'created_at') int? createdAt,
     @JsonKey(name: 'form_slug') String? slug,
     String? image_url,
     @JsonKey(name: 'form_json') Map<String, dynamic>? data,
     @JsonKey(name: 'form_files') List<FormFileGroupDTO>? formFiles,
     List<int>? deletedFileIds,
+    String? pdfPath,
   }) = _HomeDTO;
 
   factory HomeDTO.fromJson(Map<String, dynamic> json) =>
@@ -39,9 +40,9 @@ class HomeDTO with _$HomeDTO {
       formName: row['form_name']?.toString(),
       slug: row['form_slug']?.toString(),
       formType: row['form_type'],
-      createdAt: row['created_at'] as String?,
+      createdAt: row['created_at'] as int?,
       status: row['status'] as String?,
-      updatedAt: row['updated_at'] as String?,
+      updatedAt: row['updated_at'] as int?,
       data: row['form_json'] != null ? jsonDecode(row['form_json']) : null,
       formFiles: (row['form_files'] != null && row['form_files'] != 'null')
           ? (jsonDecode(row['form_files']) as List<dynamic>? ?? [])
@@ -51,6 +52,7 @@ class HomeDTO with _$HomeDTO {
       deletedFileIds: row['deleted_file_ids'] != null
           ? List<int>.from(jsonDecode(row['deleted_file_ids']))
           : [],
+      pdfPath: row['pdf_path'] as String?,
     );
   }
 }

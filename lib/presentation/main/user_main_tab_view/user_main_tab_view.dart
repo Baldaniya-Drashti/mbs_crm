@@ -9,10 +9,10 @@ import 'package:mbs_crm/core/helper/sync_service.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/presentation/core/styles/app_colors.dart';
 import 'package:mbs_crm/presentation/core/widgets/dialogs/new_form_list_dialog.dart';
+import 'package:mbs_crm/presentation/core/widgets/layout/unfocus.dart';
 import 'package:mbs_crm/presentation/main/tabs/home/user_home_view/user_home_view.dart';
 import 'package:mbs_crm/presentation/main/tabs/my_account/my_account.dart';
 import 'package:mbs_crm/injection.dart';
-import 'package:mbs_crm/presentation/common/utils/app_focus.dart';
 import 'package:mbs_crm/presentation/core/widgets/inputs/custom_app_bar.dart';
 import 'package:mbs_crm/presentation/main/widgets/user_bottom_navigation.dart';
 import 'package:flutter/material.dart';
@@ -41,78 +41,83 @@ class _UserMainTabViewState extends State<UserMainTabView> {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => getIt<UserMainTabBloc>()),
-        BlocProvider(
-          create: (context) => getIt<HomeBloc>()..add(HomeEvent.getAPIList()),
-        ),
-      ],
-      child: BlocBuilder<UserMainTabBloc, UserMainTabState>(
-        builder: (context, state) {
-          return DefaultTabController(
-            length: 1,
-            child: Scaffold(
-              appBar: getAppbar(state, context),
-              body: GestureDetector(
-                onTap: () => AppFocus.unfocus(context),
-                child: IndexedStack(
-                  index: state.pageIndex,
-                  children: List<Widget>.generate(
-                    context.read<UserMainTabBloc>().pageList.length,
-                    (int index) {
-                      return Navigator(
-                        onGenerateRoute: (RouteSettings settings) {
-                          return onGenerateRoute(
-                            settings,
-                            context.read<UserMainTabBloc>().pageList[index],
-                          );
-                        },
-                      );
-                    },
+    return SafeArea(
+      top: false,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => getIt<UserMainTabBloc>()),
+          BlocProvider(
+            create: (context) => getIt<HomeBloc>()..add(HomeEvent.getAPIList()),
+          ),
+        ],
+        child: BlocBuilder<UserMainTabBloc, UserMainTabState>(
+          builder: (context, state) {
+            return DefaultTabController(
+              length: 1,
+              child: Scaffold(
+                appBar: getAppbar(state, context),
+                body: CustomUnFocus(
+                  child: IndexedStack(
+                    index: state.pageIndex,
+                    children: List<Widget>.generate(
+                      context.read<UserMainTabBloc>().pageList.length,
+                      (int index) {
+                        return Navigator(
+                          onGenerateRoute: (RouteSettings settings) {
+                            return onGenerateRoute(
+                              settings,
+                              context.read<UserMainTabBloc>().pageList[index],
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  NewFormDialog.dialog(
-                    context,
-                    onTap: (form) {
-                      context.router
-                          .push(
-                            PageRouteInfo(
-                              autoroute.DynamicForm.name,
-                              args: autoroute.DynamicFormArgs(
-                                formSlug: form.slug ?? "",
+                floatingActionButton: FloatingActionButton(
+                  onPressed: () {
+                    NewFormDialog.dialog(
+                      context,
+                      onTap: (form) {
+                        context.router
+                            .push(
+                              PageRouteInfo(
+                                autoroute.DynamicForm.name,
+                                args: autoroute.DynamicFormArgs(
+                                  formSlug: form.slug ?? "",
+                                ),
                               ),
-                            ),
-                          )
-                          .then((value) {
-                            if (value == true) {
-                              context.read<HomeBloc>().add(
-                                HomeEvent.getFormsList(true),
-                              );
-                            }
-                          });
-                    },
-                  );
-                },
-                backgroundColor: AppColors.primary,
-                shape: CircleBorder(
-                  side: BorderSide(color: AppColors.primary, width: getSize(3)),
+                            )
+                            .then((value) {
+                              if (value == true) {
+                                context.read<HomeBloc>().add(
+                                  HomeEvent.getFormsList(true),
+                                );
+                              }
+                            });
+                      },
+                    );
+                  },
+                  backgroundColor: AppColors.primary,
+                  shape: CircleBorder(
+                    side: BorderSide(
+                      color: AppColors.primary,
+                      width: getSize(3),
+                    ),
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    size: getSize(30),
+                    color: AppColors.white,
+                  ),
                 ),
-                child: Icon(
-                  Icons.add,
-                  size: getSize(30),
-                  color: AppColors.white,
-                ),
+                floatingActionButtonLocation:
+                    FloatingActionButtonLocation.miniCenterDocked,
+                bottomNavigationBar: UserBottomNavigationWidget(),
               ),
-              floatingActionButtonLocation:
-                  FloatingActionButtonLocation.centerDocked,
-              bottomNavigationBar: UserBottomNavigationWidget(),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

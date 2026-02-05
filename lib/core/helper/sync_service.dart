@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
+import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/constants/storage_constants.dart';
@@ -37,7 +38,7 @@ class SyncService {
 
     _isSyncing = true;
 
-    debugPrint('🔄 Sync started');
+    debugPrint('Sync started');
 
     try {
       _progressController.add(
@@ -87,6 +88,7 @@ class SyncService {
 
     for (final form in pendingForms) {
       try {
+        print("offline Sync Form-----> ${jsonEncode(form)}");
         // Always CREATE When server_id is null
         if (form.server_id == null) {
           final res = await _api.addFormAPI(form: form, showSucessToast: false);
@@ -120,7 +122,6 @@ class SyncService {
               await _db.deleteLocalFormByServerId(-1);
               break;
             }
-
             final res = await _api.deleteFormAPI(
               id: form.server_id!,
               showSucessToast: false,
@@ -136,11 +137,11 @@ class SyncService {
     }
   }
 
-  /// 2️⃣ SERVER → LOCAL (FULL DATA)
+  /// SERVER → LOCAL (FULL DATA)
   Future<void> hydrateAllForms() async {
     final res = await _api.getAllFormForDB();
 
-    res.fold((l) => debugPrint('❌ getAllForms failed'), (forms) async {
+    res.fold((l) => debugPrint('getAllForms failed'), (forms) async {
       final serverIds = forms.map((e) => e.server_id).whereType<int>().toSet();
 
       await _db.upsertFullServerForms(forms);

@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/constants/png_image_constants.dart';
 import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/pdf_format/pdf_table_extractor.dart';
@@ -60,7 +58,7 @@ class DynamicPdfGenerator {
 
     await extractFieldImages(json);
 
-    /// ---------------- PORTRAIT CONTENT ----------------
+    /// ---------------- POTRAIT CONTENT ----------------
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
@@ -89,8 +87,30 @@ class DynamicPdfGenerator {
           }
 
           /// Other sections
-          void addSection(String title, Map<String, dynamic>? data) {
-            if (!hasData(data)) return;
+          // void addSection(String title, Map<String, dynamic>? data) {
+          for (FormSection section in schema.sections ?? []) {
+            if (section.key == 'project_information') {
+              continue;
+            }
+
+            final sectionKey = section.key ?? slugify(section.title);
+            final sectionData = json[sectionKey];
+
+            if (!hasData(sectionData)) continue;
+
+            widgets.add(
+              _keyValueSection(
+                section.title ?? '',
+                sectionData,
+                questionMap,
+                imageCache,
+                formFiles,
+              ),
+            );
+
+            widgets.add(pw.SizedBox(height: 15));
+            // }
+            /* if (!hasData(data)) return;
 
             widgets.add(
               _keyValueSection(
@@ -100,10 +120,10 @@ class DynamicPdfGenerator {
                 imageCache,
                 formFiles,
               ),
-            );
+            ); */
           }
 
-          addSection(
+          /* addSection(
             "Inspection Grade",
             json['inspection_grade'] as Map<String, dynamic>?,
           );
@@ -115,7 +135,7 @@ class DynamicPdfGenerator {
           addSection(
             "Environment",
             json['environment'] as Map<String, dynamic>?,
-          );
+          ); */
           final globalFiles = formFiles
               ?.where((g) => g.optionType == 'global')
               .toList();
@@ -147,13 +167,7 @@ class DynamicPdfGenerator {
               );
             }
           }
-          final inspectedBy =
-              json['inspected_by'] as Map<String, dynamic>? ?? {};
-          if (hasData(inspectedBy)) {
-            widgets.add(pw.SizedBox(height: 15));
-            widgets.add(_inspectedBy(inspectedBy));
-            widgets.add(pw.SizedBox(height: 15));
-          }
+
           return widgets;
         },
       ),
@@ -181,12 +195,27 @@ class DynamicPdfGenerator {
   // ---------- SIGNATURE ----------
   static pw.Widget signatureWidget(String base64) {
     try {
-      final bytes = base64Decode(base64);
+      final cleanBase64 = base64
+          .replaceAll('\n', '')
+          .replaceAll('\r', '')
+          .replaceAll(' ', '');
+
+      final bytes = base64Decode(cleanBase64);
+
       return pw.Padding(
-        padding: const pw.EdgeInsets.only(top: 5),
-        child: pw.Image(pw.MemoryImage(bytes), height: 80),
+        padding: const pw.EdgeInsets.only(top: 6),
+        child: pw.Container(
+          decoration: pw.BoxDecoration(border: pw.Border.all(width: 0.5)),
+          padding: const pw.EdgeInsets.all(4),
+          child: pw.Image(
+            pw.MemoryImage(bytes),
+            height: 80,
+            fit: pw.BoxFit.contain,
+          ),
+        ),
       );
-    } catch (_) {
+    } catch (e) {
+      debugPrint("Signature decode failed: $e");
       return pw.SizedBox();
     }
   }
@@ -253,39 +282,6 @@ class DynamicPdfGenerator {
             _cellRich('Client', data['client']),
             _cellRich('Site', data['site']),
             _cellRich('Contract No', data['contract_no']),
-          ],
-        ),
-      ],
-    );
-  }
-
-  static pw.Widget _inspectedBy(Map<String, dynamic> data) {
-    return pw.Table(
-      border: pw.TableBorder.all(),
-      children: [
-        pw.TableRow(
-          children: [
-            if (data['calibration_due_date'] != null &&
-                data['calibration_due_date'] != "")
-              _cellRich(
-                'Calibration Due Date',
-                DateFormat(
-                  'dd/Mm/yyyy',
-                ).format(DateTime.parse(data['calibration_due_date'])),
-              ),
-            _cellRich('Inspector Name', data['inspector_name']),
-            _cellRich(
-              "Inspector Compex Number",
-              data['inspector_compex_number'],
-            ),
-            if (data['inspection_date'] != null &&
-                data['inspection_date'] != "")
-              _cellRich(
-                "Inspection Date",
-                DateFormat(
-                  'dd/Mm/yyyy',
-                ).format(DateTime.parse(data['inspection_date'])),
-              ),
           ],
         ),
       ],
@@ -359,10 +355,22 @@ class DynamicPdfGenerator {
               [];
 
           print("Question DropDownFiles---> $dropdownFiles");
-          print("Question FormFiles---> ${jsonEncode(formFiles)}");
           if (!hasData(rawValue)) return pw.SizedBox();
 
           final questionText = questionMap[e.key] ?? e.key.replaceAll('_', ' ');
+
+          final isSignature =
+              e.key.toLowerCase().contains('signature') &&
+              rawValue is String &&
+              rawValue.isNotEmpty;
+
+          if (kDebugMode) {
+            print(
+              "IsSignature---> ${e.key.toLowerCase().contains('signature')}",
+            );
+            print("IsSignature--->11111 $isSignature");
+            print("IsSignature--->22222 $rawValue");
+          }
 
           final questionWidget = pw.Padding(
             padding: const pw.EdgeInsets.only(bottom: 10),
@@ -417,16 +425,14 @@ class DynamicPdfGenerator {
                       ],
                     ),
                   ],
-                ]
+                ] else if (isSignature)
+                  signatureWidget(rawValue)
                 /// ----------------------------- SIMPLE VALUE -----------------------------
-                else if (e.key.toLowerCase() != 'signature')
+                else
                   pw.Text(
                     '${questionText.isNotEmpty ? "Ans: " : ""}${rawValue.toString()}',
                     style: const pw.TextStyle(fontSize: 9),
                   ),
-
-                if (e.key.toLowerCase() == 'signature' && rawValue is String)
-                  signatureWidget(rawValue),
               ],
             ),
           );
@@ -456,5 +462,15 @@ class DynamicPdfGenerator {
     } catch (_) {
       return null;
     }
+  }
+
+  static String slugify(String? text) {
+    if (text == null || text.isEmpty) return '';
+
+    return text
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9]+'), '_')
+        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp(r'^_|_$'), '');
   }
 }

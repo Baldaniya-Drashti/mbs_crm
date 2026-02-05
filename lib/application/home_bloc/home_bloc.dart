@@ -6,7 +6,6 @@ import 'package:mbs_crm/core/database/local_preference.dart';
 import 'package:mbs_crm/core/helper/form_identifier.dart';
 import 'package:mbs_crm/core/helper/internet_connectivity_helper.dart';
 import 'package:mbs_crm/core/router/app_router.dart';
-import 'package:mbs_crm/core/utils/math_utils.dart';
 import 'package:mbs_crm/domain/main/i_main_facade.dart';
 import 'package:mbs_crm/domain/main/main_failure.dart';
 import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
@@ -137,7 +136,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                 },
                 (r) async {
                   lastPage = r.meta?.lastPage ?? 1;
-
                   if (e.isRefresh) {
                     List.from(state.formsList).clear();
                   }
@@ -145,13 +143,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                   final apiForms = (r.data as List)
                       .map((e) => HomeDTO.fromJson(e))
                       .toList();
-                  await DBRepository().upsertFormSummary(apiForms);
 
+                  await DBRepository().upsertFormSummary(apiForms);
                   final localForms = await DBRepository().getAllOfflineForms(
                     page: page,
                   );
                   page++;
-
                   return emit(
                     state.copyWith(
                       isLoading: false,
