@@ -194,7 +194,6 @@ class AddUser extends StatelessWidget {
                                       (_) => null,
                                     ),
                               ),
-
                               Gap(getSize(40)),
                               CommonButton(
                                 isSubmitting: state.isSubmitting,

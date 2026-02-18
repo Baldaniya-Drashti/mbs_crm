@@ -13,7 +13,6 @@ import 'package:mbs_crm/presentation/core/widgets/buttons/common_button.dart';
 
 class DynamicAttachmentField extends StatelessWidget {
   final FormFieldSchema field;
-
   const DynamicAttachmentField({super.key, required this.field});
 
   @override
@@ -21,7 +20,6 @@ class DynamicAttachmentField extends StatelessWidget {
     return BlocBuilder<DynamicFormBloc, DynamicFormState>(
       builder: (context, state) {
         final fieldKey = field.key;
-
         final FormFileGroupDTO? group = fieldKey == null
             ? null
             : state.formFiles.firstWhere(
@@ -35,8 +33,8 @@ class DynamicAttachmentField extends StatelessWidget {
                   files: [],
                 ),
               );
-
         final files = group?.files ?? const <AttachmentFileDTO>[];
+
         return Container(
           alignment: Alignment.centerLeft,
           child: Column(

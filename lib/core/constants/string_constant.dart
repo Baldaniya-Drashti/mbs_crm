@@ -1,6 +1,5 @@
 class StringConstant {
   static const String enUs = 'english';
-  static const String frFR = 'french';
 
   //onboarding
   static const String mbsCRM = 'MBS CRM';
@@ -25,7 +24,7 @@ class StringConstant {
   static const String myFavourites = 'My Favourites';
   static const String myAccount = 'My Account';
   static const String moreInfo = 'More Info';
-  static const String whatIsYourRole = 'What Is\nYour Role?';
+  static const String whatIsYourRole = 'What Is Your Role?';
 
   static const String logIn = 'Log In';
   static const String email = 'Email';

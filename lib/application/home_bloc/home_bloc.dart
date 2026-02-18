@@ -194,7 +194,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             print("ERROR: Get Home List isuue--> $e");
           }
         },
-
         deleteUser: (e) async {
           Either<MainFailure, String>? failureOrSuccess;
           emit(state.copyWith(isLoading: true));
@@ -216,7 +215,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           );
           emit(state.copyWith(isLoading: false));
         },
-
         deleteForm: (e) async {
           try {
             Either<MainFailure, String>? failureOrSuccess;

@@ -28,12 +28,12 @@ Future<void> generateAndOpenPdf({
     );
     hidePdfLoader(context);
 
-    // final String uniqueFileName =
-    //     'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
+    /* final String uniqueFileName =
+        'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf'; */
     final String uniqueFileName = buildPdfFileName(json: json, schema: schema);
 
-    // Clientjobnumber - site - Y-Md-d H:i - form type.pdf
-    // #12323 - London - 2026-02-06 - ...Ex'd.pdf
+    /* Clientjobnumber - site - Y-Md-d H:i - form type.pdf
+    #12323 - London - 2026-02-06 - ...Ex'd.pdf */
 
     Directory? baseDir;
     if (Platform.isAndroid) {
@@ -64,7 +64,6 @@ Future<void> generateAndOpenPdf({
     }
   } catch (err) {
     hidePdfLoader(context);
-
     print("Download PDF Error----> $err");
   }
 }
@@ -84,11 +83,9 @@ Future<File> generateAndSendPdfFile({
   );
   hidePdfLoader(context);
 
-  // final String uniqueFileName =
-  // 'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf';
+  /* final String uniqueFileName =
+  'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf'; */
   final String uniqueFileName = buildPdfFileName(json: json, schema: schema);
-
-  print("uniqueFileName ----->  $uniqueFileName");
 
   Directory baseDir;
   if (Platform.isAndroid) {
@@ -140,17 +137,12 @@ String buildPdfFileName({
   required DynamicFormDTO schema,
 }) {
   final projectInfo = json['project_information'] ?? {};
-
   final clientJobNumber = _safeValue(
     projectInfo['client'],
     fallback: 'UnknownClient',
   );
-
   final site = _safeValue(projectInfo['site'], fallback: 'UnknownSite');
-
   final formTitle = _safeValue(schema.title, fallback: 'Form');
-
   final dateTime = DateFormat('yyyy-MM-dd HH-mm').format(DateTime.now());
-
   return '$clientJobNumber - $site - $dateTime - $formTitle.pdf';
 }

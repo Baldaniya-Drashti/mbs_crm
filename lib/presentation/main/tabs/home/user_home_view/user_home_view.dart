@@ -43,7 +43,6 @@ class UserHomeView extends StatelessWidget {
                     final form = state.formsList[index];
                     return GestureDetector(
                       onTap: () async {
-                        print("form.server_id----> ${form.server_id}");
                         context.router
                             .push(
                               PageRouteInfo(
@@ -75,7 +74,6 @@ class UserHomeView extends StatelessWidget {
                               final currentContext = getIt<AppRouter>()
                                   .navigatorKey
                                   .currentContext!;
-
                               currentContext.router.maybePop();
                               context.read<HomeBloc>().add(
                                 HomeEvent.deleteForm(

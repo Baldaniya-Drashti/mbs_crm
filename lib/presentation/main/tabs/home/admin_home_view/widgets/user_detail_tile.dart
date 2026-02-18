@@ -11,13 +11,11 @@ import 'package:swipeable_tile/swipeable_tile.dart';
 
 class UserDetailTile extends StatelessWidget {
   final UserDTO user;
-  final int index;
   final void Function()? onDeleteUser;
   final void Function()? onEditUser;
   const UserDetailTile({
     super.key,
     required this.user,
-    required this.index,
     this.onDeleteUser,
     this.onEditUser,
   });

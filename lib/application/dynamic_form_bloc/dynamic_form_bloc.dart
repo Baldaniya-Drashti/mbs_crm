@@ -64,7 +64,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
             add(DynamicFormEvent.getFormDetails(e.formId!));
           } catch (e) {
-            print("Catch Error---> $e");
+            debugPrint("Load Form Catch Error---> $e");
           }
         },
         getFormDetails: (e) async {
@@ -87,20 +87,17 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                   ).show(currentContext);
                 },
                 (r) {
-                  print("e.formId.serverId----- $r");
                   form = r;
                 },
               );
             } else {
               form = await DBRepository().getFormByLocalId(e.formId.localId!);
             }
-
             final rawData = Map<String, dynamic>.from(form?.data ?? {});
             debugPrint(
               'Edit restored OK---> ${jsonEncode(form)}',
               wrapWidth: 5000,
             );
-
             final Map<String, dynamic> flatData = {};
 
             /// ---------- LOOP SECTIONS ----------
@@ -204,12 +201,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                 );
             updatedAttachments.remove('${e.fieldKey}_attachments'); */
 
-            emit(
-              state.copyWith(
-                // attachmentCache: updatedAttachments,
-                rebuildTick: state.rebuildTick + 1,
-              ),
-            );
+            emit(state.copyWith(rebuildTick: state.rebuildTick + 1));
           } else {
             emit(state.copyWith(rebuildTick: state.rebuildTick + 1));
           }
@@ -322,7 +314,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           emit(state.copyWith(isSubmitting: true, success: false));
           try {
             final payload = _buildPayload(e);
-
             final pdfFile = await generateAndSendPdfFile(
               context: e.context,
               json: payload,
@@ -361,7 +352,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                     serverId: r?.server_id ?? -1,
                   );
                   emit(state.copyWith(isSubmitting: false, success: true));
-
                   if (currentContext.mounted) {
                     Navigator.pop(currentContext, true);
                   }
@@ -369,13 +359,12 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               );
             } else {
               emit(state.copyWith(isSubmitting: false, success: true));
-
               if (currentContext.mounted) {
                 Navigator.pop(currentContext, true);
               }
             }
           } catch (e) {
-            print("Create Form Error: $e");
+            debugPrint("Create Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
           }
         },
@@ -390,9 +379,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               schema: state.schema!,
               formFiles: state.formFiles,
             );
-            print(
-              "Sending Data ---> e.formId.serverId---> ${e.formId.serverId}",
-            );
+
             final form = _buildForm(payload, formFiles: state.formFiles)
                 .copyWith(
                   localId: e.formId.localId!,
@@ -443,7 +430,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               }
             }
           } catch (e) {
-            print("Update Form Error: $e");
+            debugPrint("Update Form Error: $e");
             emit(state.copyWith(isSubmitting: false, success: false));
           }
         },
@@ -471,7 +458,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
     }
 
     // _addGlobalAttachments(payload);
-
     return removeNulls(prepareForJson(payload));
   }
 
@@ -522,17 +508,15 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
         }
         continue;
       }
+
       final value = data[key];
-
       if (value == null) continue;
-
       if (value is String && value.trim().isEmpty) continue;
       if (value is List && value.isEmpty) continue;
       if (value is Map && value.isEmpty) continue;
 
       sectionData[key] = value;
     }
-
     return sectionData;
   }
 
@@ -551,7 +535,6 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
         fieldObj['reason'] = reason;
       }
     }
-
     return fieldObj;
   }
 

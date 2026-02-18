@@ -32,11 +32,9 @@ pw.Widget renderPdfTable(NormalizedTable table) {
               border: pw.Border(
                 top: const pw.BorderSide(),
                 bottom: const pw.BorderSide(),
-
                 left: isGrouped && !isFirstChild
                     ? pw.BorderSide.none
                     : const pw.BorderSide(),
-
                 right: isGrouped && !isLastChild
                     ? pw.BorderSide.none
                     : const pw.BorderSide(),

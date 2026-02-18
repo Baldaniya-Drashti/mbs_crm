@@ -31,13 +31,16 @@ class OnBoarding extends StatelessWidget {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: getSize(20)),
-                    child: BaseText(
-                      text: StringConstant.whatIsYourRole,
-                      textColor: AppColors.white,
-                      maxLines: 3,
-                      fontSize: 35,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: FontConstant.jost,
+                    child: SizedBox(
+                      width: (isLandscape()) ? getSize(780) : getSize(190),
+                      child: BaseText(
+                        text: StringConstant.whatIsYourRole,
+                        textColor: AppColors.white,
+                        maxLines: 3,
+                        fontSize: 35,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: FontConstant.jost,
+                      ),
                     ),
                   ),
                   Gap(getSize(30)),
@@ -45,7 +48,6 @@ class OnBoarding extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: Container(
                       height: MediaQuery.of(context).size.height * 0.70,
-                      // margin: EdgeInsets.all(getSize(5)),
                       decoration: BoxDecoration(
                         color: AppColors.white,
                         borderRadius: BorderRadius.vertical(

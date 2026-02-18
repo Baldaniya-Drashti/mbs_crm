@@ -24,7 +24,6 @@ class DBRepository {
       'server_id': null,
       'is_synced': 0,
       'sync_action': 'create',
-      // 'form_files': jsonEncode(form.formFiles?.map((e) => e.toJson()).toList()),
       'form_files': jsonEncode(
         (form.formFiles ?? []).map((e) => e.toJson()).toList(),
       ),
@@ -47,7 +46,6 @@ class DBRepository {
       'updated_at': form.updatedAt,
       'is_synced': 0,
       'sync_action': (form.server_id == null) ? 'create' : 'update',
-      // 'form_files': jsonEncode(form.formFiles?.map((e) => e.toJson()).toList()),
       'form_files': jsonEncode(
         (form.formFiles ?? []).map((e) => e.toJson()).toList(),
       ),

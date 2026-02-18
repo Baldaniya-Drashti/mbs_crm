@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:another_flushbar/flushbar.dart';
-import 'package:another_flushbar/flushbar_route.dart';
 import 'package:gap/gap.dart';
 import 'package:mbs_crm/core/constants/string_constant.dart';
 import 'package:mbs_crm/core/utils/math_utils.dart';

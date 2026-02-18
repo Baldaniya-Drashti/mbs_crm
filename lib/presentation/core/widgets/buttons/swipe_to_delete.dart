@@ -29,7 +29,7 @@ class SwipeToDelete extends StatelessWidget {
       confirmSwipe: confirmSwipe,
       borderRadius: getSize(10),
       onSwiped: (dir) {},
-      swipeThreshold: 0.4,
+      swipeThreshold: 0.5,
       backgroundBuilder: (context, direction, progress) {
         return AnimatedBuilder(
           animation: progress,

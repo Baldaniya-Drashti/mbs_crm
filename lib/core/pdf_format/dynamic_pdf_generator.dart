@@ -18,7 +18,6 @@ class DynamicPdfGenerator {
     List<FormFileGroupDTO>? formFiles,
     DynamicFormDTO schema,
   ) async {
-    print("PDF FormFiles----> $formFiles");
     final pdf = pw.Document();
     final logoBytes = await rootBundle.load(PngImageConstants.mbsLogoWithTitle);
     final logoImage = pw.MemoryImage(logoBytes.buffer.asUint8List());
@@ -92,6 +91,9 @@ class DynamicPdfGenerator {
             if (section.key == 'project_information') {
               continue;
             }
+            if (section.key == 'instrument_details') {
+              continue;
+            }
 
             final sectionKey = section.key ?? slugify(section.title);
             final sectionData = json[sectionKey];
@@ -109,33 +111,8 @@ class DynamicPdfGenerator {
             );
 
             widgets.add(pw.SizedBox(height: 15));
-            // }
-            /* if (!hasData(data)) return;
-
-            widgets.add(
-              _keyValueSection(
-                title,
-                data!,
-                questionMap,
-                imageCache,
-                formFiles,
-              ),
-            ); */
           }
 
-          /* addSection(
-            "Inspection Grade",
-            json['inspection_grade'] as Map<String, dynamic>?,
-          );
-          addSection("Equipment", json['equipment'] as Map<String, dynamic>?);
-          addSection(
-            "Installation",
-            json['installation'] as Map<String, dynamic>?,
-          );
-          addSection(
-            "Environment",
-            json['environment'] as Map<String, dynamic>?,
-          ); */
           final globalFiles = formFiles
               ?.where((g) => g.optionType == 'global')
               .toList();
@@ -167,7 +144,6 @@ class DynamicPdfGenerator {
               );
             }
           }
-
           return widgets;
         },
       ),
@@ -354,7 +330,6 @@ class DynamicPdfGenerator {
                   .toList() ??
               [];
 
-          print("Question DropDownFiles---> $dropdownFiles");
           if (!hasData(rawValue)) return pw.SizedBox();
 
           final questionText = questionMap[e.key] ?? e.key.replaceAll('_', ' ');
@@ -368,8 +343,6 @@ class DynamicPdfGenerator {
             print(
               "IsSignature---> ${e.key.toLowerCase().contains('signature')}",
             );
-            print("IsSignature--->11111 $isSignature");
-            print("IsSignature--->22222 $rawValue");
           }
 
           final questionWidget = pw.Padding(

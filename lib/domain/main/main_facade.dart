@@ -211,8 +211,6 @@ class MainFacade implements IMainFacade {
         }
       }
 
-      print("Sending Data---> ${form}");
-      print("Sending Data--->11  ${form.server_id}");
       _logFormData(formData);
       final response = await apiService.postMethod(
         "${ApiConstants.addForm}/${form.server_id}",

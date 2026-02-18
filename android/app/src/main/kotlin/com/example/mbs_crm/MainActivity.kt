@@ -1,4 +1,4 @@
-package com.example.mbs_crm
+package com.mobile.mbscrm
 
 import io.flutter.embedding.android.FlutterActivity
 

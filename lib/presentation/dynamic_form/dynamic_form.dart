@@ -32,7 +32,6 @@ class DynamicForm extends StatelessWidget {
 
     return SafeArea(
       top: false,
-
       child: BlocProvider(
         create: (context) =>
             getIt<DynamicFormBloc>()
@@ -130,9 +129,9 @@ class DynamicForm extends StatelessWidget {
                                     ).show(context);
                                   }
                                 },
-                                width: (isLandscape())
-                                    ? double.maxFinite
-                                    : null,
+                                // width: (isLandscape())
+                                //     ? null
+                                //     : double.maxFinite,
                                 height: (isLandscape()) ? 80 : 40,
                                 borderRadius: 10,
                                 buttonText: (isEdit)
@@ -159,9 +158,7 @@ class DynamicForm extends StatelessWidget {
       if (field.grade == null || field.grade!.isEmpty) {
         return true;
       }
-
       if (selectedGrade == null) return true;
-
       return field.grade!
           .split(',')
           .map((e) => e.trim())

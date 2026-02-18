@@ -86,7 +86,6 @@ class AdminHomeView extends StatelessWidget {
                             },
                             child: UserDetailTile(
                               user: user,
-                              index: index,
                               onEditUser: () {
                                 context.router
                                     .push(

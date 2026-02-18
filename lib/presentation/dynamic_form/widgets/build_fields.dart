@@ -15,8 +15,6 @@ class BuildFields {
     FormFieldSchema field,
     int index,
   ) {
-    // Default Values (Requirement #3)
-
     switch (field.type) {
       case "number":
         return DynamicTextField(
@@ -24,14 +22,7 @@ class BuildFields {
           keyboardType: TextInputType.number,
         );
       case "dropdown":
-        return DynamicDropdown(
-          index: index,
-          field: field,
-          /* keyName: field.key ?? '',
-          label: field.label ?? '',
-          required: field.required,
-          options: field.options ?? [], */
-        );
+        return DynamicDropdown(index: index, field: field);
       case "radio":
         return DynamicRadio(
           keyName: field.key ?? '',
