@@ -52,7 +52,7 @@ class PaginatedListView extends StatelessWidget {
           } else if (mode == LoadStatus.canLoading) {
             text = "⟳ Release to load more";
           } else {
-            text = "No more data";
+            text = 'No more data';
           }
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 12),
