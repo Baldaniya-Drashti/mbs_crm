@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/constants/png_image_constants.dart';
 import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/pdf_format/pdf_table_extractor.dart';
-import 'package:mbs_crm/core/pdf_format/pdf_table_renderer.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
+import 'package:mbs_crm/presentation/common/utils/date_time_format.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
 import 'package:pdf/pdf.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -25,7 +26,6 @@ class DynamicPdfGenerator {
     final formTitle = schema.title ?? 'Inspection Report';
     final questionMap = buildQuestionLabelMap(schema);
 
-    final tables = extractTablesFromJson(schema: schema, json: json);
     final Map<String, pw.MemoryImage> imageCache = {};
     for (final group in formFiles ?? []) {
       for (final file in group.files ?? []) {
@@ -67,103 +67,114 @@ class DynamicPdfGenerator {
           final widgets = <pw.Widget>[];
 
           widgets.add(pw.SizedBox(height: 10));
-
-          final projectInfo =
-              json['project_information'] as Map<String, dynamic>? ?? {};
-          if (hasData(projectInfo)) {
-            widgets.add(_projectInfo(projectInfo));
-            widgets.add(pw.SizedBox(height: 15));
-          }
-
-          /// Portrait tables
-          for (final table in tables.where((t) => t.flatColumns.length <= 6)) {
-            widgets.add(
-              _sectionTitle(table.tableKey.replaceAll('_', ' ').toUpperCase()),
-            );
-            widgets.add(pw.SizedBox(height: 8));
-            widgets.add(renderPdfTable(table));
-            widgets.add(pw.SizedBox(height: 15));
-          }
-
-          /// Other sections
-          // void addSection(String title, Map<String, dynamic>? data) {
-          for (FormSection section in schema.sections ?? []) {
-            if (section.key == 'project_information') {
-              continue;
-            }
-            if (section.key == 'instrument_details') {
-              continue;
-            }
-
-            final sectionKey = section.key ?? slugify(section.title);
-            final sectionData = json[sectionKey];
+          for (final entry in json.entries) {
+            final sectionKey = entry.key;
+            final sectionData = entry.value;
 
             if (!hasData(sectionData)) continue;
 
-            widgets.add(
-              _keyValueSection(
-                section.title ?? '',
+            /// 🔹 PROJECT INFORMATION (Special Layout)
+            if (sectionKey == "project_information" &&
+                sectionData is Map<String, dynamic>) {
+              widgets.add(_projectInfo(sectionData));
+              widgets.add(pw.SizedBox(height: 15));
+              continue;
+            }
+
+            /// 🔹 INSTRUMENT DETAILS (Custom Rendering)
+            if (sectionKey == "instrument_details" &&
+                sectionData is Map<String, dynamic>) {
+              final groupedRows = groupInstrumentRows(
                 sectionData,
-                questionMap,
-                imageCache,
-                formFiles,
-              ),
+                "instrument_table",
+              );
+
+              final instrumentLabelMap = buildInstrumentLabelMap(schema);
+
+              for (int i = 0; i < groupedRows.length; i++) {
+                final rowData = groupedRows[i] ?? {};
+
+                widgets.add(
+                  pw.Container(
+                    margin: const pw.EdgeInsets.only(bottom: 15),
+                    child: pw.Column(
+                      crossAxisAlignment: pw.CrossAxisAlignment.start,
+                      children: [
+                        /// Section Header
+                        _sectionTitle("Instrument Details ${i + 1}"),
+                        pw.SizedBox(height: 8),
+
+                        /// Key Value Rows
+                        ...rowData.entries.map((entry) {
+                          final label =
+                              instrumentLabelMap[entry.key] ?? entry.key;
+                          final value = entry.value ?? '';
+
+                          return pw.Padding(
+                            padding: pw.EdgeInsets.symmetric(vertical: 2),
+
+                            child: pw.Row(
+                              children: [
+                                /// Label
+                                pw.Text(
+                                  "$label: ",
+                                  style: pw.TextStyle(
+                                    fontSize: 9,
+                                    fontWeight: pw.FontWeight.bold,
+                                    color: PdfColors.blueGrey800,
+                                  ),
+                                ),
+                                pw.SizedBox(width: 2),
+
+                                /// Value (Indented)
+                                pw.Expanded(
+                                  child: pw.Text(
+                                    value.toString(),
+                                    style: const pw.TextStyle(fontSize: 9),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
+
+                        /// Divider
+                        pw.Divider(thickness: 0.4, color: PdfColors.grey300),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              continue;
+            }
+
+            /// 🔹 DEFAULT SECTIONS
+            final schemaSection = schema.sections?.firstWhere(
+              (s) => s.key == sectionKey,
+              orElse: () => FormSection(),
             );
 
-            widgets.add(pw.SizedBox(height: 15));
-          }
+            final title =
+                schemaSection?.title ?? sectionKey.replaceAll('_', ' ');
 
-          final globalFiles = formFiles
-              ?.where((g) => g.optionType == 'global')
-              .toList();
-
-          if (globalFiles != null && globalFiles.isNotEmpty) {
-            widgets.add(pw.SizedBox(height: 20));
-            widgets.add(_sectionTitle('ATTACHMENTS'));
-            widgets.add(pw.SizedBox(height: 10));
-
-            for (final group in globalFiles) {
-              final files = group.files ?? [];
-              if (files.isEmpty) continue;
-
+            if (sectionData is Map<String, dynamic>) {
               widgets.add(
-                pw.Wrap(
-                  spacing: 8,
-                  runSpacing: 8,
-                  children: [
-                    for (final file in files)
-                      if (file.url != null && imageCache.containsKey(file.url))
-                        pw.Image(
-                          imageCache[file.url!]!,
-                          height: 200,
-                          width: 200,
-                          fit: pw.BoxFit.fill,
-                        ),
-                  ],
+                _keyValueSection(
+                  title,
+                  sectionData,
+                  questionMap,
+                  imageCache,
+                  formFiles,
                 ),
               );
+
+              widgets.add(pw.SizedBox(height: 15));
             }
           }
           return widgets;
         },
       ),
     );
-
-    /// ---------------- LANDSCAPE TABLES ----------------
-    for (final table in tables.where((t) => t.flatColumns.length > 6)) {
-      pdf.addPage(
-        pw.MultiPage(
-          pageFormat: PdfPageFormat.a4.landscape,
-          margin: const pw.EdgeInsets.all(20),
-          header: (_) => _header(logo: logoImage, title: formTitle),
-          build: (_) => [
-            _sectionTitle(table.tableKey.replaceAll('_', ' ').toUpperCase()),
-            pw.SizedBox(height: 10),
-            renderPdfTable(table),
-          ],
-        ),
-      );
-    }
 
     return pdf.save();
   }
@@ -339,14 +350,9 @@ class DynamicPdfGenerator {
               rawValue is String &&
               rawValue.isNotEmpty;
 
-          if (kDebugMode) {
-            print(
-              "IsSignature---> ${e.key.toLowerCase().contains('signature')}",
-            );
-          }
+          final questionWidget = pw.Container(
+            margin: const pw.EdgeInsets.only(bottom: 10),
 
-          final questionWidget = pw.Padding(
-            padding: const pw.EdgeInsets.only(bottom: 10),
             child: pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.start,
               children: [
@@ -374,10 +380,9 @@ class DynamicPdfGenerator {
                     ),
                   ],
 
-                  /// -------- FIELD ATTACHMENTS --------
                   /// -------- FIELD ATTACHMENTS (QUESTION LEVEL) --------
 
-                  // 🔹 POINT 4: render dropdown attachments under the question
+                  //  POINT 4: render dropdown attachments under the question
                   if (dropdownFiles.isNotEmpty) ...[
                     pw.SizedBox(height: 6),
                     pw.Wrap(
@@ -403,16 +408,17 @@ class DynamicPdfGenerator {
                 /// ----------------------------- SIMPLE VALUE -----------------------------
                 else
                   pw.Text(
-                    '${questionText.isNotEmpty ? "Ans: " : ""}${rawValue.toString()}',
+                    '${questionText.isNotEmpty ? "Ans: " : ""}${CustomDateTimeFormat.isIsoDate(rawValue) ? DateFormat('dd/MM/yyyy').format(DateTime.parse(rawValue)) : rawValue}',
                     style: const pw.TextStyle(fontSize: 9),
                   ),
+
+                pw.Divider(thickness: 0.5, color: PdfColors.grey300),
               ],
             ),
           );
 
           return questionWidget;
         }),
-        pw.SizedBox(height: 12),
       ],
     );
   }

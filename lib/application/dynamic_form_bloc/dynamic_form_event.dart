@@ -19,8 +19,11 @@ class DynamicFormEvent with _$DynamicFormEvent {
     required FormIdentifier formId,
     required Map<String, dynamic> values,
   }) = UpdateForm;
-  const factory DynamicFormEvent.attachFileEvent(FormFieldSchema field) =
-      AttachFileEvent;
+  const factory DynamicFormEvent.attachFileEvent(
+    BuildContext context, {
+    required FormFieldSchema field,
+    @Default(true) bool isOnlyImages,
+  }) = AttachFileEvent;
 
   const factory DynamicFormEvent.inspectionGradeChanged(String grade) =
       InspectionGradeChanged;

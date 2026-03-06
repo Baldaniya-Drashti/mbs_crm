@@ -129,9 +129,6 @@ class DynamicForm extends StatelessWidget {
                                     ).show(context);
                                   }
                                 },
-                                // width: (isLandscape())
-                                //     ? null
-                                //     : double.maxFinite,
                                 height: (isLandscape()) ? 80 : 40,
                                 borderRadius: 10,
                                 buttonText: (isEdit)
@@ -168,6 +165,73 @@ class DynamicForm extends StatelessWidget {
     if (filteredFields == null || filteredFields.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    /// SPECIAL HANDLING FOR TABLE → MULTIPLE EXPANSION TILES
+    if (filteredFields.length == 1 && filteredFields.first.type == "table") {
+      final tableField = filteredFields.first;
+      final rowCount = tableField.rowCount ?? 1;
+      final columns = tableField.tablecolumn ?? [];
+
+      /// Flatten columns
+      final List<FormFieldSchema> flattenedFields = [];
+      for (final column in columns) {
+        if (column.children.isEmpty) {
+          flattenedFields.add(
+            FormFieldSchema(
+              key: column.key,
+              label: column.label,
+              type: column.type ?? "text",
+            ),
+          );
+        } else {
+          for (final child in column.children) {
+            flattenedFields.add(
+              FormFieldSchema(
+                key: child.key,
+                label: child.label,
+                type: child.type ?? "text",
+              ),
+            );
+          }
+        }
+      }
+
+      /// Return MULTIPLE ExpansionTiles
+      return Column(
+        children: List.generate(rowCount, (index) {
+          return Card(
+            elevation: 3,
+            color: AppColors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+            ),
+            margin: EdgeInsets.symmetric(vertical: getSize(6)),
+            child: ExpansionTile(
+              maintainState: true,
+              iconColor: AppColors.black,
+              title: BaseText(
+                text: "${section.title} ${index + 1}",
+                fontWeight: FontWeight.bold,
+                textColor: AppColors.primary,
+              ),
+              childrenPadding: EdgeInsets.all(getSize(10)),
+              children: [
+                for (final f in flattenedFields)
+                  BuildFields.buildField(
+                    context: context,
+                    field: f.copyWith(
+                      key: "table_${tableField.key}_row_${index}_${f.key}",
+                    ),
+                    index: index,
+                    json: bloc.state.existingForm?.data ?? {},
+                  ),
+              ],
+            ),
+          );
+        }),
+      );
+    }
+
     return Card(
       elevation: 3,
       color: AppColors.white,
@@ -177,18 +241,21 @@ class DynamicForm extends StatelessWidget {
         maintainState: true,
         initiallyExpanded: false,
         iconColor: AppColors.black,
-        title: Text(
-          section.title ?? '',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: AppColors.primary,
-          ),
+        title: BaseText(
+          text: section.title ?? '',
+          fontWeight: FontWeight.bold,
+          textColor: AppColors.primary,
         ),
         backgroundColor: AppColors.white,
         childrenPadding: EdgeInsets.all(getSize(10)),
         children: [
           for (int i = 0; i < filteredFields.length; i++)
-            BuildFields.buildField(context, filteredFields[i], i),
+            BuildFields.buildField(
+              context: context,
+              field: filteredFields[i],
+              index: i,
+              json: bloc.state.existingForm?.data ?? {},
+            ),
         ],
       ),
     );

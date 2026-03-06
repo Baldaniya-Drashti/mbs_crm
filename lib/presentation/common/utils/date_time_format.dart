@@ -16,4 +16,20 @@ class CustomDateTimeFormat {
   static DateTime timeStampToDateTime(int timeStamp) {
     return DateTime.fromMillisecondsSinceEpoch((timeStamp) * 1000, isUtc: true);
   }
+
+  static bool isIsoDate(dynamic value) {
+    if (value == null) return false;
+
+    final stringValue = value.toString();
+
+    if (stringValue.contains('T') && stringValue.contains('-')) {
+      try {
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    return false;
+  }
 }

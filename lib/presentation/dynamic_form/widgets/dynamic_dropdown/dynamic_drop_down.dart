@@ -99,6 +99,7 @@ class DynamicDropdown extends StatelessWidget {
                         key: '${field.key ?? ''}_attachments',
                         multipleImages: true,
                       ),
+                      json: null,
                     ),
                   ],
                 ),

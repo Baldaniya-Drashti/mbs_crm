@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, avoid_print
 
 import 'dart:convert';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -20,6 +19,7 @@ import 'package:mbs_crm/infrastructure/home_dto/home_dto.dart';
 import 'package:mbs_crm/injection.dart';
 import 'package:mbs_crm/presentation/common/utils/date_time_format.dart';
 import 'package:mbs_crm/presentation/common/utils/flushbar_creator.dart';
+import 'package:mbs_crm/presentation/common/widgets/image_chosser.dialog.dart';
 import 'package:mbs_crm/presentation/core/widgets/utility/normalization_utilities.dart';
 import 'package:mbs_crm/presentation/dynamic_form/widgets/dynamic_form_helper.dart';
 import 'package:uuid/uuid.dart';
@@ -95,7 +95,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
             }
             final rawData = Map<String, dynamic>.from(form?.data ?? {});
             debugPrint(
-              'Edit restored OK---> ${jsonEncode(form)}',
+              'Edit restored OK---> ${jsonEncode(form?.data)}',
               wrapWidth: 5000,
             );
             final Map<String, dynamic> flatData = {};
@@ -105,7 +105,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               if (sectionValue is! Map<String, dynamic>) return;
 
               /// ---------- TABLES ----------
-              if (sectionValue.containsKey('tables')) {
+              /* if (sectionValue.containsKey('tables')) {
                 final tables = Map<String, dynamic>.from(
                   sectionValue['tables'],
                 );
@@ -125,7 +125,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
                     });
                   });
                 });
-              }
+              } */
 
               /// ---------- NORMAL / DROPDOWN ----------
               sectionValue.forEach((fieldKey, fieldValue) {
@@ -207,12 +207,14 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           }
         },
         attachFileEvent: (e) async {
-          final result = await FilePicker.platform.pickFiles(
-            allowMultiple: e.field.multipleImages,
-            type: FileType.custom,
-            allowedExtensions: ['jpg', 'jpeg', 'png'],
+          final paths = await ImageChooserDialog().showImageChooserDialog(
+            context: e.context,
+            isOnlyImages: e.isOnlyImages,
           );
-          if (result == null) return;
+
+          print("Selected Attachments Files----> $paths");
+
+          if (paths == null) return;
 
           final bool isDropdownAttachment =
               e.field.key != null && e.field.key!.endsWith('_attachments');
@@ -229,21 +231,18 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
               (s) => s.key == 'attachments',
             ),
           );
-
           final sectionSlug =
               section.key ??
               (section.title ?? '').toLowerCase().replaceAll(' ', '_');
 
           // ---------------- UPDATE FORM FILE GROUP ----------------
           final updatedGroups = List<FormFileGroupDTO>.from(state.formFiles);
-
           final index = updatedGroups.indexWhere(
             (g) =>
                 g.sectionSlug == sectionSlug &&
                 g.optionSlug == e.field.key &&
                 g.optionType == optionType,
           );
-
           FormFileGroupDTO group;
           if (index == -1) {
             group = FormFileGroupDTO(
@@ -256,22 +255,17 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
           } else {
             group = updatedGroups[index];
           }
-
           final newFiles = List<AttachmentFileDTO>.from(group.files ?? []);
-
-          for (final file in result.files) {
-            if (file.path == null) continue;
-
+          for (final path in paths) {
             newFiles.add(
               AttachmentFileDTO(
                 id: null,
-                name: file.name,
-                url: file.path!,
+                name: path.split('/').last,
+                url: path,
                 uploaded: false,
               ),
             );
           }
-
           updatedGroups[index == -1 ? updatedGroups.length - 1 : index] = group
               .copyWith(files: newFiles);
 
@@ -439,10 +433,11 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
   }
 
   Map<String, dynamic> _buildPayload(dynamic e) {
-    final data = Map<String, dynamic>.from(e.values)..addAll(tableCache);
-
+    /* final data = Map<String, dynamic>.from(e.values)..addAll(tableCache);
     final tables = _extractTables(data);
-    data.removeWhere((k, _) => k.startsWith("table_"));
+    data.removeWhere((k, _) => k.startsWith("table_")); */
+
+    final data = Map<String, dynamic>.from(e.values);
 
     final Map<String, dynamic> payload = {};
 
@@ -450,7 +445,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       final sectionKey =
           section.key ??
           (section.title ?? '').toLowerCase().replaceAll(' ', '_');
-      final sectionData = _buildSectionData(section, data, tables);
+      final sectionData = _buildSectionData(section, data);
 
       if (sectionData.isNotEmpty) {
         payload[sectionKey] = sectionData;
@@ -461,6 +456,7 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
     return removeNulls(prepareForJson(payload));
   }
 
+  /* 
   Map<String, dynamic> _extractTables(Map<String, dynamic> data) {
     final Map<String, dynamic> tables = {};
 
@@ -480,11 +476,11 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
 
     return tables;
   }
-
+ */
   Map<String, dynamic> _buildSectionData(
     FormSection section,
     Map<String, dynamic> data,
-    Map<String, dynamic> tables,
+    // Map<String, dynamic> tables,
   ) {
     final Map<String, dynamic> sectionData = {};
 
@@ -492,10 +488,24 @@ class DynamicFormBloc extends Bloc<DynamicFormEvent, DynamicFormState> {
       final key = field.key;
       if (key == null) continue;
 
-      if (field.type == 'table') {
+      /* if (field.type == 'table') {
         if (tables.isNotEmpty) {
           sectionData['tables'] = tables;
         }
+        continue;
+      } */
+      if (field.type == 'table') {
+        final prefix = "table_${key}_row_";
+
+        data.forEach((dataKey, value) {
+          if (dataKey.startsWith(prefix)) {
+            if (value == null) return;
+            if (value is String && value.trim().isEmpty) return;
+
+            sectionData[dataKey] = value;
+          }
+        });
+
         continue;
       }
 

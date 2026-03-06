@@ -84,3 +84,29 @@ void showPdfLoader(BuildContext context) {
 void hidePdfLoader(BuildContext context) {
   Navigator.of(context, rootNavigator: true).pop();
 }
+
+void showFileLoader(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (_) => AlertDialog(
+      backgroundColor: AppColors.white,
+      content: Row(
+        children: [
+          CircularProgressIndicator(color: AppColors.primary),
+          Gap(getSize(20)),
+          Expanded(
+            child: BaseText(
+              text: StringConstant.downloadingFilePleaseWait,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+void hideFileLoader(BuildContext context) {
+  Navigator.of(context, rootNavigator: true).pop();
+}

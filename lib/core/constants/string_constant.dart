@@ -21,6 +21,7 @@ class StringConstant {
   static const String networkError = 'Network Error';
   static const String takePhoto = 'Take Photo';
   static const String galleryPhoto = 'Gallery Photo';
+  static const String pickFile = 'Pick File';
   static const String myFavourites = 'My Favourites';
   static const String myAccount = 'My Account';
   static const String moreInfo = 'More Info';
@@ -63,6 +64,8 @@ class StringConstant {
   static const String createdBy = 'Created By';
   static const String deleteForm = 'Delete Form';
   static const String generatingPdfPleaseWait = 'Generating PDF, Please wait…';
+  static const String downloadingFilePleaseWait =
+      'Downloading file, Please wait…';
 
   static const String deleteUserDesc = 'Are you sure want to delete this User?';
   static const String deleteFormDesc = 'Are you sure want to delete this Form?';

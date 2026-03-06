@@ -29,7 +29,12 @@ mixin _$DynamicFormEvent {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -47,7 +52,12 @@ mixin _$DynamicFormEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -65,7 +75,12 @@ mixin _$DynamicFormEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -220,7 +235,12 @@ class _$LoadFormImpl implements LoadForm {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -242,7 +262,12 @@ class _$LoadFormImpl implements LoadForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -264,7 +289,12 @@ class _$LoadFormImpl implements LoadForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -428,7 +458,12 @@ class _$GetFormDetailsImpl implements GetFormDetails {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -450,7 +485,12 @@ class _$GetFormDetailsImpl implements GetFormDetails {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -472,7 +512,12 @@ class _$GetFormDetailsImpl implements GetFormDetails {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -647,7 +692,12 @@ class _$CreateFormImpl implements CreateForm {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -669,7 +719,12 @@ class _$CreateFormImpl implements CreateForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -691,7 +746,12 @@ class _$CreateFormImpl implements CreateForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -888,7 +948,12 @@ class _$UpdateFormImpl implements UpdateForm {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -910,7 +975,12 @@ class _$UpdateFormImpl implements UpdateForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -932,7 +1002,12 @@ class _$UpdateFormImpl implements UpdateForm {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1022,7 +1097,7 @@ abstract class _$$AttachFileEventImplCopyWith<$Res> {
     $Res Function(_$AttachFileEventImpl) then,
   ) = __$$AttachFileEventImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({FormFieldSchema field});
+  $Res call({BuildContext context, FormFieldSchema field, bool isOnlyImages});
 
   $FormFieldSchemaCopyWith<$Res> get field;
 }
@@ -1040,13 +1115,25 @@ class __$$AttachFileEventImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? field = null}) {
+  $Res call({
+    Object? context = null,
+    Object? field = null,
+    Object? isOnlyImages = null,
+  }) {
     return _then(
       _$AttachFileEventImpl(
-        null == field
+        null == context
+            ? _value.context
+            : context // ignore: cast_nullable_to_non_nullable
+                  as BuildContext,
+        field: null == field
             ? _value.field
             : field // ignore: cast_nullable_to_non_nullable
                   as FormFieldSchema,
+        isOnlyImages: null == isOnlyImages
+            ? _value.isOnlyImages
+            : isOnlyImages // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -1065,14 +1152,23 @@ class __$$AttachFileEventImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$AttachFileEventImpl implements AttachFileEvent {
-  const _$AttachFileEventImpl(this.field);
+  const _$AttachFileEventImpl(
+    this.context, {
+    required this.field,
+    this.isOnlyImages = true,
+  });
 
   @override
+  final BuildContext context;
+  @override
   final FormFieldSchema field;
+  @override
+  @JsonKey()
+  final bool isOnlyImages;
 
   @override
   String toString() {
-    return 'DynamicFormEvent.attachFileEvent(field: $field)';
+    return 'DynamicFormEvent.attachFileEvent(context: $context, field: $field, isOnlyImages: $isOnlyImages)';
   }
 
   @override
@@ -1080,11 +1176,14 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AttachFileEventImpl &&
-            (identical(other.field, field) || other.field == field));
+            (identical(other.context, context) || other.context == context) &&
+            (identical(other.field, field) || other.field == field) &&
+            (identical(other.isOnlyImages, isOnlyImages) ||
+                other.isOnlyImages == isOnlyImages));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, field);
+  int get hashCode => Object.hash(runtimeType, context, field, isOnlyImages);
 
   /// Create a copy of DynamicFormEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1110,13 +1209,18 @@ class _$AttachFileEventImpl implements AttachFileEvent {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
     deleteAttachmentEvent,
   }) {
-    return attachFileEvent(field);
+    return attachFileEvent(context, field, isOnlyImages);
   }
 
   @override
@@ -1132,13 +1236,18 @@ class _$AttachFileEventImpl implements AttachFileEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
     deleteAttachmentEvent,
   }) {
-    return attachFileEvent?.call(field);
+    return attachFileEvent?.call(context, field, isOnlyImages);
   }
 
   @override
@@ -1154,7 +1263,12 @@ class _$AttachFileEventImpl implements AttachFileEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1162,7 +1276,7 @@ class _$AttachFileEventImpl implements AttachFileEvent {
     required TResult orElse(),
   }) {
     if (attachFileEvent != null) {
-      return attachFileEvent(field);
+      return attachFileEvent(context, field, isOnlyImages);
     }
     return orElse();
   }
@@ -1220,10 +1334,15 @@ class _$AttachFileEventImpl implements AttachFileEvent {
 }
 
 abstract class AttachFileEvent implements DynamicFormEvent {
-  const factory AttachFileEvent(final FormFieldSchema field) =
-      _$AttachFileEventImpl;
+  const factory AttachFileEvent(
+    final BuildContext context, {
+    required final FormFieldSchema field,
+    final bool isOnlyImages,
+  }) = _$AttachFileEventImpl;
 
+  BuildContext get context;
   FormFieldSchema get field;
+  bool get isOnlyImages;
 
   /// Create a copy of DynamicFormEvent
   /// with the given fields replaced by the non-null parameter values.
@@ -1316,7 +1435,12 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -1338,7 +1462,12 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1360,7 +1489,12 @@ class _$InspectionGradeChangedImpl implements InspectionGradeChanged {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1533,7 +1667,12 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -1555,7 +1694,12 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1577,7 +1721,12 @@ class _$OnDropDownChangedImpl implements OnDropDownChanged {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1772,7 +1921,12 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
       Map<String, dynamic> values,
     )
     updateForm,
-    required TResult Function(FormFieldSchema field) attachFileEvent,
+    required TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )
+    attachFileEvent,
     required TResult Function(String grade) inspectionGradeChanged,
     required TResult Function(String fieldKey, dynamic value) onDropDownChanged,
     required TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)
@@ -1794,7 +1948,12 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult? Function(FormFieldSchema field)? attachFileEvent,
+    TResult? Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult? Function(String grade)? inspectionGradeChanged,
     TResult? Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult? Function(FormFileGroupDTO group, AttachmentFileDTO file)?
@@ -1816,7 +1975,12 @@ class _$DeleteAttachmentEventImpl implements DeleteAttachmentEvent {
       Map<String, dynamic> values,
     )?
     updateForm,
-    TResult Function(FormFieldSchema field)? attachFileEvent,
+    TResult Function(
+      BuildContext context,
+      FormFieldSchema field,
+      bool isOnlyImages,
+    )?
+    attachFileEvent,
     TResult Function(String grade)? inspectionGradeChanged,
     TResult Function(String fieldKey, dynamic value)? onDropDownChanged,
     TResult Function(FormFileGroupDTO group, AttachmentFileDTO file)?

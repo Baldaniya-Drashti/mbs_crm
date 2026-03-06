@@ -518,8 +518,8 @@
             "key": "inspected_by",
             "fields": [
                 {
-                    "label": "Calibration Due Date",
-                    "key": "calibration_due_date",
+                    "label": "Inspection Undertaken Date",
+                    "key": "inspection_undertaken_date",
                     "type": "date",
                     "readOnly": true
                 },
@@ -532,8 +532,8 @@
                     "key": "inspector_compex_number"
                 },
                 {
-                    "label": "Inspection Date",
-                    "key": "inspection_date",
+                    "label": "Inspection Complex Expiry Dates",
+                    "key": "inspection_complex_expiry_dates",
                     "type": "date",
                     "readOnly": true
                 },
