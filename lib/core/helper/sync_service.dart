@@ -1,7 +1,6 @@
 // ignore_for_file: avoid_print
 
 import 'dart:async';
-import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:mbs_crm/core/constants/storage_constants.dart';
@@ -60,7 +59,6 @@ class SyncService {
       );
 
       await hydrateAllForms();
-
       _progressController.add(
         const SyncProgress(
           stage: SyncStage.completed,
@@ -84,11 +82,9 @@ class SyncService {
 
   Future<void> syncPendingForms() async {
     final pendingForms = await _db.getUnsyncedForms();
-    print("Pending Sync Forms---> $pendingForms");
 
     for (final form in pendingForms) {
       try {
-        print("offline Sync Form-----> ${jsonEncode(form)}");
         // Always CREATE When server_id is null
         if (form.server_id == null) {
           final res = await _api.addFormAPI(form: form, showSucessToast: false);

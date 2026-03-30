@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print, use_build_context_synchronously
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,24 +29,22 @@ class ImagePickerUtils {
             imageQuality: 50,
           );
         } catch (e, stackTrace) {
-          print("Error crash imagepicker ---> $e");
-          print("Stack trace: $stackTrace");
+          debugPrint(
+            "Error crash imagepicker------> $e \n Stack Trace------> $stackTrace",
+          );
         }
       }
 
       if (pickedImage != null) {
         File imageFile = File(pickedImage.path);
 
-        print(
+        debugPrint(
           'File size = ${(imageFile.lengthSync() / 1024).toStringAsFixed(2)} KB',
         );
-      } else {
-        print('picked image is $pickedImage');
       }
-
       return pickedImage?.path;
     } catch (ex) {
-      print('Pick image catch Error ===> ${ex.toString()}');
+      debugPrint('Pick image catch Error ===> ${ex.toString()}');
       return null;
     }
   }

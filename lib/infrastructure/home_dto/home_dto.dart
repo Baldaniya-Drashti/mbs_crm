@@ -30,7 +30,7 @@ class HomeDTO with _$HomeDTO {
   factory HomeDTO.fromJson(Map<String, dynamic> json) =>
       _$HomeDTOFromJson(json);
 
-  /// ---------- This Method is user when fetch from Database ------------ ////
+  // ---------- This Method is user when fetch from Database ------------ //
   factory HomeDTO.fromDb(Map<String, dynamic> row) {
     return HomeDTO(
       server_id: row['server_id'] as int?,

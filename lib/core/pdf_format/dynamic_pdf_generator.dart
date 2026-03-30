@@ -5,6 +5,8 @@ import 'package:intl/intl.dart';
 import 'package:mbs_crm/core/constants/png_image_constants.dart';
 import 'package:mbs_crm/core/pdf_format/generate_pdf.dart';
 import 'package:mbs_crm/core/pdf_format/pdf_table_extractor.dart';
+import 'package:mbs_crm/core/utils/math_utils.dart';
+import 'package:mbs_crm/infrastructure/attachment_file_dto/attachment_file_dto.dart';
 import 'package:mbs_crm/infrastructure/dynamic_form_dto/dynamic_form_dto.dart';
 import 'package:mbs_crm/infrastructure/form_files_group_dto/form_file_group_dto.dart';
 import 'package:mbs_crm/presentation/common/utils/date_time_format.dart';
@@ -27,8 +29,8 @@ class DynamicPdfGenerator {
     final questionMap = buildQuestionLabelMap(schema);
 
     final Map<String, pw.MemoryImage> imageCache = {};
-    for (final group in formFiles ?? []) {
-      for (final file in group.files ?? []) {
+    for (FormFileGroupDTO group in formFiles ?? []) {
+      for (AttachmentFileDTO file in group.files ?? []) {
         final url = file.url;
         if (url != null && !imageCache.containsKey(url)) {
           final img = await loadPdfImage(url);
@@ -37,7 +39,6 @@ class DynamicPdfGenerator {
       }
     }
 
-    /// Field-level attachments
     Future<void> extractFieldImages(Map<String, dynamic> map) async {
       for (final value in map.values) {
         if (value is Map && value['files'] is List) {
@@ -57,31 +58,58 @@ class DynamicPdfGenerator {
 
     await extractFieldImages(json);
 
-    /// ---------------- POTRAIT CONTENT ----------------
+    // ---------------- POTRAIT CONTENT ---------------- //
     pdf.addPage(
       pw.MultiPage(
         pageFormat: PdfPageFormat.a4,
         margin: const pw.EdgeInsets.all(20),
-        header: (_) => _header(logo: logoImage, title: formTitle),
+        header: (context) => _header(
+          context: context,
+          logo: logoImage,
+          title: formTitle,
+
+          projectInfo: json['project_information'],
+        ),
         build: (_) {
           final widgets = <pw.Widget>[];
 
           widgets.add(pw.SizedBox(height: 10));
+          if (json['project_information'] is Map<String, dynamic>) {
+            widgets.add(_projectInfo(json['project_information']));
+            widgets.add(pw.SizedBox(height: 15));
+          }
+
+          // ALWAYS SHOW INSPECTED BY SECOND //
+          if (json['inspected_by'] is Map<String, dynamic>) {
+            widgets.add(_inspectedBy(json['inspected_by']));
+            widgets.add(pw.SizedBox(height: 15));
+          }
+          bool firstSectionStarted = false;
+          String? previousSectionKey;
+
           for (final entry in json.entries) {
             final sectionKey = entry.key;
             final sectionData = entry.value;
 
-            if (!hasData(sectionData)) continue;
-
-            /// 🔹 PROJECT INFORMATION (Special Layout)
-            if (sectionKey == "project_information" &&
-                sectionData is Map<String, dynamic>) {
-              widgets.add(_projectInfo(sectionData));
-              widgets.add(pw.SizedBox(height: 15));
+            // Skip first page sections //
+            if (sectionKey == "project_information" ||
+                sectionKey == "inspected_by") {
               continue;
             }
 
-            /// 🔹 INSTRUMENT DETAILS (Custom Rendering)
+            if (!hasData(sectionData)) continue;
+
+            if (!firstSectionStarted) {
+              widgets.add(pw.NewPage());
+              firstSectionStarted = true;
+            } else if (sectionKey == "inspection_grade") {
+              widgets.add(pw.NewPage());
+            } else if (previousSectionKey != "inspection_grade") {
+              widgets.add(pw.NewPage());
+            }
+
+            // ----- INSTRUMENT DETAILS ----- //
+
             if (sectionKey == "instrument_details" &&
                 sectionData is Map<String, dynamic>) {
               final groupedRows = groupInstrumentRows(
@@ -91,64 +119,56 @@ class DynamicPdfGenerator {
 
               final instrumentLabelMap = buildInstrumentLabelMap(schema);
 
-              for (int i = 0; i < groupedRows.length; i++) {
-                final rowData = groupedRows[i] ?? {};
+              final instrumentWidgets = <pw.Widget>[];
 
-                widgets.add(
-                  pw.Container(
-                    margin: const pw.EdgeInsets.only(bottom: 15),
-                    child: pw.Column(
-                      crossAxisAlignment: pw.CrossAxisAlignment.start,
-                      children: [
-                        /// Section Header
-                        _sectionTitle("Instrument Details ${i + 1}"),
-                        pw.SizedBox(height: 8),
+              for (final entry in groupedRows.entries) {
+                final instrumentNumber = entry.key + 1;
+                final rowData = entry.value;
 
-                        /// Key Value Rows
-                        ...rowData.entries.map((entry) {
-                          final label =
-                              instrumentLabelMap[entry.key] ?? entry.key;
-                          final value = entry.value ?? '';
+                final validEntries = rowData.entries.where((e) {
+                  final v = e.value;
+                  return v != null && v.toString().trim().isNotEmpty;
+                }).toList();
 
-                          return pw.Padding(
-                            padding: pw.EdgeInsets.symmetric(vertical: 2),
+                if (validEntries.isEmpty) continue;
 
-                            child: pw.Row(
-                              children: [
-                                /// Label
-                                pw.Text(
-                                  "$label: ",
-                                  style: pw.TextStyle(
-                                    fontSize: 9,
-                                    fontWeight: pw.FontWeight.bold,
-                                    color: PdfColors.blueGrey800,
-                                  ),
-                                ),
-                                pw.SizedBox(width: 2),
-
-                                /// Value (Indented)
-                                pw.Expanded(
-                                  child: pw.Text(
-                                    value.toString(),
-                                    style: const pw.TextStyle(fontSize: 9),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }),
-
-                        /// Divider
-                        pw.Divider(thickness: 0.4, color: PdfColors.grey300),
-                      ],
-                    ),
+                instrumentWidgets.add(
+                  _instrumentBlock(
+                    "Instrument Details $instrumentNumber",
+                    rowData,
+                    instrumentLabelMap,
                   ),
                 );
               }
+
+              widgets.add(
+                pw.Column(
+                  children: [
+                    for (int i = 0; i < instrumentWidgets.length; i += 2)
+                      pw.Padding(
+                        padding: const pw.EdgeInsets.only(bottom: 12),
+                        child: pw.Row(
+                          crossAxisAlignment: pw.CrossAxisAlignment.start,
+                          children: [
+                            pw.Expanded(child: instrumentWidgets[i]),
+                            pw.SizedBox(width: 10),
+
+                            if (i + 1 < instrumentWidgets.length)
+                              pw.Expanded(child: instrumentWidgets[i + 1])
+                            else
+                              pw.Expanded(child: pw.SizedBox()),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
+              );
+
               continue;
             }
 
-            /// 🔹 DEFAULT SECTIONS
+            // ----- NORMAL SECTIONS ----- //
+
             final schemaSection = schema.sections?.firstWhere(
               (s) => s.key == sectionKey,
               orElse: () => FormSection(),
@@ -170,6 +190,8 @@ class DynamicPdfGenerator {
 
               widgets.add(pw.SizedBox(height: 15));
             }
+            previousSectionKey = sectionKey;
+            continue;
           }
           return widgets;
         },
@@ -179,7 +201,7 @@ class DynamicPdfGenerator {
     return pdf.save();
   }
 
-  // ---------- SIGNATURE ----------
+  // ---------- SIGNATURE ---------- //
   static pw.Widget signatureWidget(String base64) {
     try {
       final cleanBase64 = base64
@@ -207,31 +229,19 @@ class DynamicPdfGenerator {
     }
   }
 
-  // ----------------------------- SECTION CONTROLLER -----------------------------
-  static void addSection({
-    required List<pw.Widget> widgets,
-    required String? title,
-    required dynamic data,
-    required pw.Widget Function() content,
-  }) {
-    if (!hasNonEmptyValue(data)) return;
-
-    widgets.add(pw.SizedBox(height: 15));
-
-    if (title != null) {
-      widgets.add(_sectionTitle(title));
-      widgets.add(pw.SizedBox(height: 15));
-    }
-    widgets.add(content());
-  }
-
-  // ----------------------------- HEADER -----------------------------
+  // ----------------------------- HEADER ----------------------------- //
 
   static pw.Widget _header({
+    required pw.Context context,
     required pw.ImageProvider logo,
     required String title,
+
+    Map<String, dynamic>? projectInfo,
   }) {
+    final isFirstPage = context.pageNumber == 1;
+
     return pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.end,
       children: [
         pw.Row(
           children: [
@@ -242,14 +252,41 @@ class DynamicPdfGenerator {
               child: pw.Image(logo, fit: pw.BoxFit.contain),
             ),
             pw.Expanded(
-              child: pw.Center(
-                child: pw.Text(
-                  title,
-                  style: pw.TextStyle(
-                    fontSize: 16,
-                    fontWeight: pw.FontWeight.bold,
+              child: pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.end,
+                children: [
+                  pw.Text(
+                    title,
+                    textAlign: pw.TextAlign.right,
+                    style: pw.TextStyle(
+                      fontSize: 16,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
                   ),
-                ),
+
+                  if (!isFirstPage && projectInfo != null) ...[
+                    pw.SizedBox(height: 5),
+                    pw.Row(
+                      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                      children: [
+                        pw.Text(
+                          projectInfo['client']?.toString() ?? "",
+                          style: pw.TextStyle(fontSize: 9),
+                        ),
+
+                        pw.Text(
+                          projectInfo['site']?.toString() ?? "",
+                          style: pw.TextStyle(fontSize: 9),
+                        ),
+
+                        pw.Text(
+                          projectInfo['contract_no']?.toString() ?? "",
+                          style: pw.TextStyle(fontSize: 9),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
               ),
             ),
           ],
@@ -259,55 +296,187 @@ class DynamicPdfGenerator {
     );
   }
 
-  // ----------------------------- PROJECT INFO -----------------------------
+  // ----------------------------- PROJECT INFO ----------------------------- //
   static pw.Widget _projectInfo(Map<String, dynamic> data) {
-    return pw.Table(
-      border: pw.TableBorder.all(),
+    return pw.Container(
+      color: PdfColors.blue700,
+      padding: pw.EdgeInsets.all(6),
+      alignment: pw.Alignment.centerLeft,
+      child: pw.Column(
+        crossAxisAlignment: pw.CrossAxisAlignment.start,
+        mainAxisSize: pw.MainAxisSize.min,
+        children: [
+          _cellRich('Client', data['client'], textColor: PdfColors.white),
+          _cellRich('Site', data['site'], textColor: PdfColors.white),
+          _cellRich(
+            'Contract No',
+            data['contract_no'],
+            textColor: PdfColors.white,
+          ),
+        ],
+      ),
+    );
+    /* pw.Table(
+      border: pw.TableBorder.all(color: PdfColors.white),
+
       children: [
         pw.TableRow(
+          decoration: pw.BoxDecoration(color: PdfColors.blue700),
           children: [
-            _cellRich('Client', data['client']),
-            _cellRich('Site', data['site']),
-            _cellRich('Contract No', data['contract_no']),
+            _cellRich(
+              'Client',
+              data['client'],
+              textColor: PdfColors.white,
+              leftPadding: 10,
+            ),
+            _cellRich(
+              'Site',
+              data['site'],
+              textColor: PdfColors.white,
+              leftPadding: 10,
+            ),
+            _cellRich(
+              'Contract No',
+              data['contract_no'],
+              textColor: PdfColors.white,
+              leftPadding: 10,
+            ),
           ],
         ),
       ],
     );
+   */
   }
 
-  // ----------------------------- EQUIPMENT TABLE -----------------------------
+  static pw.Widget _inspectedBy(Map<String, dynamic> data) {
+    final signature = data['signature'];
 
-  static List<Map<String, dynamic>> normalizeTable(
-    Map<String, dynamic>? table,
-  ) {
-    if (table == null || table.isEmpty) return [];
-
-    return table.values.whereType<Map<String, dynamic>>().toList();
-  }
-
-  // ----------------------------- SMALL HELPERS -----------------------------
-
-  static pw.Widget _sectionTitle(String text) {
-    return pw.Text(
-      text,
-      style: pw.TextStyle(fontSize: 11, fontWeight: pw.FontWeight.bold),
+    return pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      mainAxisSize: pw.MainAxisSize.min,
+      children: [
+        pw.Table(
+          children: [
+            pw.TableRow(
+              children: [
+                _cellRich(
+                  'Inspection Undertaken Date',
+                  data['inspection_undertaken_date'],
+                ),
+                _cellRich('Inspector Name', data['inspector_name']),
+              ],
+            ),
+            pw.TableRow(
+              children: [
+                _cellRich(
+                  'Inspector Compex Number',
+                  data['inspector_compex_number'],
+                ),
+                _cellRich(
+                  'Inspection Complex Expiry Dates',
+                  data['inspection_complex_expiry_dates'],
+                ),
+              ],
+            ),
+          ],
+        ),
+        if (signature is String && signature.isNotEmpty) ...[
+          pw.SizedBox(height: 5),
+          pw.Text(
+            'Signature',
+            style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold),
+          ),
+          signatureWidget(signature),
+        ],
+      ],
     );
   }
 
-  static pw.Widget _cellRich(String title, dynamic value) {
+  // ----------------------------- SMALL HELPERS ----------------------------- //
+  static pw.Widget _sectionTitle(String text) {
+    return pw.Container(
+      width: double.infinity,
+      padding: pw.EdgeInsets.symmetric(
+        vertical: getSize(5),
+      ).copyWith(left: getSize(10)),
+      decoration: pw.BoxDecoration(color: PdfColors.blue700),
+      child: pw.Text(
+        text,
+        style: pw.TextStyle(
+          fontSize: 11,
+          fontWeight: pw.FontWeight.bold,
+          color: PdfColors.white,
+        ),
+      ),
+    );
+  }
+
+  static pw.Widget _instrumentBlock(
+    String title,
+    Map<String, dynamic> rowData,
+    Map<String, String> instrumentLabelMap,
+  ) {
+    final validEntries = rowData.entries.where((e) {
+      final v = e.value;
+      return v != null && v.toString().trim().isNotEmpty;
+    }).toList();
+
+    return pw.Column(
+      crossAxisAlignment: pw.CrossAxisAlignment.start,
+      children: [
+        _sectionTitle(title),
+        pw.SizedBox(height: 8),
+
+        ...validEntries.map((entry) {
+          final label = instrumentLabelMap[entry.key] ?? entry.key;
+          final value = entry.value;
+
+          return pw.Padding(
+            padding: const pw.EdgeInsets.symmetric(vertical: 2),
+            child: pw.Row(
+              mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+              children: [
+                pw.Text("$label: ", style: pw.TextStyle(fontSize: 9)),
+                pw.Expanded(
+                  child: pw.Text(
+                    value.toString(),
+                    textAlign: pw.TextAlign.end,
+                    style: pw.TextStyle(
+                      fontSize: 9,
+                      fontWeight: pw.FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        }),
+      ],
+    );
+  }
+
+  static pw.Widget _cellRich(
+    String title,
+    dynamic value, {
+    PdfColor? textColor,
+  }) {
     return pw.Padding(
-      padding: const pw.EdgeInsets.all(6),
+      padding: const pw.EdgeInsets.all(6).copyWith(left: 0),
       child: pw.Column(
         crossAxisAlignment: pw.CrossAxisAlignment.start,
         children: [
           pw.Text(
-            '$title:',
-            style: pw.TextStyle(fontSize: 9, fontWeight: pw.FontWeight.bold),
+            title,
+            style: pw.TextStyle(
+              fontSize: 9,
+              fontWeight: pw.FontWeight.bold,
+              color: textColor,
+            ),
           ),
           pw.SizedBox(height: 2),
           pw.Text(
             value?.toString() ?? '',
-            style: const pw.TextStyle(fontSize: 9),
+            style: pw.TextStyle(fontSize: 9, color: textColor),
           ),
         ],
       ),
@@ -345,76 +514,78 @@ class DynamicPdfGenerator {
 
           final questionText = questionMap[e.key] ?? e.key.replaceAll('_', ' ');
 
-          final isSignature =
-              e.key.toLowerCase().contains('signature') &&
-              rawValue is String &&
-              rawValue.isNotEmpty;
-
-          final questionWidget = pw.Container(
-            margin: const pw.EdgeInsets.only(bottom: 10),
-
-            child: pw.Column(
-              crossAxisAlignment: pw.CrossAxisAlignment.start,
-              children: [
-                if (questionText.isNotEmpty)
-                  pw.Text(
-                    '${index++}. $questionText',
-                    style: pw.TextStyle(
-                      fontSize: 9,
-                      fontWeight: pw.FontWeight.bold,
+          final questionWidget = pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  if (questionText.isNotEmpty)
+                    pw.Expanded(
+                      child: pw.Text(
+                        '${index++}. $questionText',
+                        style: pw.TextStyle(fontSize: 9),
+                        maxLines: 10,
+                      ),
                     ),
-                  ),
-                pw.SizedBox(height: 4),
-
-                /// ----------------------------- ANSWER STRUCTURE { answer, reason } -----------------------------
-                if (rawValue is Map && rawValue.containsKey('answer')) ...[
-                  pw.Text(
-                    'Ans: ${DynamicFormHelper.answerToValue(rawValue['answer'])}',
-                    style: const pw.TextStyle(fontSize: 9),
-                  ),
-                  if (hasData(rawValue['reason'])) ...[
-                    pw.SizedBox(height: 2),
+                  if (rawValue is Map && rawValue.containsKey('answer')) ...[
+                    pw.SizedBox(width: 3),
                     pw.Text(
-                      'Reason: ${rawValue['reason']}',
-                      style: const pw.TextStyle(fontSize: 8),
+                      '${DynamicFormHelper.answerToValue(rawValue['answer'])}',
+                      style: pw.TextStyle(
+                        fontSize: 9,
+                        fontWeight: pw.FontWeight.bold,
+                      ),
                     ),
                   ],
+                ],
+              ),
 
-                  /// -------- FIELD ATTACHMENTS (QUESTION LEVEL) --------
+              pw.SizedBox(height: 4),
 
-                  //  POINT 4: render dropdown attachments under the question
-                  if (dropdownFiles.isNotEmpty) ...[
-                    pw.SizedBox(height: 6),
-                    pw.Wrap(
-                      spacing: 6,
-                      runSpacing: 6,
-                      children: [
-                        for (final file in dropdownFiles.take(6))
-                          if (file.url != null &&
-                              imageCache.containsKey(file.url))
-                            pw.Container(
-                              width: 150,
-                              height: 150,
-                              child: pw.Image(
-                                imageCache[file.url!]!,
-                                fit: pw.BoxFit.fill,
-                              ),
-                            ),
-                      ],
-                    ),
-                  ],
-                ] else if (isSignature)
-                  signatureWidget(rawValue)
-                /// ----------------------------- SIMPLE VALUE -----------------------------
-                else
+              // ----------------------------- ANSWER STRUCTURE { answer, reason } ----------------------------- //
+              if (rawValue is Map && rawValue.containsKey('answer')) ...[
+                if (hasData(rawValue['reason'])) ...[
+                  pw.SizedBox(height: 2),
                   pw.Text(
-                    '${questionText.isNotEmpty ? "Ans: " : ""}${CustomDateTimeFormat.isIsoDate(rawValue) ? DateFormat('dd/MM/yyyy').format(DateTime.parse(rawValue)) : rawValue}',
-                    style: const pw.TextStyle(fontSize: 9),
+                    'Reason: ${rawValue['reason']}',
+                    style: const pw.TextStyle(fontSize: 8),
                   ),
+                ],
 
-                pw.Divider(thickness: 0.5, color: PdfColors.grey300),
-              ],
-            ),
+                // -------- FIELD ATTACHMENTS (QUESTION LEVEL) -------- //
+
+                //  POINT 4: render dropdown attachments under the question //
+                if (dropdownFiles.isNotEmpty) ...[
+                  pw.SizedBox(height: 6),
+                  pw.Wrap(
+                    spacing: 6,
+                    runSpacing: 6,
+                    children: [
+                      for (final file in dropdownFiles.take(6))
+                        if (file.url != null &&
+                            imageCache.containsKey(file.url))
+                          pw.Container(
+                            width: 150,
+                            height: 200,
+                            child: pw.Image(
+                              imageCache[file.url!]!,
+                              fit: pw.BoxFit.fill,
+                            ),
+                          ),
+                    ],
+                  ),
+                ],
+              ]
+              // ----------------------------- SIMPLE VALUE ----------------------------- //
+              else
+                pw.Text(
+                  '${questionText.isNotEmpty ? "Ans: " : ""}${CustomDateTimeFormat.isIsoDate(rawValue) ? DateFormat('dd/MM/yyyy').format(DateTime.parse(rawValue)) : rawValue}',
+                  style: const pw.TextStyle(fontSize: 9),
+                ),
+
+              pw.Divider(thickness: 0.5, color: PdfColors.grey300),
+            ],
           );
 
           return questionWidget;

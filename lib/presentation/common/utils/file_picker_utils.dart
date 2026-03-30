@@ -1,9 +1,9 @@
+// ignore_for_file: avoid_print
+
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 
 class FilePickerUtils {
-  // final picker = FileP();
-
   Future<String?> pickFile({required BuildContext context}) async {
     try {
       FilePickerResult? result = await FilePicker.platform.pickFiles(

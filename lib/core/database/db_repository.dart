@@ -61,7 +61,6 @@ class DBRepository {
     );
   }
 
-  /// USED
   Future<void> markFormForDelete(HomeDTO form) async {
     final db = await AppDatabase().database;
 
@@ -88,7 +87,6 @@ class DBRepository {
     );
   }
 
-  /// USED
   Future<void> deleteLocalFormByServerId(int serverId) async {
     final db = await AppDatabase().database;
 
@@ -99,7 +97,6 @@ class DBRepository {
     );
   }
 
-  /// USED
   Future<HomeDTO?> getFormByLocalId(String localId) async {
     final db = await AppDatabase().database;
 
@@ -124,7 +121,6 @@ class DBRepository {
     return result.isEmpty ? null : HomeDTO.fromDb(result.first);
   }
 
-  /// USED
   Future<List<HomeDTO>> getAllOfflineForms({required int page}) async {
     final db = await AppDatabase().database;
     final offset = (page - 1) * perPage;
@@ -137,11 +133,9 @@ class DBRepository {
       limit: perPage,
       offset: offset,
     );
-
     return result.map(HomeDTO.fromDb).toList();
   }
 
-  /// USED
   Future<int> getOfflineFormsCount() async {
     final db = await AppDatabase().database;
     final result = Sqflite.firstIntValue(
@@ -152,21 +146,6 @@ class DBRepository {
     return result ?? 0;
   }
 
-  Future<void> updateFormStatus({
-    required int id,
-    required String status,
-  }) async {
-    final db = await AppDatabase().database;
-
-    await db.update(
-      StorageConstants.offlineForms,
-      {'status': status, 'updated_at': DateTime.now().toIso8601String()},
-      where: 'server_id = ?',
-      whereArgs: [id],
-    );
-  }
-
-  /// USED
   Future<List<HomeDTO>> getUnsyncedForms() async {
     final db = await AppDatabase().database;
 
@@ -180,7 +159,6 @@ class DBRepository {
     return rows.map(HomeDTO.fromDb).toList();
   }
 
-  /// USED
   Future<void> markAsSynced({
     required String localId,
     required int serverId,
@@ -201,7 +179,6 @@ class DBRepository {
     );
   }
 
-  /// USED
   Future<void> upsertFullServerForms(List<HomeDTO> serverForms) async {
     final db = await AppDatabase().database;
     final batch = db.batch();
@@ -239,7 +216,7 @@ class DBRepository {
     await batch.commit(noResult: true);
   }
 
-  /// USED /// PARTIAL SERVER DATA (HOME LIST API)
+  // -----  PARTIAL SERVER DATA (HOME LIST API) ----- //
   Future<void> upsertFormSummary(List<HomeDTO> forms) async {
     final db = await AppDatabase().database;
 

@@ -58,12 +58,7 @@ Future<void> generateAndOpenPdf({
     final File file = File('${folder.path}/$uniqueFileName');
     await file.writeAsBytes(bytes);
 
-    print("PDF saved at: ${file.path}");
-
-    final result = await OpenFilex.open(file.path);
-    if (result.type != ResultType.done) {
-      print('OpenFile result: ${result.message}');
-    }
+    await OpenFilex.open(file.path);
   } catch (err) {
     hidePdfLoader(context);
     print("Download PDF Error----> $err");
@@ -85,7 +80,7 @@ Future<File> generateAndSendPdfFile({
   );
   hidePdfLoader(context);
 
-  /* final String uniqueFileName =
+  /* E.G- final String uniqueFileName =
   'inspection_report_${DateFormat('yyyyMMdd_HHmmss').format(DateTime.now())}.pdf'; */
   final String uniqueFileName = buildPdfFileName(json: json, schema: schema);
 
@@ -121,7 +116,6 @@ Future<void> downloadAttachement({
     showFileLoader(context);
     final String? sourcePath = file.url;
 
-    print("sourcePath---->   $sourcePath");
     if (sourcePath == null || sourcePath.isEmpty) {
       throw Exception("File path is empty");
     }
@@ -164,15 +158,12 @@ Future<void> downloadAttachement({
     if (sourcePath.contains('http')) {
       final dio = Dio();
       await dio.download(sourcePath, targetPath);
-      print("HTTP DOWNLOADING----> $targetPath");
     } else {
       final localFile = File(sourcePath);
 
       if (!await localFile.exists()) {
         throw Exception("Local file not found");
       }
-
-      print("Local DOWNLOADING----> $targetPath");
 
       await localFile.copy(targetPath);
     }
@@ -237,12 +228,12 @@ String buildAttachmentFileName({
 
   String extension = '';
 
-  // 1️⃣ Try getting extension from original filename
+  //  Try getting extension from original filename
   if (originalFileName.contains('.')) {
     extension = originalFileName.substring(originalFileName.lastIndexOf('.'));
   }
 
-  // 2️⃣ If no extension → extract from URL/path
+  //  If no extension → extract from URL/path
   if (extension.isEmpty && sourcePath.contains('.')) {
     final uri = Uri.parse(sourcePath);
     final lastSegment = uri.pathSegments.isNotEmpty

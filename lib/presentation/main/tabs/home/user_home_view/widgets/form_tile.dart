@@ -44,7 +44,6 @@ class FormTile extends StatelessWidget {
           children: [
             BaseText(
               text: form.formName ?? "",
-              // text: "${form.server_id}",
               textColor: AppColors.primary,
               fontFamily: FontConstant.jost,
               fontWeight: FontWeight.w500,

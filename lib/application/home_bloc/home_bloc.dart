@@ -143,7 +143,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
                   final apiForms = (r.data as List)
                       .map((e) => HomeDTO.fromJson(e))
                       .toList();
-
                   await DBRepository().upsertFormSummary(apiForms);
                   final localForms = await DBRepository().getAllOfflineForms(
                     page: page,
